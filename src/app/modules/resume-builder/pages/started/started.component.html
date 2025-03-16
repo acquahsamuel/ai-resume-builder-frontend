@@ -1,42 +1,49 @@
-
-
 <section>
-    <div class="app-container">
-     
-        <section class="flex">
+	<div class="app-container">
+		<section class="flex">
+			<div>
+				<nz-card [nzCover]="coverTemplate"
+					nzHoverable
+					style="width:240px; height: 240px;">
+					<nz-card-meta nzTitle="Create new resume"
+						nzDescription="Start a new resume"></nz-card-meta>
+				</nz-card>
+				<ng-template #coverTemplate>
+					<span nz-icon
+						nzType="appstore-add"
+						nzTheme="outline"></span>
+				</ng-template>
+			</div>
 
-            <div>
-                <nz-card nzHoverable style="width:240px; height: 240px;" [nzCover]="coverTemplate">
-                    <nz-card-meta nzTitle="Create new resume" nzDescription="Start a new resume"></nz-card-meta>
-                  </nz-card>
-                  <ng-template #coverTemplate>
-                    <span nz-icon nzType="appstore-add" nzTheme="outline"></span>
+			<div>
+				<nz-card [nzCover]="coverTemplate"
+					nzHoverable
+					style="width:240px; height: 240px;">
+					<nz-card-meta nzTitle="Import Resume"
+						nzDescription="Import already existing templates"></nz-card-meta>
+				</nz-card>
+				<ng-template #coverTemplate>
+					<span nz-icon
+						nzType="appstore-add"
+						nzTheme="outline"></span>
 
-                    
-                  </ng-template>
-              </div>
+				</ng-template>
+			</div>
 
-            <div>
-                <nz-card nzHoverable style="width:240px; height: 240px;" [nzCover]="coverTemplate">
-                    <nz-card-meta nzTitle="Import Resume" nzDescription="Import already existing templates"></nz-card-meta>
-                  </nz-card>
-                  <ng-template #coverTemplate>
-                    <span nz-icon nzType="appstore-add" nzTheme="outline"></span>
-
-                    
-                  </ng-template>
-              </div>
-       
-              <div class="flex justify-center items-center">
-                <nz-card nzHoverable style="width:240px; height: 240px;" [nzCover]="coverTemplate">
-                    <nz-card-meta nzTitle="Europe Street beat" nzDescription="www.instagram.com"></nz-card-meta>
-                  </nz-card>
-                  <ng-template #coverTemplate>
-                    <span nz-icon nzType="appstore-add" class="w-24 h-24" nzTheme="outline"></span>
-                  </ng-template>
-              </div>
-        
-        </section>
-      
-    </div>
+			<div class="flex justify-center items-center">
+				<nz-card [nzCover]="coverTemplate"
+					nzHoverable
+					style="width:240px; height: 240px;">
+					<nz-card-meta nzTitle="Europe Street beat"
+						nzDescription="www.instagram.com"></nz-card-meta>
+				</nz-card>
+				<ng-template #coverTemplate>
+					<span nz-icon
+						nzType="appstore-add"
+						class="w-24 h-24"
+						nzTheme="outline"></span>
+				</ng-template>
+			</div>
+		</section>
+	</div>
 </section>

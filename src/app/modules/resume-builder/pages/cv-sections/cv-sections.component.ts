@@ -1,25 +1,35 @@
-import { Component, Input, Output, EventEmitter, OnInit, Injector } from '@angular/core';
-import { HobbiesComponent } from '../../pages/cv-headers/hobbies/hobbies.component';
-import { ReferencesComponent } from '../../pages/cv-headers/references/references.component';
-import { InternshipsComponent } from '../../pages/cv-headers/internships/internships.component';
-import { CoursesComponent } from '../../pages/cv-headers/courses/courses.component';
-import { PublicationsComponent } from '../../pages/cv-headers/publications/publications.component';
-import { ProjectsComponent } from '../../pages/cv-headers/projects/projects.component';
-import { LanguagesComponent } from '../../pages/cv-headers/languages/languages.component';
-import { ExtraActivitiesComponent } from '../../pages/cv-headers/extra-activities/extra-activities.component';
+
+
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  Injector,
+  StaticProvider,
+} from '@angular/core';
+import { HobbiesComponent } from '../../pages/cv-sections/hobbies/hobbies.component';
+import { ReferencesComponent } from '../../pages/cv-sections/references/references.component';
+import { InternshipsComponent } from '../../pages/cv-sections/internships/internships.component';
+import { CoursesComponent } from '../../pages/cv-sections/courses/courses.component';
+import { PublicationsComponent } from '../../pages/cv-sections/publications/publications.component';
+import { ProjectsComponent } from '../../pages/cv-sections/projects/projects.component';
+import { LanguagesComponent } from '../../pages/cv-sections/languages/languages.component';
+import { ExtraActivitiesComponent } from '../../pages/cv-sections/extra-activities/extra-activities.component';
 import { CommonModule } from '@angular/common';
-import { SkillsComponent } from '../../pages/cv-headers/skills/skills.component';
-import { EducationComponent } from '../../pages/cv-headers/education/education.component';
-import { SummaryComponent } from '../../pages/cv-headers/summary/summary.component';
-import { CvHeaderComponent } from '../../pages/cv-headers/cv-header/cv-header.component';
-import { ExperienceComponent } from '../../pages/cv-headers/experience/experience.component';
+import { SkillsComponent } from '../../pages/cv-sections/skills/skills.component';
+import { EducationComponent } from '../../pages/cv-sections/education/education.component';
+import { SummaryComponent } from '../../pages/cv-sections/summary/summary.component';
+import { CvHeaderComponent } from '../../pages/cv-sections/cv-header/cv-header.component';
+import { ExperienceComponent } from '../../pages/cv-sections/experience/experience.component';
 import { NgZorroAntdModule } from '../../../../shared/modules/ng-zero-ant.module';
 import { TemplateSunshineComponent } from '../../../../shared/resume-templates/template-sunshine/template-sunshine.component';
 
 @Component({
   selector: 'app-builder-ui',
-  templateUrl: './builder-ui.component.html',
-  styleUrls: ['./builder-ui.component.scss'],
+  templateUrl: './cv-sections.component.html',
+  styleUrl: './cv-sections.component.scss',
   standalone: true,
   imports: [
     CommonModule,
@@ -41,9 +51,32 @@ import { TemplateSunshineComponent } from '../../../../shared/resume-templates/t
     TemplateSunshineComponent,
   ],
 })
-export class BuilderUiComponent implements OnInit {
+export class CvSectionsComponent implements OnInit {
   step = 0;
   expandIconPosition: 'start' | 'end' = 'start';
+  injector: Injector = Injector.create({
+    providers: [
+      {
+        provide: 'CV_DATA',
+        useValue: {
+          PersonalDetails: [],
+          Summary: [],
+          Experience: [],
+          Education: [],
+          References: [],
+          Skills: [],
+          Hobbies: [],
+          Internship: [],
+          Courses: [],
+          Publication: [],
+          Project: [],
+          Languages: [],
+          ExtraCurricularActivities: [],
+          ExtraFields: [],
+        } as any,
+      },
+    ],
+  });
 
   @Input() PersonalDetails = [];
   @Input() Summary = [];
@@ -60,8 +93,7 @@ export class BuilderUiComponent implements OnInit {
   @Input() ExtraCurricularActivities = [];
   @Input() ExtraFields = [];
 
-
-  constructor( ) {}
+  constructor() {}
 
   panels = [
     {
@@ -120,8 +152,7 @@ export class BuilderUiComponent implements OnInit {
         border: '0px',
       },
     },
-    
-    
+
     {
       active: true,
       disabled: false,
@@ -193,7 +224,6 @@ export class BuilderUiComponent implements OnInit {
       },
     },
 
-
     {
       active: true,
       disabled: false,
@@ -209,7 +239,6 @@ export class BuilderUiComponent implements OnInit {
       },
     },
 
-
     {
       active: true,
       disabled: false,
@@ -224,38 +253,28 @@ export class BuilderUiComponent implements OnInit {
         border: '0px',
       },
     },
-
-
   ];
+
+  createInjector(inputs: any): Injector {
+    const providers: StaticProvider[] = [
+      { provide: 'inputs', useValue: inputs },
+    ];
+    return Injector.create({ providers, parent: this.injector });
+  }
 
   saveToLocalStorage() {}
 
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void {}
 
   updateCv() {}
 
-
-
-  ngDoCheck() {
-    // this.Education = this.Education;
-    // console.log("EDUCATION INFO", this.Education);
-  }
- 
-
-
-
-  onPersonalInfoUpdateEvt(data : any){
-    console.log("PERSONAL INFO UPDATED" , data);
+  onPersonalInfoUpdateEvt(data: any) {
+    console.log('PERSONAL INFO UPDATED', data);
     this.PersonalDetails = data;
   }
-  
 
-
-
-  onEducationFormUpdate(data : any){
-    console.log("DATA PASSED", data);
+  onEducationFormUpdate(data: any) {
+    console.log('DATA PASSED', data);
     this.Education = data.educationRecords;
   }
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BuilderUiComponent } from './builder-ui.component';
+import { CvSectionsComponent } from './cv-sections.component';
 
-describe('BuilderUiComponent', () => {
-  let component: BuilderUiComponent;
-  let fixture: ComponentFixture<BuilderUiComponent>;
+describe('CvSectionsComponent', () => {
+  let component: CvSectionsComponent;
+  let fixture: ComponentFixture<CvSectionsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [BuilderUiComponent]
-})
+      imports: [CvSectionsComponent]
+    })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BuilderUiComponent);
+    fixture = TestBed.createComponent(CvSectionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
