@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule } from '../../../../../shared/modules/ng-zero-ant.module';
+import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
 import { CustomEditorComponent } from '../../../../../shared/components/custom-editor/custom-editor.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { CustomEditorComponent } from '../../../../../shared/components/custom-e
   templateUrl: './education.component.html',
   styleUrls: ['./education.component.scss'],
   standalone: true,
-  imports: [NgZorroAntdModule ,ReactiveFormsModule, CommonModule, CustomEditorComponent],
+  imports: [PrimeNgModule ,ReactiveFormsModule, CommonModule, CustomEditorComponent],
   changeDetection : ChangeDetectionStrategy.OnPush
 })
 

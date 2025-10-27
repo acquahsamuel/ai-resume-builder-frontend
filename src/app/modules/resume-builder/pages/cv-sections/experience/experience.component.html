@@ -2,23 +2,12 @@
   <form [formGroup]="experienceForm">
     <div formArrayName="experienceRecords">
 
-
-      <!-- <div
-        *ngFor="let education of experienceRecords.controls; let i = index"
-        [formGroupName]="i"
-        class="education-record"
-      > -->
-
-
-      <nz-collapse>
-        <nz-collapse-panel
+      <p-accordion>
+        <p-accordionTab
           *ngFor="let education of experienceRecords.controls; let i = index"
           [formGroupName]="i"
-          [nzHeader]="
-            education.get('employerName')?.value || 'New Employer'
-          "
-          [nzActive]="true"
-          [nzShowArrow]="true"
+          [header]="education.get('employerName')?.value || 'New Employer'"
+          [selected]="true"
         >
 
         <div class="form-section">
@@ -29,9 +18,8 @@
                 placeholder="Enter Job Title"
                 formControlName="jobTitle"
                 type="text"
-                nz-input
-                class="w-full border border-gray-300 rounded px-3 py-2"
-                nzSize="default"
+                pInputText
+                class="w-full"
               />
             </div>
 
@@ -39,10 +27,9 @@
               <label for="country">Employer Name </label>
 
               <input
-                nz-input
-                nzSize="default"
+                pInputText
                 placeholder="Enter Employer name"
-                class="w-full border border-gray-300 rounded px-3 py-2"
+                class="w-full"
                 type="text"
                 formControlName="employerName"
               />
@@ -56,9 +43,8 @@
                 placeholder="Enter City"
                 formControlName="city"
                 type="text"
-                nz-input
-                class="w-full border border-gray-300 rounded px-3 py-2"
-                nzSize="default"
+                pInputText
+                class="w-full"
               />
             </div>
 
@@ -68,9 +54,8 @@
                 placeholder="Country"
                 type="text"
                 formControlName="country"
-                class="w-full border border-gray-300 rounded px-3 py-2"
-                nz-input
-                nzSize="default"
+                class="w-full"
+                pInputText
               />
             </div>
           </div>
@@ -79,30 +64,30 @@
             <div class="form-column flex flex-wrap  -mx-2">
               <div class="form-group flex flex-col w-full sm:w-1/2 px-2 py-2">
                 <label for="startYear">Start Date</label>
-                <nz-date-picker
+                <p-calendar
                   formControlName="startYear"
                   (ngModelChange)="onDateChange($event)"
-                ></nz-date-picker>
+                ></p-calendar>
               </div>
 
               <div class="form-group flex flex-col w-full sm:w-1/2 px-2 py-2">
                 <label for="endYear">End Date</label>
-                <nz-date-picker
+                <p-calendar
                   formControlName="endYear"
                   (ngModelChange)="onDateChange($event)"
-                ></nz-date-picker>
+                ></p-calendar>
               </div>
 
               <div class="form-group w-full sm:w-1/2 px-2 py-2">
                 <div class="checkbox-wrapper-14">
-                  <label
-                    for="s1-14"
+                  <p-checkbox
+                    inputId="currentlyHere"
                     formControlName="currentlyHere"
-                    nz-checkbox
-                    class="font-normal"
                   >
-                    I Currently work here
-                  </label>
+                    <label for="currentlyHere" class="font-normal">
+                      I Currently work here
+                    </label>
+                  </p-checkbox>
                 </div>
               </div>
             </div>
@@ -117,11 +102,9 @@
                 >
                   Company Website
                 </label>
-                <nz-input-group nzAddOnAfterIcon="chrome">
-                  <input type="text"
-                  class="  border-gray-300 rounded px-3 py-2"
-                  nz-input formControlName="companyWebsite" />
-                </nz-input-group>
+                <input type="text"
+                class="border border-gray-300 rounded px-3 py-2"
+                pInputText formControlName="companyWebsite" />
               </div>
             </div>
           
@@ -135,38 +118,29 @@
 
           <div class="flex justify-end">
           
-            <button
-              (click)="removeField(i)"
-              nz-button
-              nzType="primary"
-              [nzSize]="'small'"
-              nz-button
-              nzType="primary"
-              nzDanger
-            >
-              <span nz-icon nzDanger nzType="delete"></span>
-            </button>
+            <p-button
+              (onClick)="removeField(i)"
+              severity="danger"
+              [rounded]="true"
+              label="Delete"
+            ></p-button>
           </div>
         </div>
 
-
-      </nz-collapse-panel>
-    </nz-collapse>
+      </p-accordionTab>
+    </p-accordion>
 
       <!-- </div> -->
     </div>
      
 
     <section class="py-3">
-    <button 
+    <p-button 
       class="btn-create"
-      nz-button
-      nzType="primary"
-      (click)="addEducationRecord()"
+      (onClick)="addEducationRecord()"
       type="button"
-    >
-      Add Experience
-    </button>
+      label="Add Experience"
+    ></p-button>
     </section>
   </form>
 </div>

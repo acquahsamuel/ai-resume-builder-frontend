@@ -3,15 +3,12 @@
 <!-- Form with collapsible panels -->
 <form [formGroup]="educationForm">
   <div formArrayName="educationRecords">
-    <nz-collapse>
-      <nz-collapse-panel
+    <p-accordion>
+      <p-accordionTab
         *ngFor="let education of educationRecords.controls; let i = index"
         [formGroupName]="i"
-        [nzHeader]="
-          education.get('nameOfInstitution')?.value || 'New Institution'
-        "
-        [nzActive]="true"
-        [nzShowArrow]="true"
+        [header]="education.get('nameOfInstitution')?.value || 'New Institution'"
+        [selected]="true"
       >
 
       
@@ -24,9 +21,8 @@
                 type="text"
                 id="name"
                 formControlName="nameOfInstitution"
-                nz-input
+                pInputText
                   class="w-full border border-gray-300 rounded px-3 py-2"
-                nzSize="default"
                 placeholder="Enter institution name"
               />
             </div>
@@ -38,9 +34,8 @@
                 id="degree"
                 formControlName="degree"
                 placeholder="Enter degree"
-                nz-input
+                pInputText
                   class="w-full border border-gray-300 rounded px-3 py-2"
-                nzSize="default"
               />
             </div>
           </div>
@@ -52,9 +47,8 @@
                 placeholder="Enter City"
                 formControlName="city"
                 type="text"
-                nz-input
+                pInputText
                   class="w-full border border-gray-300 rounded px-3 py-2"
-                nzSize="default"
               />
             </div>
 
@@ -64,9 +58,8 @@
                 placeholder="Country"
                 type="text"
                 formControlName="country"
-                nz-input
+                pInputText
                   class="w-full border border-gray-300 rounded px-3 py-2"
-                nzSize="default"
               />
             </div>
           </div>
@@ -75,18 +68,18 @@
             <div class="form-group flex flex-col px-2 py-2 w-full sm:w-1/2">
               <label for="startYear">Start Date</label>
 
-              <nz-date-picker
+              <p-calendar
                 formControlName="startYear"
                 (ngModelChange)="onDateChange($event)"
-              ></nz-date-picker>
+              ></p-calendar>
             </div>
 
             <div class="form-group flex px-2 py-2 flex-col w-full sm:w-1/2">
               <label for="endYear">End Date</label>
-              <nz-date-picker
+              <p-calendar
                 formControlName="endYear"
                 (ngModelChange)="onDateChange($event)"
-              ></nz-date-picker>
+              ></p-calendar>
             </div>
           </div>
 
@@ -96,11 +89,9 @@
                 <label for="s1-14" class="font-normal">
                   Institution Website
                 </label>
-                <nz-input-group nzAddOnAfterIcon="chrome">
-                  <input type="text"
-                  class="border border-gray-300 rounded px-3 py-2"
-                  nz-input formControlName="website" />
-                </nz-input-group>
+                <input type="text"
+                class="border border-gray-300 rounded px-3 py-2"
+                pInputText formControlName="website" />
               </div>
             </div>
           </div>
@@ -115,34 +106,25 @@
           </div>
 
           <div class="flex justify-end">
-            <button
-              (click)="removeEducationRecord(i)"
-              nz-button
-              nzType="primary"
-              [nzSize]="'small'"
-              nz-button
-              nzType="primary"
-              nzDanger
-            >
-              <span nz-icon nzDanger nzType="delete"></span>
-            </button>
+            <p-button
+              (onClick)="removeEducationRecord(i)"
+              severity="danger"
+              [rounded]="true"
+              label="Delete"
+            ></p-button>
           </div>
         </section>
-      </nz-collapse-panel>
-    </nz-collapse>
+      </p-accordionTab>
+    </p-accordion>
   </div>
 </form>
 
 
 <section class="py-3">
-  <button
-  class="btn-create "
-  nz-button
-  nzType="primary"
-  (click)="addEducationRecord()"
+  <p-button
+  class="btn-create"
+  (onClick)="addEducationRecord()"
   type="button"
->
-  Add Education
-</button>
+  label="Add Education"
+></p-button>
 </section>
-

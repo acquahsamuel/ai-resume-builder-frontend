@@ -8,8 +8,11 @@
   </div>
 
   <ng-template #noTemplate>
- 
-    <nz-avatar [nzSize]="64" nzIcon="user"></nz-avatar>
+    <img
+      src="/assets/images/placeholder.png"
+      class="w-24 h-24 rounded-full"
+      alt="Image preview"
+    />
   </ng-template>
 
   <div class="file-drop-area mb-2">
@@ -35,10 +38,10 @@
         <input
           formControlName="firstname"
           type="text"
-          nzSize="default"
           id="firstname"
-          nz-input placeholder="Basic usage"
-          class="w-full border border-gray-300 rounded px-3 py-2"
+          pInputText
+          placeholder="Basic usage"
+          class="w-full"
         />
       </div>
 
@@ -48,11 +51,9 @@
         <input
           formControlName="surname"
           type="text"
-          nz-input
-          
-          nzSize="default"
+          pInputText
           id="surname"
-          class="w-full border border-gray-300 rounded px-3 py-2"
+          class="w-full"
           placeholder="Your surname"
         />
       </div>
@@ -65,11 +66,9 @@
         <input
           formControlName="city"
           type="text"
-          nz-input
-         
-          nzSize="default"
+          pInputText
           id="city"
-          class="w-full border border-gray-300 rounded px-3 py-2"
+          class="w-full"
           placeholder="Your City"
         />
       </div>
@@ -80,11 +79,9 @@
         <input
           formControlName="country"
           type="text"
-          nz-input
-         
-          nzSize="default"
+          pInputText
           id="country"
-          class="w-full border border-gray-300 rounded px-3 py-2"
+          class="w-full"
           placeholder="Country"
         />
       </div>
@@ -97,11 +94,9 @@
         <input
           formControlName="postalCode"
           type="text"
-          nz-input
-          
-          nzSize="default"
+          pInputText
           id="postalCode"
-          class="w-full border border-gray-300 rounded px-3 py-2"
+          class="w-full"
           placeholder="Postal Code"
         />
       </div>
@@ -112,11 +107,9 @@
         <input
           formControlName="phoneNumber"
           type="text"
-          nz-input
-          
-          nzSize="default"
+          pInputText
           id="phoneNumber"
-          class="w-full border border-gray-300 rounded px-3 py-2"
+          class="w-full"
           placeholder="Phone Number"
         />
       </div>
@@ -128,9 +121,8 @@
           formControlName="email"
           type="email"
           id="email"
-          nz-input
-          nzSize="default"
-          class="w-full border border-gray-300 rounded px-3 py-2"
+          pInputText
+          class="w-full"
           placeholder="Your email address"
         />
       </div>
@@ -138,9 +130,9 @@
       <!-- Date of Birth -->
       <div class="form-group flex flex-col w-full px-2 py-2 sm:w-1/2">
         <label for="dateOfBirth" class="block mb-1">Date of Birth</label>
-        <nz-date-picker formControlName="dateOfBirth" 
-        class="w-full border border-gray-300 rounded px-3 py-2"
-        (ngModelChange)="onDateChange($event)"></nz-date-picker>
+        <p-calendar formControlName="dateOfBirth" 
+        class="w-full"
+        (ngModelChange)="onDateChange($event)"></p-calendar>
          
       </div>
     </div>
@@ -162,39 +154,22 @@
                   {{ field.get("label")?.value }}
                 </label>
 
-                <!-- <button nz-button nzType="primary" [nzSize]="'small'" nzShape="round">
-                  <span nz-icon nzType="download"></span>
-                  Download
-                </button> -->
-
-                <div class="flex  items-center justify-center w-full">
+                <div class="flex items-center justify-center w-full gap-2">
                   <input
                     type="text"
-                    nz-input
-                    placeholder="default size"
-                    nzSize="default"
+                    pInputText
                     formControlName="value"
-                    nzShape="round"
                     [attr.id]="field.get('label')?.value"
-                    class=""
+                    class="w-full"
                     [attr.placeholder]="field.get('label')?.value"
                   />
-                   
                  
-                  <nz-space>
-                   <button
-                   (click)="removeField(i)"
-                   nz-button
-                   nzType="primary"
-                   [nzSize]="'small'"
-                   nz-button
-                   nzType="primary"
-                   class="p-2"
-                   nzDanger
-                 >
-                   <span nz-icon nzDanger nzType="delete"></span>
-                 </button>
-                 </nz-space>
+                  <p-button
+                   (onClick)="removeField(i)"
+                   severity="danger"
+                   [rounded]="true"
+                   icon="pi pi-times"
+                 ></p-button>
                 </div>
               </div>
             </div> 
@@ -202,18 +177,17 @@
         </div>
       </div>
 
-      <div class="flex flex-wrap">
+      <div class="flex flex-wrap gap-2">
         <div class="w-full">
           <div class="#">
-            <button
+            <p-button
               *ngFor="let fieldType of fieldTypes"
-              (click)="addField(fieldType)"
-              nzType="primary"
-              nzShape="round"
-            >
-            <span nz-icon nzSize="small" nzType="plus" nzTheme="outline"></span>  
-            {{ fieldType }}
-            </button>
+              (onClick)="addField(fieldType)"
+              severity="secondary"
+              [rounded]="true"
+              [label]="fieldType"
+              icon="pi pi-plus"
+            ></p-button>
           </div>
         </div>
       </div>

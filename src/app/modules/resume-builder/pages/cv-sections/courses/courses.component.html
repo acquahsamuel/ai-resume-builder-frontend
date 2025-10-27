@@ -15,9 +15,8 @@
                 placeholder="Course Title"
                 formControlName="nameofCourse"
                 type="text"
-                nz-input
-                class="w-full border border-gray-300 rounded px-3 py-2"
-                nzSize="default"
+                pInputText
+                class="w-full"
               />
             </div>
 
@@ -25,10 +24,9 @@
               <input
                 placeholder="Institution"
                 type="text"
-                class="w-full border border-gray-300 rounded px-3 py-2"
+                class="w-full"
                 formControlName="institution"
-                nz-input
-                nzSize="default"
+                pInputText
               />
             </div>
           </div>
@@ -36,19 +34,19 @@
           <div class="form-column flex flex-wrap -mx-2">
             <div class="form-group flex flex-col w-full py-2 px-2 sm:w-1/2">
               <label for="startYear">Start Date</label>
-              <nz-date-picker
+              <p-calendar
                 formControlName="startYear"
                 (ngModelChange)="onDateChange($event)"
-              ></nz-date-picker>
+              ></p-calendar>
             </div>
 
             <div class="form-group flex flex-col w-full py-2 px-2 sm:w-1/2">
               <label for="endYear">End Date</label>
-              <nz-date-picker
+              <p-calendar
                 formControlName="endYear"
-                class="w-full border border-gray-300 rounded px-3 py-2"
+                class="w-full"
                 (ngModelChange)="onDateChange($event)"
-              ></nz-date-picker>
+              ></p-calendar>
             </div>
           </div>
 
@@ -63,30 +61,22 @@
           </div>
 
           <div class="flex justify-end">
-            <button
-              (click)="removeEducationRecord(i)"
-              nz-button
-              nzType="primary"
-              [nzSize]="'small'"
-              nz-button
-              nzType="primary"
-              nzDanger
-            >
-              <span nz-icon nzDanger nzType="delete"></span>
-            </button>
+            <p-button
+              (onClick)="removeEducationRecord(i)"
+              severity="danger"
+              [rounded]="true"
+              label="Delete"
+            ></p-button>
           </div>
         </div>
       </div>
     </div>
 
-    <button
+    <p-button
       class="btn-create"
-      nz-button
-      nzType="primary"
-      (click)="addEducationRecord()"
+      (onClick)="addEducationRecord()"
       type="button"
-    >
-      Add Course
-    </button>
+      label="Add Course"
+    ></p-button>
   </form>
 </div>

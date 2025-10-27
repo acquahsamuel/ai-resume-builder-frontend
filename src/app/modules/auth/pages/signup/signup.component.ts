@@ -15,9 +15,9 @@ import {
   FormGroup,
   ValidatorFn,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule } from '../../../../shared/modules/ng-zero-ant.module';
+import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
  
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -32,7 +32,8 @@ import { NgZorroAntdModule } from '../../../../shared/modules/ng-zero-ant.module
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    NgZorroAntdModule
+    PrimeNgModule,
+    RouterModule
   ]
 })
 export class SignupComponent implements OnInit {

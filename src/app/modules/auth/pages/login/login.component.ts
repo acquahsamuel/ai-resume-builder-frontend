@@ -12,17 +12,16 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../../../shared/services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
-import { NgZorroAntdModule } from '../../../../shared/modules/ng-zero-ant.module';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [NgZorroAntdModule, CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [PrimeNgModule, CommonModule, ReactiveFormsModule, FormsModule, RouterModule],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup<{

@@ -2,14 +2,14 @@
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from "@angular/forms";
 import { Subject } from "rxjs";
 import { NgIf } from "@angular/common";
-import { NgZorroAntdModule } from "../../../../shared/modules/ng-zero-ant.module";
+import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
 
 @Component({
     selector: 'app-settings',
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.scss'],
     standalone: true,
-    imports: [NgIf, ReactiveFormsModule, NgZorroAntdModule],
+    imports: [NgIf, ReactiveFormsModule, PrimeNgModule],
 })
 
 

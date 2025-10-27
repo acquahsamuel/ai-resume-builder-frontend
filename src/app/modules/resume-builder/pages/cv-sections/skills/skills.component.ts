@@ -7,14 +7,14 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule, NgFor } from '@angular/common';
-import { NgZorroAntdModule } from '../../../../../shared/modules/ng-zero-ant.module';
+import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
 
 @Component({
   selector: 'app-skills',
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NgZorroAntdModule],
+  imports: [ReactiveFormsModule, CommonModule, PrimeNgModule],
 })
 export class SkillsComponent implements OnInit {
   skillsForm: FormGroup;

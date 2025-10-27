@@ -7,14 +7,14 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { NgZorroAntdModule } from '../../../../../shared/modules/ng-zero-ant.module';
+import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
 
 @Component({
   selector: 'app-hobbies',
   templateUrl: './hobbies.component.html',
   styleUrls: ['./hobbies.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgZorroAntdModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, PrimeNgModule],
 })
 export class HobbiesComponent implements OnInit {
   listOfOption: Array<{ label: string; value: string }> = [];

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NgZorroAntdModule } from '../../../../../shared/modules/ng-zero-ant.module';
+import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
     styleUrls: ['./languages.component.scss'],
     standalone: true,
     imports: [
-      NgZorroAntdModule,
+      PrimeNgModule,
       ReactiveFormsModule,
       CommonModule
     ],

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, forwardRef, Component, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { NgZorroAntdModule } from '../../modules/ng-zero-ant.module';
+import { PrimeNgModule } from '../../modules/primeNg.module';
 
 
 
@@ -16,7 +16,7 @@ import { NgZorroAntdModule } from '../../modules/ng-zero-ant.module';
         }
     ],
     standalone: true,
-    imports: [NgZorroAntdModule]
+    imports: [PrimeNgModule]
 })
 export class CustomEditorComponent implements ControlValueAccessor, OnInit {
   editorContent: string = '';

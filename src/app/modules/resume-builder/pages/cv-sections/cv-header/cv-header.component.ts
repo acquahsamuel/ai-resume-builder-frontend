@@ -6,14 +6,14 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule } from '../../../../../shared/modules/ng-zero-ant.module';
+import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
 
 @Component({
   selector: 'app-cv-header',
   templateUrl: './cv-header.component.html',
   styleUrls: ['./cv-header.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, NgZorroAntdModule, CommonModule],
+  imports: [ReactiveFormsModule, PrimeNgModule, CommonModule],
 })
 export class CvHeaderComponent implements OnInit {
   @Input() PersonalDetails: any;

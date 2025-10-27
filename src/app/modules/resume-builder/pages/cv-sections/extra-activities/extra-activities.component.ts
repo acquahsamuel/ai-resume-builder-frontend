@@ -2,14 +2,14 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule, NgFor } from "@angular/common";
-import { NgZorroAntdModule } from "../../../../../shared/modules/ng-zero-ant.module";
+import { PrimeNgModule } from "../../../../../shared/modules/primeNg.module";
 
 @Component({
        selector: 'app-extra-activities',
     templateUrl: './extra-activities.component.html',
     styleUrls: ['./extra-activities.component.scss'],
     standalone: true,
-    imports: [ReactiveFormsModule,CommonModule, NgZorroAntdModule]
+    imports: [ReactiveFormsModule,CommonModule, PrimeNgModule]
 })
 
 export class ExtraActivitiesComponent implements OnInit {

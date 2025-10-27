@@ -2,47 +2,30 @@
 	<div class="app-container">
 		<section class="flex">
 			<div>
-				<nz-card [nzCover]="coverTemplate"
-					nzHoverable
-					style="width:240px; height: 240px;">
-					<nz-card-meta nzTitle="Create new resume"
-						nzDescription="Start a new resume"></nz-card-meta>
-				</nz-card>
-				<ng-template #coverTemplate>
-					<span nz-icon
-						nzType="appstore-add"
-						nzTheme="outline"></span>
-				</ng-template>
+				<p-card [header]="'Create new resume'" [subheader]="'Start a new resume'"
+					styleClass="card-hover">
+					<ng-template pTemplate="header">
+						<i class="pi pi-plus-circle" style="font-size: 2.5rem"></i>
+					</ng-template>
+				</p-card>
 			</div>
 
 			<div>
-				<nz-card [nzCover]="coverTemplate"
-					nzHoverable
-					style="width:240px; height: 240px;">
-					<nz-card-meta nzTitle="Import Resume"
-						nzDescription="Import already existing templates"></nz-card-meta>
-				</nz-card>
-				<ng-template #coverTemplate>
-					<span nz-icon
-						nzType="appstore-add"
-						nzTheme="outline"></span>
-
-				</ng-template>
+				<p-card [header]="'Import Resume'" [subheader]="'Import already existing templates'"
+					styleClass="card-hover">
+					<ng-template pTemplate="header">
+						<i class="pi pi-upload" style="font-size: 2.5rem"></i>
+					</ng-template>
+				</p-card>
 			</div>
 
 			<div class="flex justify-center items-center">
-				<nz-card [nzCover]="coverTemplate"
-					nzHoverable
-					style="width:240px; height: 240px;">
-					<nz-card-meta nzTitle="Europe Street beat"
-						nzDescription="www.instagram.com"></nz-card-meta>
-				</nz-card>
-				<ng-template #coverTemplate>
-					<span nz-icon
-						nzType="appstore-add"
-						class="w-24 h-24"
-						nzTheme="outline"></span>
-				</ng-template>
+				<p-card [header]="'Europe Street beat'" [subheader]="'www.instagram.com'"
+					styleClass="card-hover">
+					<ng-template pTemplate="header">
+						<i class="pi pi-image" style="font-size: 2.5rem"></i>
+					</ng-template>
+				</p-card>
 			</div>
 		</section>
 	</div>

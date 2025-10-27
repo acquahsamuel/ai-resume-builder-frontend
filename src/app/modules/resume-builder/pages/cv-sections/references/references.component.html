@@ -1,21 +1,13 @@
 <div class="form-section">
   <form [formGroup]="referenceForm">
     <div formArrayName="referenceRecords">
-      <!-- <div
-        *ngFor="let education of referenceRecords.controls; let i = index"
-        [formGroupName]="i"
-        class="education-record"
-      >-->
 
-      <nz-collapse>
-        <nz-collapse-panel
+      <p-accordion>
+        <p-accordionTab
           *ngFor="let reference of referenceRecords.controls; let i = index"
           [formGroupName]="i"
-          [nzHeader]="
-            reference.get('referenceName')?.value || 'Reference Name'
-          "
-          [nzActive]="true"
-          [nzShowArrow]="true"
+          [header]="reference.get('referenceName')?.value || 'Reference Name'"
+          [selected]="true"
         >
 
 
@@ -27,9 +19,8 @@
                 placeholder="Name/Company"
                 formControlName="referenceName"
                 type="text"
-                nz-input
-                nzSize="default"
-                class="w-full border border-gray-300 rounded px-3 py-2"
+                pInputText
+                class="w-full"
               />
             </div>
 
@@ -39,9 +30,8 @@
                 placeholder="Enter Contact Person"
                 type="text"
                 formControlName="contactPerson"
-                nz-input
-                nzSize="default"
-                class="w-full border border-gray-300 rounded px-3 py-2"
+                pInputText
+                class="w-full"
               />
             </div>
           </div>
@@ -53,9 +43,8 @@
                 placeholder="Phone Number"
                 formControlName="phoneNumber"
                 type="text"
-                nz-input
-                nzSize="default"
-                class="w-full border border-gray-300 rounded px-3 py-2"
+                pInputText
+                class="w-full"
               />
             </div>
 
@@ -65,15 +54,14 @@
                 placeholder="Enter Person Email"
                 type="email"
                 formControlName="emailAddress"
-                nz-input
-                nzSize="default"
-                class="w-full border border-gray-300 rounded px-3 py-2"
+                pInputText
+                class="w-full"
               />
             </div>
           </div>
 
           <div class="form-group w-full px-3 py-2 -mx-2">
-            <nz-switch formControlName="isHidden"></nz-switch>
+            <p-inputSwitch formControlName="isHidden"></p-inputSwitch>
             <label for="">
               I'd like to hide reference and make them available only upon
               request</label
@@ -82,33 +70,28 @@
 
           <div class="flex justify-end">
            
-            <button
-            (click)="removeRecord(i)"
-            nz-button
-            nzType="primary"
-            [nzSize]="'small'"
-            nz-button nzType="primary" nzDanger>
-            <span nz-icon nzDanger nzType="delete"></span>
-          </button>
+            <p-button
+            (onClick)="removeRecord(i)"
+            severity="danger"
+            [rounded]="true"
+            icon="pi pi-times"
+          ></p-button>
 
           </div>
         </div>
     
-    </nz-collapse-panel>
-  </nz-collapse>
+    </p-accordionTab>
+  </p-accordion>
     </div>
 
 
     <section class="py-3">
-    <button
+    <p-button
       class="btn-create"
-      nz-button
-      nzType="primary"
-      (click)="addRecord()"
+      (onClick)="addRecord()"
       type="button"
-    >
-      Add Reference
-    </button>
+      label="Add Reference"
+    ></p-button>
     </section>
   </form>
 </div>

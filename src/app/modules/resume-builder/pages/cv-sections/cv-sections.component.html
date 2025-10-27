@@ -1,29 +1,18 @@
 <section class="app-container">
     <section class="builder">
-      <nz-collapse [nzBordered]="false">
+      <p-accordion>
         @for (panel of panels; track panel) {
-        <nz-collapse-panel
-          #p
-          [nzHeader]="panel.name"
-          [nzActive]="panel.active"
+        <p-accordionTab
+          [header]="panel.name"
+          [selected]="panel.active"
           [ngStyle]="panel.customStyle"
-          [nzExpandedIcon]="!$first ? panel.icon || expandedIcon : undefined"
         >
           <ng-container *ngIf="panel.visible">
             <ng-container *ngComponentOutlet="panel.component"></ng-container>
           </ng-container>
-          <ng-template #expandedIcon let-active>
-            {{ active }}
-            <span
-              nz-icon
-              nzType="caret-right"
-              class="ant-collapse-arrow"
-              [nzRotate]="p.nzActive ? 90 : -90"
-            ></span>
-          </ng-template>
-        </nz-collapse-panel>
+        </p-accordionTab>
         }
-      </nz-collapse>
+      </p-accordion>
     </section>
   
     <section class="preview">

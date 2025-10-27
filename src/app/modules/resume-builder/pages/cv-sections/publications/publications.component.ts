@@ -2,14 +2,14 @@
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule, NgFor } from "@angular/common";
 import { CustomEditorComponent } from "../../../../../shared/components/custom-editor/custom-editor.component";
-import { NgZorroAntdModule } from "../../../../../shared/modules/ng-zero-ant.module";
+import { PrimeNgModule } from "../../../../../shared/modules/primeNg.module";
 
 @Component({
     selector: 'app-publications',
     templateUrl: './publications.component.html',
     styleUrls: ['./publications.component.scss'],
     standalone: true,
-    imports: [ReactiveFormsModule, CommonModule, NgZorroAntdModule, CustomEditorComponent]
+    imports: [ReactiveFormsModule, CommonModule, PrimeNgModule, CustomEditorComponent]
 })
 
 export class PublicationsComponent implements OnInit {

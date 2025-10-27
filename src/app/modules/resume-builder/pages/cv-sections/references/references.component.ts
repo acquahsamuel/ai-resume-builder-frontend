@@ -3,14 +3,14 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule, NgFor } from "@angular/common";
 import { CustomEditorComponent } from "../../../../../shared/components/custom-editor/custom-editor.component";
-import { NgZorroAntdModule } from "../../../../../shared/modules/ng-zero-ant.module";
+import { PrimeNgModule } from "../../../../../shared/modules/primeNg.module";
 
 @Component({
     selector: 'app-references',
     templateUrl: './references.component.html',
     styleUrls: ['./references.component.scss'],
     standalone: true,
-    imports: [ReactiveFormsModule, CommonModule, NgZorroAntdModule, CustomEditorComponent]
+    imports: [ReactiveFormsModule, CommonModule, PrimeNgModule, CustomEditorComponent]
 })
 
 export class ReferencesComponent implements OnInit {

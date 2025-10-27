@@ -2,20 +2,12 @@
   <form [formGroup]="skillsForm">
     <div formArrayName="skillsRecords">
 
-      <!-- <div
-        *ngFor="let skills of skillsRecord.controls; let i = index"
-        [formGroupName]="i"
-        class="education-record"
-      > -->
-      <nz-collapse>
-        <nz-collapse-panel
+      <p-accordion>
+        <p-accordionTab
           *ngFor="let skills of skillsRecord.controls; let i = index"
           [formGroupName]="i"
-          [nzHeader]="
-            skills.get('name')?.value || 'New Skill'
-          "
-          [nzActive]="true"
-          [nzShowArrow]="true"
+          [header]="skills.get('name')?.value || 'New Skill'"
+          [selected]="true"
         >
  
         <div class="form-section flex flex-wrap -mx-2">
@@ -24,85 +16,61 @@
             <input
               id="name"
               type="text"
-              nz-input
+              pInputText
               placeholder=" Enter Skill"
-              nzSize="default"
               formControlName="name"
-              class="w-full border border-gray-300 rounded px-3 py-2"
+              class="w-full"
             />
           </div>
 
           <div class="example-input px-2 py-2 sm:w-1/2">
             <label for="name"> Proficiency </label>
-            <nz-select
+            <p-dropdown
               class="w-full"
               formControlName="proficiency"
-              nzShowSearch
-              nzAllowClear
-              nzPlaceHolder="Select Proficiency"
-            >
-              <nz-option nzLabel="Beginner" nzValue="Beginner"></nz-option>
-              <nz-option
-                nzLabel="Intermediate"
-                nzValue="Intermediate"
-              ></nz-option>
-              <nz-option nzLabel="Advanced" nzValue="Advanced"></nz-option>
-
-              <nz-option nzLabel="Intermediate" nzValue="Expert"></nz-option>
-              <nz-option nzLabel="Advanced" nzValue="Master"></nz-option>
-            </nz-select>
+              [showClear]="true"
+              placeholder="Select Proficiency"
+              [options]="[
+                {label: 'Beginner', value: 'Beginner'},
+                {label: 'Intermediate', value: 'Intermediate'},
+                {label: 'Advanced', value: 'Advanced'},
+                {label: 'Expert', value: 'Expert'},
+                {label: 'Master', value: 'Master'}
+              ]"
+              optionLabel="label"
+              optionValue="value"
+            ></p-dropdown>
           </div>
         </div>
 
         <div class="form-section w-full flex flex-wrap py-2 sm:w-1/2">
           <label for="name"> Level </label>
-          <nz-slider nzRange class="w-full"></nz-slider>
+          <p-slider class="w-full"></p-slider>
         </div>
 
         <div class="flex justify-end">
-          <!-- <button
-            (click)="removeRecord(i)"
-            nz-button
-            nzType="primary"
-            [nzSize]="'small'"
-          >
-            <span nz-icon nzType="delete"></span>
-          </button> -->
-
-          <button
-          (click)="removeRecord(i)"
-          nz-button
-          nzType="primary"
-          [nzSize]="'small'"
-          nz-button
-          nzType="primary"
-          class="p-2"
-          nzDanger
-        >
-          <span nz-icon nzDanger nzType="delete"></span>
-        </button>
+          <p-button
+          (onClick)="removeRecord(i)"
+          severity="danger"
+          [rounded]="true"
+          label="Delete"
+        ></p-button>
         </div>
 
-
-
-      </nz-collapse-panel>
-    </nz-collapse>
-
+      </p-accordionTab>
+    </p-accordion>
 
       </div>
     <!-- </div> -->
 
 
     <section class="py-3">
-    <button
-      (click)="addRecord()"
-      nz-button
-      nzType="primary"
+    <p-button
+      (onClick)="addRecord()"
+      label="Add Skills"
       class="btn-create"
       type="button"
-    >
-      Add Skills
-    </button>
+    ></p-button>
     </section>
   </form>
 </div>

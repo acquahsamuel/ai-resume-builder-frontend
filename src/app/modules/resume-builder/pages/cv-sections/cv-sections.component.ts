@@ -23,7 +23,7 @@ import { EducationComponent } from '../../pages/cv-sections/education/education.
 import { SummaryComponent } from '../../pages/cv-sections/summary/summary.component';
 import { CvHeaderComponent } from '../../pages/cv-sections/cv-header/cv-header.component';
 import { ExperienceComponent } from '../../pages/cv-sections/experience/experience.component';
-import { NgZorroAntdModule } from '../../../../shared/modules/ng-zero-ant.module';
+import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
 import { TemplateSunshineComponent } from '../../../../shared/resume-templates/template-sunshine/template-sunshine.component';
 
 @Component({
@@ -33,7 +33,7 @@ import { TemplateSunshineComponent } from '../../../../shared/resume-templates/t
   standalone: true,
   imports: [
     CommonModule,
-    NgZorroAntdModule,
+    PrimeNgModule,
     HobbiesComponent,
     ReferencesComponent,
     InternshipsComponent,

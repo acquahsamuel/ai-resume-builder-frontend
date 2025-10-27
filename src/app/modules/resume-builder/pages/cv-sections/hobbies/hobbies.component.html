@@ -9,11 +9,13 @@
             <label for> Hobbies </label>
             
 
-            <nz-select   [nzSize]="'default'" nzMode="multiple" nzPlaceHolder="Please add or select">
-                @for (option of listOfOption; track option.value) {
-                  <nz-option [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
-                }
-              </nz-select>
+            <p-multiSelect
+              [options]="listOfOption"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Please add or select"
+              class="w-full"
+            ></p-multiSelect>
 
           </div>
         </div>

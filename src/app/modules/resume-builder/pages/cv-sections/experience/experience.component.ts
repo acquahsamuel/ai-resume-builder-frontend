@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { CommonModule, NgFor } from '@angular/common';
 import { CustomEditorComponent } from '../../../../../shared/components/custom-editor/custom-editor.component';
-import { NgZorroAntdModule } from '../../../../../shared/modules/ng-zero-ant.module';
+import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
 
 @Component({
   selector: 'app-experience',
@@ -18,7 +18,7 @@ import { NgZorroAntdModule } from '../../../../../shared/modules/ng-zero-ant.mod
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    NgZorroAntdModule,
+    PrimeNgModule,
     CustomEditorComponent,
   ],
 })
