@@ -1,39 +1,179 @@
-<div class="resume-builder-container">
-  <!-- Header/Navigation -->
-  <header class="builder-header">
-    <div class="header-content">
-      <div class="logo-section">
-        <h1 class="brand-title">Cleansheet</h1>
+<div class="app-layout">
+  <!-- Sidebar for Desktop -->
+  <aside class="sidebar" [class.sidebar-collapsed]="isCollapsed">
+    <div class="sidebar-header">
+      <div class="logo" (click)="toggleSidebar()">
+        <i class="pi pi-file-edit"></i>
+        @if (!isCollapsed) {
+          <span class="brand-name">Cleansheet</span>
+        }
       </div>
-      
-      <nav class="header-nav">
-        <a class="nav-link" [routerLink]="['/dashboard/getting-started']" routerLinkActive="active">
-          <i class="pi pi-file-edit"></i>
-          <span>Builder</span>
-        </a>
-        <a class="nav-link" [routerLink]="['/dashboard/ats-analysis']" routerLinkActive="active">
-          <i class="pi pi-shield"></i>
-          <span>ATS Analyzer</span>
-        </a>
-        <a class="nav-link" [routerLink]="['/dashboard/cv-rewrite']" routerLinkActive="active">
-          <i class="pi pi-pencil"></i>
-          <span>CV Rewrite</span>
-        </a>
-        <a class="nav-link" [routerLink]="['/dashboard/settings']" routerLinkActive="active">
-          <i class="pi pi-cog"></i>
-          <span>Settings</span>
-        </a>
-      </nav>
-      
-      <div class="header-actions">
-        <p-button icon="pi pi-power-off" severity="danger" [text]="true" (onClick)="logout()" 
-          label="Logout" size="small"></p-button>
-      </div>
+      @if (!isCollapsed) {
+        <button class="collapse-btn" (click)="isCollapsed = true">
+          <i class="pi pi-angle-left"></i>
+        </button>
+      }
     </div>
-  </header>
 
-  <!-- Main Content Area -->
-  <main class="builder-main">
-    <router-outlet></router-outlet>
-  </main>
+    <nav class="sidebar-nav">
+      <a 
+        class="nav-item" 
+        routerLink="/dashboard/getting-started" 
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}"
+      >
+        <i class="pi pi-file-edit"></i>
+        <span>Resumes</span>
+      </a>
+      
+      <a 
+        class="nav-item" 
+        routerLink="/dashboard/resume-builder/getting-started" 
+        routerLinkActive="active"
+      >
+        <i class="pi pi-briefcase"></i>
+        <span>Builder</span>
+      </a>
+      
+      <a 
+        class="nav-item" 
+        routerLink="/dashboard/resume-builder/settings" 
+        routerLinkActive="active"
+      >
+        <i class="pi pi-cog"></i>
+        <span>Settings</span>
+      </a>
+      
+      <a 
+        class="nav-item" 
+        routerLink="/dashboard/resume-builder/ats-analysis" 
+        routerLinkActive="active"
+      >
+        <i class="pi pi-shield"></i>
+        <span>ATS Analyzer</span>
+      </a>
+      
+      <a 
+        class="nav-item" 
+        routerLink="/dashboard/resume-builder/cv-rewrite" 
+        routerLinkActive="active"
+      >
+        <i class="pi pi-pencil"></i>
+        <span>CV Rewrite</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item logout-btn" (click)="logout()">
+        <i class="pi pi-power-off"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-wrapper">
+    <!-- Top Header -->
+    <header class="main-header">
+      <button class="menu-toggle" (click)="toggleMobileSidebar()">
+        <i class="pi pi-bars"></i>
+      </button>
+      
+      <div class="header-title">
+        <h1>@if (currentPageTitle) { {{ currentPageTitle }} }</h1>
+      </div>
+
+      <div class="header-actions">
+        <p-button 
+          icon="pi pi-user" 
+          [rounded]="true" 
+          [text]="true"
+          size="small"
+        ></p-button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <router-outlet (activate)="onRouteActivate($event)"></router-outlet>
+    </main>
+  </div>
+
+  <!-- Mobile Sidebar Overlay -->
+  <div 
+    class="mobile-sidebar-overlay" 
+    [class.active]="isMobileSidebarOpen"
+    (click)="closeMobileSidebar()"
+  ></div>
+
+  <!-- Mobile Sidebar -->
+  <aside class="mobile-sidebar" [class.active]="isMobileSidebarOpen">
+    <div class="mobile-sidebar-header">
+      <div class="logo">
+        <i class="pi pi-file-edit"></i>
+        <span class="brand-name">Cleansheet</span>
+      </div>
+      <button class="close-btn" (click)="closeMobileSidebar()">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+
+    <nav class="mobile-nav">
+      <a 
+        class="nav-item" 
+        routerLink="/dashboard/resume-builder" 
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}"
+        (click)="closeMobileSidebar()"
+      >
+        <i class="pi pi-file-edit"></i>
+        <span>Resumes</span>
+      </a>
+      
+      <a 
+        class="nav-item" 
+        routerLink="/dashboard/resume-builder/getting-started" 
+        routerLinkActive="active"
+        (click)="closeMobileSidebar()"
+      >
+        <i class="pi pi-briefcase"></i>
+        <span>Builder</span>
+      </a>
+      
+      <a 
+        class="nav-item" 
+        routerLink="/dashboard/settings" 
+        routerLinkActive="active"
+        (click)="closeMobileSidebar()"
+      >
+        <i class="pi pi-cog"></i>
+        <span>Settings</span>
+      </a>
+      
+      <a 
+        class="nav-item" 
+        routerLink="/dashboard/ats-analysis" 
+        routerLinkActive="active"
+        (click)="closeMobileSidebar()"
+      >
+        <i class="pi pi-shield"></i>
+        <span>ATS Analyzer</span>
+      </a>
+      
+      <a 
+        class="nav-item" 
+        routerLink="/dashboard/cv-rewrite" 
+        routerLinkActive="active"
+        (click)="closeMobileSidebar()"
+      >
+        <i class="pi pi-pencil"></i>
+        <span>CV Rewrite</span>
+      </a>
+      
+      <button class="nav-item logout-btn" (click)="logout()">
+        <i class="pi pi-power-off"></i>
+        <span>Logout</span>
+      </button>
+    </nav>
+  </aside>
 </div>

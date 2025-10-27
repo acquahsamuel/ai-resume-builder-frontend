@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { Router, RouterOutlet, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router'; 
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PrimeNgModule } from '../../shared/modules/primeNg.module';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-resume-builder',
@@ -12,37 +13,83 @@ import { PrimeNgModule } from '../../shared/modules/primeNg.module';
 })
 export class ResumeBuilderComponent implements OnInit {
   isLoading = false;
-  isCollapsed = true;
+  isCollapsed = false;
+  isMobileSidebarOpen = false;
+  isMobile = false;
+  currentPageTitle = 'Resumes';
 
-  constructor(private chr: ChangeDetectorRef, private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.checkScreenSize();
+    this.setupRouteListener();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.isMobile = window.innerWidth < 1024;
+      if (this.isMobile && this.isCollapsed) {
+        this.isCollapsed = false;
+      }
+    }
+  }
+
+  setupRouteListener() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.updatePageTitle(event.url);
+      });
+  }
+
+  updatePageTitle(url: string) {
+    if (url.includes('getting-started')) {
+      this.currentPageTitle = 'Get Started';
+    } else if (url.includes('settings')) {
+      this.currentPageTitle = 'Settings';
+    } else if (url.includes('ats-analysis')) {
+      this.currentPageTitle = 'ATS Analysis';
+    } else if (url.includes('cv-rewrite')) {
+      this.currentPageTitle = 'CV Rewrite';
+    } else if (url.includes('resume-builder')) {
+      this.currentPageTitle = 'Resume Builder';
+    } else {
+      this.currentPageTitle = 'Resumes';
+    }
+  }
+
+  onRouteActivate(component: any) {
+    // Handle component activation
+  }
+
+  toggleSidebar() {
+    if (!this.isMobile) {
+      this.isCollapsed = !this.isCollapsed;
+    }
+  }
+
+  toggleMobileSidebar() {
+    this.isMobileSidebarOpen = !this.isMobileSidebarOpen;
+  }
+
+  closeMobileSidebar() {
+    this.isMobileSidebarOpen = false;
+  }
 
   getInteractionPrompt() {}
 
   logout() {
+    this.closeMobileSidebar();
     this.router.navigate(['/auth/login']);
   }
 
-  OnInit() {}
-
   title = 'Cleansheet';
-
-  LINKS = [
-    {
-      path: '/builder/resume-builder',
-      icon: 'format_shapes',
-      title: 'Resumes',
-    },
-    {
-      path: '/builder/ats-analysis',
-      icon: 'attach_file',
-      title: 'ATS Analyzer',
-    },
-    {
-      path: '/builder/cv-rewrite',
-      icon: 'insert_drive_file',
-      title: 'CV Rewrite',
-    },
-  ];
 }
