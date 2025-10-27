@@ -1,27 +1,108 @@
 <div class="editor-container">
- 
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button 
+      type="button" 
+      (click)="format('bold')" 
+      title="Bold"
+    >
+      <b>B</b>
+    </button>
+    
+    <button 
+      type="button" 
+      (click)="format('underline')" 
+      title="Underline"
+    >
+      <u>U</u>
+    </button>
+    
+    <div class="toolbar-separator"></div>
+    
+    <button 
+      type="button" 
+      (click)="setAlignment('left')" 
+      title="Align Left"
+    >
+      <i class="pi pi-align-left"></i>
+    </button>
+    
+    <button 
+      type="button" 
+      (click)="setAlignment('center')" 
+      title="Align Center"
+    >
+      <i class="pi pi-align-center"></i>
+    </button>
+    
+    <button 
+      type="button" 
+      (click)="setAlignment('right')" 
+      title="Align Right"
+    >
+      <i class="pi pi-align-right"></i>
+    </button>
+    
+    <div class="toolbar-separator"></div>
+    
+    <button 
+      type="button" 
+      (click)="format('insertOrderedList')" 
+      title="Numbered List"
+    >
+      <i class="pi pi-list"></i>
+    </button>
+    
+    <button 
+      type="button" 
+      (click)="format('insertUnorderedList')" 
+      title="Bullet List"
+    >
+      <i class="pi pi-circle"></i>
+    </button>
+    
+    <div class="toolbar-separator"></div>
+    
+    <button 
+      type="button" 
+      (click)="format('formatBlock', '<h1>')" 
+      title="Heading 1"
+    >
+      H1
+    </button>
+    
+    <button 
+      type="button"
+      (click)="format('formatBlock', '<h2>')" 
+      title="Heading 2"
+    >
+      H2
+    </button>
+    
+    <button 
+      type="button" 
+      (click)="format('formatBlock', '<p>')" 
+      title="Paragraph"
+    >
+      P
+    </button>
+    
+    <div class="toolbar-spacer"></div>
+    
+    <p-button 
+      label="Generate with AI" 
+      size="small" 
+      (onClick)="generateText()" 
+      icon="pi pi-magic"
+      title="Generate content with AI"
+    ></p-button>
+  </div>
+
+  <!-- Editor Content -->
   <div
     class="editor"
     contenteditable="true"
     (input)="onContentChange()"
+    [attr.data-placeholder]="'Start typing...'"
   ></div>
-  <div class="toolbar">
-    <button (click)="format('bold')"> <i class="pi pi-bold"></i> </button>
-    <button (click)="format('underline')"> <i class="pi pi-underline"></i> </button>
-    <button (click)="setAlignment('left')"> <i class="pi pi-align-left"></i> </button>
-    <button (click)="setAlignment('center')"> <i class="pi pi-align-center"></i> </button>
-    <button (click)="setAlignment('right')"> <i class="pi pi-align-right"></i> </button>
-
-
-    <button (click)="format('insertOrderedList')"> <i class="pi pi-list"></i> </button>
-    <button (click)="format('insertUnorderedList')"> <i class="pi pi-list"></i> </button>
-
-
-    <button (click)="format('formatBlock', '<h1>')"> H1 </button>
-    <button (click)="format('formatBlock', '<h2>')"> H2 </button>
-    <button (click)="format('formatBlock', '<p>')">  P </button>
-
-  
-    <button pButton label="Generate with AI" [size]="'small'" (click)="generateText()" icon="pi pi-magic"></button>
-  </div>
 </div>
