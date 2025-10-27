@@ -1,37 +1,4 @@
 <div class="builder-page">
-  <!-- Page Header -->
-  <header class="page-header">
-    <div class="header-left">
-      <h1 class="page-title">Build Your Resume</h1>
-      <p class="page-desc">Fill in the sections below to create your professional resume</p>
-    </div>
-    <div class="header-actions">
-      <button 
-        class="toggle-btn" 
-        (click)="toggleTemplates()"
-        [class.active]="showTemplates"
-        pTooltip="Toggle Templates"
-      >
-        <i [class]="showTemplates ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
-        <span>Template</span>
-      </button>
-      <p-button 
-        icon="pi pi-download" 
-        label="Download PDF" 
-        severity="secondary" 
-        [outlined]="true"
-        size="small"
-      ></p-button>
-      <p-button 
-        icon="pi pi-print" 
-        label="Print" 
-        severity="secondary" 
-        [outlined]="true"
-        size="small"
-      ></p-button>
-    </div>
-  </header>
-
   <!-- Mobile Navigation Tabs -->
   <div class="mobile-nav-tabs">
     <button 

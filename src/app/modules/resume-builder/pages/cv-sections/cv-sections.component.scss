@@ -6,76 +6,6 @@
   overflow: hidden;
 }
 
-// Page Header
-.page-header {
-  flex-shrink: 0;
-  padding: 1.5rem 2rem;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  .header-left {
-    flex: 1;
-
-    .page-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: #111827;
-      margin: 0 0 0.25rem 0;
-      letter-spacing: -0.5px;
-    }
-
-    .page-desc {
-      font-size: 14px;
-      color: #6b7280;
-      margin: 0;
-    }
-  }
-
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-
-    .toggle-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.625rem 1.25rem;
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 14px;
-      font-weight: 500;
-      color: #374151;
-
-      i {
-        font-size: 16px;
-      }
-
-      &:hover {
-        background: #e5e7eb;
-        border-color: #d1d5db;
-      }
-
-      &.active {
-        background: #667eea;
-        border-color: #667eea;
-        color: white;
-
-        &:hover {
-          background: #5a67d8;
-          border-color: #5a67d8;
-        }
-      }
-    }
-  }
-}
-
 // Content Grid
 .content-grid {
   flex: 1;
@@ -190,7 +120,7 @@
     }
 
     .accordion-body {
-      padding: 1.25rem;
+      padding: .5rem 0;
       background: #f9fafb;
       border-radius: 8px;
       margin-top: 0.5rem;
@@ -477,7 +407,7 @@
 
 @media (max-width: 768px) {
   .builder-page {
-    height: calc(100vh - 60px);
+    height: calc(100vh - 120px);
   }
 
   .page-header {

@@ -196,6 +196,43 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+
+    .toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      height: 2.75rem;
+      box-sizing: border-box;
+
+      i {
+        font-size: 16px;
+      }
+
+      &:hover {
+        background: #e5e7eb;
+        border-color: #d1d5db;
+      }
+
+      &.active {
+        background: #667eea;
+        border-color: #667eea;
+        color: white;
+
+        &:hover {
+          background: #5a67d8;
+          border-color: #5a67d8;
+        }
+      }
+    }
   }
 }
 
@@ -209,35 +246,20 @@
 // Mobile Sidebar Overlay
 .mobile-sidebar-overlay {
   display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 998;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-
-  &.active {
-    opacity: 1;
-    visibility: visible;
-  }
 }
 
 // Mobile Sidebar
 .mobile-sidebar {
-  display: none;
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 0;
-  left: -300px;
+  left: -100%;
   bottom: 0;
   width: 280px;
   background: white;
-  z-index: 999;
+  z-index: 1000;
   transition: left 0.3s ease;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 
   &.active {
     left: 0;
@@ -289,9 +311,62 @@
   }
 
   .mobile-nav {
+    flex: 1;
     padding: 1rem 0;
     overflow-y: auto;
-    height: calc(100vh - 80px);
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1.5rem;
+      color: #6b7280;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-size: 15px;
+      font-weight: 500;
+      position: relative;
+      border-left: 3px solid transparent;
+
+      i {
+        font-size: 20px;
+        width: 24px;
+        text-align: center;
+      }
+
+      &:hover {
+        background: #f9fafb;
+        color: #667eea;
+      }
+
+      &.active {
+        background: #f0f7ff;
+        color: #667eea;
+        border-left-color: #667eea;
+
+        i {
+          color: #667eea;
+        }
+      }
+    }
+
+    .logout-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      color: #ef4444;
+      cursor: pointer;
+
+      &:hover {
+        background: #fef2f2;
+      }
+
+      &.active {
+        background: #fef2f2;
+        border-left-color: #ef4444;
+      }
+    }
   }
 }
 
@@ -305,11 +380,6 @@
     .menu-toggle {
       display: block;
     }
-  }
-
-  .mobile-sidebar-overlay,
-  .mobile-sidebar {
-    display: block;
   }
 }
 

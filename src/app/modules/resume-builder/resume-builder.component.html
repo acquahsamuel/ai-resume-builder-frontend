@@ -84,6 +84,30 @@
       </div>
 
       <div class="header-actions">
+        @if (showHeaderActions) {
+          <button 
+            class="toggle-btn" 
+            (click)="toggleTemplates()"
+            [class.active]="showTemplates"
+            pTooltip="Toggle Templates"
+          >
+            <i [class]="showTemplates ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+            <span>Template</span>
+          </button>
+          <p-button 
+            icon="pi pi-download" 
+            label="Download PDF" 
+            severity="secondary" 
+            [outlined]="true"
+          ></p-button>
+          <p-button 
+            icon="pi pi-print" 
+            label="Print" 
+            severity="secondary" 
+            [outlined]="true"
+          ></p-button>
+        }
+        
         <p-button 
           icon="pi pi-user" 
           [rounded]="true" 
