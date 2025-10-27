@@ -1,32 +1,81 @@
-<section>
-	<div class="app-container">
-		<section class="flex">
-			<div>
-				<p-card [header]="'Create new resume'" [subheader]="'Start a new resume'"
-					styleClass="card-hover">
-					<ng-template pTemplate="header">
-						<i class="pi pi-plus-circle" style="font-size: 2.5rem"></i>
-					</ng-template>
-				</p-card>
-			</div>
+<div class="started-page">
+  <div class="page-header">
+    <h1 class="page-title">Resumes</h1>
+    <p class="page-description">Manage and organize your resumes</p>
+  </div>
 
-			<div>
-				<p-card [header]="'Import Resume'" [subheader]="'Import already existing templates'"
-					styleClass="card-hover">
-					<ng-template pTemplate="header">
-						<i class="pi pi-upload" style="font-size: 2.5rem"></i>
-					</ng-template>
-				</p-card>
-			</div>
+  <div class="actions-section">
+    <!-- Create New Resume -->
+    <div class="action-card" (click)="createNewResume()">
+      <div class="action-icon">
+        <i class="pi pi-plus"></i>
+      </div>
+      <div class="action-content">
+        <h3 class="action-title">Create a new resume</h3>
+        <p class="action-description">Start building from scratch</p>
+      </div>
+      <div class="action-arrow">
+        <i class="pi pi-arrow-right"></i>
+      </div>
+    </div>
 
-			<div class="flex justify-center items-center">
-				<p-card [header]="'Europe Street beat'" [subheader]="'www.instagram.com'"
-					styleClass="card-hover">
-					<ng-template pTemplate="header">
-						<i class="pi pi-image" style="font-size: 2.5rem"></i>
-					</ng-template>
-				</p-card>
-			</div>
-		</section>
-	</div>
-</section>
+    <!-- Import Resume -->
+    <div class="action-card" (click)="importResume()">
+      <div class="action-icon">
+        <i class="pi pi-download"></i>
+      </div>
+      <div class="action-content">
+        <h3 class="action-title">Import an existing resume</h3>
+        <p class="action-description">LinkedIn, JSON Resume, etc.</p>
+      </div>
+      <div class="action-arrow">
+        <i class="pi pi-arrow-right"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Existing Resumes -->
+  @if (existingResumes.length > 0) {
+  <div class="resumes-section">
+    <h2 class="section-title">Your Resumes</h2>
+    
+    <div class="resumes-list">
+      @for (resume of existingResumes; track resume.id) {
+      <div class="resume-card">
+        <div class="resume-icon">
+          <i class="pi pi-file"></i>
+        </div>
+        <div class="resume-content">
+          <h3 class="resume-title">{{ resume.name }}</h3>
+          <p class="resume-meta">
+            <i class="pi pi-clock"></i>
+            Last updated {{ resume.lastUpdated }}
+          </p>
+        </div>
+        <div class="resume-actions">
+          <p-button
+            icon="pi pi-ellipsis-v"
+            [rounded]="true"
+            [text]="true"
+            [outlined]="true"
+            size="small"
+            type="button"
+          ></p-button>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- Empty State -->
+  @if (existingResumes.length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon">
+      <i class="pi pi-file-edit"></i>
+    </div>
+    <h3 class="empty-title">No resumes yet</h3>
+    <p class="empty-description">Create your first resume to get started</p>
+  </div>
+  }
+</div>

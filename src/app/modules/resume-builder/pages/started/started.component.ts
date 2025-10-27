@@ -1,46 +1,46 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
 
+interface Resume {
+  id: string;
+  name: string;
+  lastUpdated: string;
+}
 
 @Component({
   selector: 'app-started',
   templateUrl: './started.component.html',
   styleUrls: ['./started.component.scss'],
   standalone: true,
-  imports: [PrimeNgModule],
+  imports: [CommonModule, PrimeNgModule],
 })
 export class StartedComponent implements OnInit {
-
-  isLoading = false;
-  username = "Samuel";
-  userProfile = "./assets/images/placeholder.png";
-
-
-
-  getInteractionPrompt() { }
-
-  logout() { }
-
-  OnInit() { }
-
-  title = "Cleansheet";
-
-  LINKS = [
-    { path: "", icon: "format_shapes", title: "Resumes" },
-    { path: "/account/ats-analysis", icon: "attach_file", title: "ATS" },
+  existingResumes: Resume[] = [
     {
-      path: "/account/cv-rewrite",
-      icon: "insert_drive_file",
-      title: "CV Rewrite",
+      id: '1',
+      name: 'Software Engineer CV',
+      lastUpdated: '4 hours ago'
     },
-    { path: "/account/settings", icon: "settings", title: "Settings" },
+    {
+      id: '2',
+      name: 'Product Manager Resume',
+      lastUpdated: '2 days ago'
+    }
   ];
 
+  constructor(private router: Router) {}
 
+  ngOnInit(): void {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  createNewResume() {
+    console.log('Create new resume');
+    this.router.navigate(['/dashboard/resume-builder/cv-sections']);
   }
 
+  importResume() {
+    console.log('Import resume');
+    // TODO: Implement import functionality
+  }
 }

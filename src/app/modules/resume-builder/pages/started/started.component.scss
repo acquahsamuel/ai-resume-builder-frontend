@@ -1,0 +1,248 @@
+.started-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  min-height: calc(100vh - 80px);
+}
+
+.page-header {
+  margin-bottom: 3rem;
+
+  .page-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .page-description {
+    font-size: 16px;
+    color: #6b7280;
+    margin: 0;
+  }
+}
+
+// Action Cards Section
+.actions-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.action-card {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  &:hover {
+    border-color: #667eea;
+    background: #f9fafb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    .action-icon {
+      background: #667eea;
+      color: white;
+    }
+
+    .action-arrow {
+      color: #667eea;
+      transform: translateX(4px);
+    }
+  }
+
+  .action-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #667eea;
+    font-size: 24px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .action-content {
+    flex: 1;
+
+    .action-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin: 0 0 0.25rem 0;
+    }
+
+    .action-description {
+      font-size: 14px;
+      color: #6b7280;
+      margin: 0;
+    }
+  }
+
+  .action-arrow {
+    font-size: 20px;
+    color: #9ca3af;
+    transition: all 0.3s ease;
+  }
+}
+
+// Resumes Section
+.resumes-section {
+  .section-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 1.5rem 0;
+  }
+}
+
+.resumes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.resume-card {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #667eea;
+    background: #f9fafb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .resume-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #667eea;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .resume-content {
+    flex: 1;
+
+    .resume-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin: 0 0 0.25rem 0;
+    }
+
+    .resume-meta {
+      font-size: 14px;
+      color: #6b7280;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      i {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .resume-actions {
+    flex-shrink: 0;
+  }
+}
+
+// Empty State
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+
+  .empty-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-size: 32px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .empty-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .empty-description {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .started-page {
+    padding: 2rem 1rem;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+
+    .page-title {
+      font-size: 28px;
+    }
+  }
+
+  .actions-section {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .action-card {
+    padding: 1.5rem;
+    gap: 1rem;
+
+    .action-icon {
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+    }
+
+    .action-title {
+      font-size: 16px;
+    }
+  }
+
+  .resume-card {
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+}
+
