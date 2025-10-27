@@ -1,39 +1,65 @@
 <div class="form-section">
   <form [formGroup]="languagesForm">
     <div formArrayName="skillsRecords">
-      <div *ngFor="let skills of skillsRecord.controls; let i = index" [formGroupName]="i" class="education-record">
+      <div
+        *ngFor="let skills of skillsRecord.controls; let i = index"
+        [formGroupName]="i"
+        class="education-record"
+      >
         <h3></h3>
 
-        <div class="form-section flex flex-wrap  -mx-2">
-          <div class="form-group w-full px-2 py-2 sm:w-1/2">
-            <label for="name"> Language </label>
-            <input id="name" type="text" pInputText formControlName="name" class="w-full" />
+        <div class="form-section">
+          <div class="form-group">
+            <label for="language-{{i}}">Language</label>
+            <input
+              id="language-{{i}}"
+              type="text"
+              pInputText
+              formControlName="name"
+              placeholder="e.g., English, Spanish"
+            />
           </div>
 
-          <div class="example-input px-2 py-2 sm:w-1/2">
-            <label for="name"> Proficiency </label>
-            <p-dropdown class="w-full" formControlName="proficiency" [showClear]="true" placeholder="Select Proficiency"
+          <div class="example-input">
+            <label for="proficiency-{{i}}">Proficiency</label>
+            <p-dropdown
+              id="proficiency-{{i}}"
+              formControlName="proficiency"
+              [showClear]="true"
+              placeholder="Select proficiency level"
               [options]="[
-                  {label: 'Beginner', value: 'Beginner'},
-                  {label: 'Intermediate', value: 'Intermediate'},
-                  {label: 'Advanced', value: 'Advanced'},
-                  {label: 'Expert', value: 'Expert'},
-                  {label: 'Master', value: 'Master'}
-                ]" optionLabel="label" optionValue="value"></p-dropdown>
+                { label: 'Beginner', value: 'Beginner' },
+                { label: 'Intermediate', value: 'Intermediate' },
+                { label: 'Advanced', value: 'Advanced' },
+                { label: 'Expert', value: 'Expert' },
+                { label: 'Master', value: 'Master' }
+              ]"
+              optionLabel="label"
+              optionValue="value"
+            ></p-dropdown>
           </div>
         </div>
 
-
-
-        <div class="flex justify-end">
-
-          <p-button (onClick)="removeRecord(i)" severity="danger" [rounded]="true" icon="pi pi-times"></p-button>
-
+        <div class="form-actions">
+          <p-button
+            (onClick)="removeRecord(i)"
+            severity="danger"
+            [outlined]="true"
+            icon="pi pi-trash"
+            label="Remove"
+          ></p-button>
         </div>
       </div>
     </div>
 
-    <p-button (onClick)="addRecord()" label="Add Languages" class="btn-create" type="button">
-    </p-button>
+    <p-button
+      (onClick)="addRecord()"
+      label="+ Add Language"
+      icon="pi pi-plus"
+      class="btn-create"
+      type="button"
+      severity="secondary"
+      [outlined]="true"
+    ></p-button>
   </form>
 </div>

@@ -77,7 +77,60 @@ button {
   background: #3d3c3c;
 }
 
-// .custom-divider {
-//   border: 1px solid rgb(230, 228, 228);
-//   border-radius: 0px;
-// }
+/* Global PrimeNG Input Styles */
+.p-inputtext {
+  width: 100%;
+  border: 1.5px solid #e0e0e0;
+  // border-radius: 8px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  padding: 0.4rem !important;
+  background: #ffffff;
+
+  &:enabled:focus {
+    border-color: #0d6efd;
+    outline: none;
+  }
+
+  &:hover:enabled {
+    border-color: #adb5bd;
+  }
+}
+
+/* Global Button Styles */
+.p-button {
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  padding: 0.3rem 1rem !important;
+}
+
+/* Global Form Labels */
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+}
+
+/* Global Add/Remove Button Styles */
+.btn-add {
+  width: 100%;
+  margin-top: 1rem;
+  
+  ::ng-deep .p-button {
+    width: 100%;
+    border-radius: 8px;
+  }
+}
+
+.btn-remove {
+  margin-top: 0.5rem;
+  
+  ::ng-deep .p-button {
+    min-width: auto;
+  }
+}
+

@@ -48,13 +48,15 @@
           <p-slider class="w-full"></p-slider>
         </div>
 
-        <div class="flex justify-end">
+        <div class="form-actions">
           <p-button
-          (onClick)="removeRecord(i)"
-          severity="danger"
-          [rounded]="true"
-          label="Delete"
-        ></p-button>
+            (onClick)="removeRecord(i)"
+            severity="danger"
+            [outlined]="true"
+            icon="pi pi-trash"
+            label="Remove"
+            type="button"
+          ></p-button>
         </div>
 
       </p-accordionTab>
@@ -64,13 +66,14 @@
     <!-- </div> -->
 
 
-    <section class="py-3">
     <p-button
       (onClick)="addRecord()"
-      label="Add Skills"
-      class="btn-create"
+      label="+ Add Skill"
+      icon="pi pi-plus"
+      class="btn-add"
+      severity="secondary"
+      [outlined]="true"
       type="button"
     ></p-button>
-    </section>
   </form>
 </div>

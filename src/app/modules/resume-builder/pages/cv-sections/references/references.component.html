@@ -68,15 +68,15 @@
             >
           </div>
 
-          <div class="flex justify-end">
-           
+          <div class="form-actions">
             <p-button
-            (onClick)="removeRecord(i)"
-            severity="danger"
-            [rounded]="true"
-            icon="pi pi-times"
-          ></p-button>
-
+              (onClick)="removeRecord(i)"
+              severity="danger"
+              [outlined]="true"
+              icon="pi pi-trash"
+              label="Remove"
+              type="button"
+            ></p-button>
           </div>
         </div>
     
@@ -85,14 +85,14 @@
     </div>
 
 
-    <section class="py-3">
     <p-button
-      class="btn-create"
+      class="btn-add"
       (onClick)="addRecord()"
-      size="small"
       type="button"
-      label="Add Reference"
+      label="+ Add Reference"
+      icon="pi pi-plus"
+      severity="secondary"
+      [outlined]="true"
     ></p-button>
-    </section>
   </form>
 </div>

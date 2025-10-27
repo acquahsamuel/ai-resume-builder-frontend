@@ -1,120 +1,71 @@
-<div class="settings-page">
-  <div class="page-header">
-    <h1 class="page-title">Account Settings</h1>
-    <p class="page-subtitle">Manage your account information and preferences</p>
-  </div>
-
-  <div class="settings-content">
-    <!-- Profile Section -->
-    <div class="settings-section">
-      <div class="section-header">
-        <div class="section-icon">
-          <i class="pi pi-user"></i>
-        </div>
-        <div>
-          <h2 class="section-title">Profile Information</h2>
-          <p class="section-description">Update your personal details</p>
-        </div>
-      </div>
-
-      <div class="profile-card">
-        <div class="profile-image-wrapper">
-          <div *ngIf="imagePreview; else noImage" class="profile-image">
-            <img [src]="imagePreview" alt="Profile" />
+<div class="settings-container">
+  <div class="settings-card">
+    <!-- Profile Picture Section -->
+    <div class="profile-section">
+      <div class="profile-image">
+        @if (imagePreview) {
+          <img [src]="imagePreview" alt="Profile" />
+        } @else {
+          <div class="placeholder">
+            <i class="pi pi-user text-5xl"></i>
           </div>
-          <ng-template #noImage>
-            <div class="profile-placeholder">
-              <i class="pi pi-user text-4xl text-gray-400"></i>
-            </div>
-          </ng-template>
-          
-          <label for="profile-upload" class="edit-photo-btn">
-            <i class="pi pi-camera"></i>
-          </label>
-          <input
-            id="profile-upload"
-            (change)="onFileChange($event)"
-            class="file-input"
-            type="file"
-            accept="image/*"
-          />
-        </div>
-
-        <form [formGroup]="headerInfoForm" (ngSubmit)="submitForm()" class="settings-form">
-          <div class="form-fields">
-            <div class="field-row">
-              <div class="field">
-                <label for="firstname">
-                  <i class="pi pi-id-card"></i>
-                  <span>First Name</span>
-                </label>
-                <input pInputText id="firstname" formControlName="firstname" />
-              </div>
-
-              <div class="field">
-                <label for="surname">
-                  <i class="pi pi-id-card"></i>
-                  <span>Last Name</span>
-                </label>
-                <input pInputText id="surname" formControlName="surname" />
-              </div>
-            </div>
-
-            <div class="field-row">
-              <div class="field">
-                <label for="email">
-                  <i class="pi pi-envelope"></i>
-                  <span>Email Address</span>
-                </label>
-                <input pInputText id="email" type="email" formControlName="email" />
-              </div>
-
-              <div class="field">
-                <label for="phoneNumber">
-                  <i class="pi pi-phone"></i>
-                  <span>Phone Number</span>
-                </label>
-                <input pInputText id="phoneNumber" formControlName="phoneNumber" />
-              </div>
-            </div>
-
-            <div class="field-row">
-              <div class="field">
-                <label for="city">
-                  <i class="pi pi-map-marker"></i>
-                  <span>City</span>
-                </label>
-                <input pInputText id="city" formControlName="city" />
-              </div>
-
-              <div class="field">
-                <label for="country">
-                  <i class="pi pi-globe"></i>
-                  <span>Country</span>
-                </label>
-                <input pInputText id="country" formControlName="country" />
-              </div>
-            </div>
-
-            <div class="field-row">
-              <div class="field field-full">
-                <label for="postalCode">
-                  <i class="pi pi-map"></i>
-                  <span>Postal Code</span>
-                </label>
-                <input pInputText id="postalCode" formControlName="postalCode" />
-              </div>
-            </div>
-
-            <div class="form-footer">
-              <p-button label="Cancel" severity="secondary" [outlined]="true" [rounded]="true"></p-button>
-              <p-button label="Save Changes" [rounded]="true" type="submit"></p-button>
-            </div>
-          </div>
-        </form>
+        }
       </div>
+      <label for="profile-upload" class="upload-btn">
+        <i class="pi pi-camera"></i>
+        Change Photo
+      </label>
+      <input id="profile-upload" type="file" accept="image/*" (change)="onFileChange($event)" hidden />
     </div>
 
-   
+    <!-- Form Section -->
+    <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="form-field">
+          <label>First Name</label>
+          <input pInputText formControlName="firstname" placeholder="John" />
+        </div>
+
+        <div class="form-field">
+          <label>Last Name</label>
+          <input pInputText formControlName="surname" placeholder="Doe" />
+        </div>
+
+        <div class="form-field">
+          <label>Email</label>
+          <input pInputText type="email" formControlName="email" placeholder="john.doe@example.com" />
+        </div>
+
+        <div class="form-field">
+          <label>Phone</label>
+          <input pInputText formControlName="phone" placeholder="+1 234 567 8900" />
+        </div>
+
+        <div class="form-field">
+          <label>City</label>
+          <input pInputText formControlName="city" placeholder="New York" />
+        </div>
+
+        <div class="form-field">
+          <label>Country</label>
+          <input pInputText formControlName="country" placeholder="United States" />
+        </div>
+
+        <div class="form-field">
+          <label>Postal Code</label>
+          <input pInputText formControlName="postalCode" placeholder="10001" />
+        </div>
+
+        <div class="form-field">
+          <label>Date of Birth</label>
+          <p-calendar formControlName="dateOfBirth" dateFormat="mm/dd/yy" placeholder="Select date"></p-calendar>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <p-button label="Cancel" severity="secondary" [outlined]="true" type="button"></p-button>
+        <p-button label="Save Changes" type="submit"></p-button>
+      </div>
+    </form>
   </div>
 </div>

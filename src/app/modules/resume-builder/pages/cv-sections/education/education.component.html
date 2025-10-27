@@ -105,12 +105,14 @@
             ></app-custom-editor>
           </div>
 
-          <div class="flex justify-end">
+          <div class="form-actions">
             <p-button
               (onClick)="removeEducationRecord(i)"
               severity="danger"
-              [rounded]="true"
-              label="Delete"
+              [outlined]="true"
+              icon="pi pi-trash"
+              label="Remove"
+              type="button"
             ></p-button>
           </div>
         </section>
@@ -120,11 +122,12 @@
 </form>
 
 
-<section class="py-3">
-  <p-button
-  class="btn-create"
+<p-button
+  class="btn-add"
   (onClick)="addEducationRecord()"
   type="button"
-  label="Add Education"
+  label="+ Add Education"
+  icon="pi pi-plus"
+  severity="secondary"
+  [outlined]="true"
 ></p-button>
-</section>

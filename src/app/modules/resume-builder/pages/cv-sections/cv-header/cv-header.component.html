@@ -76,50 +76,69 @@
       </div>
     </div>
 
-    <!-- Dynamic Fields -->
-    <div class="form-section py-4">
-      <div class="flex flex-wrap -mx-2 gap-4">
+    <!-- Social Fields -->
+    <div class="social-fields-section">
+      <h3 class="section-title">Social Links</h3>
+      <div class="social-fields">
         <div
           *ngFor="let field of fields.controls; let i = index"
           [formGroup]="field"
-          class="w-full px-2 sm:w-1/2"
+          class="social-field-item"
         >
-          <div class="flex gap-2">
-            <div class="flex-1">
-              <label [for]="'dynamic-' + i" class="block mb-2 font-medium text-gray-700">
-                {{ field.get("label")?.value }}
-              </label>
-              <input
-                type="text"
-                pInputText
-                formControlName="value"
-                [id]="'dynamic-' + i"
-                class="w-full"
-                [placeholder]="field.get('label')?.value"
-              />
-            </div>
+          <label [for]="'social-' + i">
+            <i [class]="getFieldIcon(field.get('label')?.value)"></i>
+            {{ field.get("label")?.value }}
+          </label>
+          <div class="social-input-group">
+            <input
+              type="text"
+              pInputText
+              formControlName="value"
+              [id]="'social-' + i"
+              [placeholder]="'Enter ' + field.get('label')?.value + ' URL'"
+              class="social-input"
+            />
             <p-button
               (onClick)="removeField(i)"
               severity="danger"
-              [rounded]="true"
-              icon="pi pi-times"
               [outlined]="true"
+              icon="pi pi-trash"
+              [text]="true"
+              [rounded]="true"
+              type="button"
             ></p-button>
           </div>
         </div>
       </div>
 
-      <div class="flex flex-wrap gap-2 mt-4">
+      <div class="social-buttons">
         <p-button
           *ngFor="let fieldType of fieldTypes"
           (onClick)="addField(fieldType)"
           severity="secondary"
+          [outlined]="true"
           [rounded]="true"
           [label]="fieldType"
           icon="pi pi-plus"
-          [outlined]="true"
+          type="button"
         ></p-button>
       </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions-footer">
+      <p-button
+        label="Cancel"
+        severity="secondary"
+        [outlined]="true"
+        icon="pi pi-times"
+        type="button"
+      ></p-button>
+      <p-button
+        label="Save"
+        type="submit"
+        icon="pi pi-check"
+      ></p-button>
     </div>
   </div>
 </form>

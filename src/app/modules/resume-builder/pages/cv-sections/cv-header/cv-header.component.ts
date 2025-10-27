@@ -114,4 +114,31 @@ export class CvHeaderComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+
+  getFieldIcon(fieldName: string): string {
+    const iconMap: { [key: string]: string } = {
+      'LinkedIn': 'pi pi-linkedin',
+      'Twitter/X': 'pi pi-twitter',
+      'GitHub': 'pi pi-github',
+      'GitLab': 'pi pi-gitlab',
+      'Facebook': 'pi pi-facebook',
+      'Instagram': 'pi pi-instagram',
+      'YouTube': 'pi pi-youtube',
+      'WhatsApp': 'pi pi-whatsapp',
+      'Telegram': 'pi pi-telegram',
+      'Skype': 'pi pi-skype',
+      'Website': 'pi pi-globe',
+      'Discord': 'pi pi-discord',
+      'TikTok': 'pi pi-tiktok',
+      'Dribbble': 'pi pi-dribbble',
+      'Behance': 'pi pi-behance',
+      'Stack Overflow': 'pi pi-stack-overflow',
+      'Medium': 'pi pi-medium',
+      'Quora': 'pi pi-quora',
+      'PayPal': 'pi pi-paypal',
+      'Signal': 'pi pi-signal',
+      'Product Hunt': 'pi pi-product-hunt'
+    };
+    return iconMap[fieldName] || 'pi pi-link';
+  }
 }

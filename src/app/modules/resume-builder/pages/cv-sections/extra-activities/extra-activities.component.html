@@ -41,18 +41,27 @@
           </div>
         </div>
 
-        <div class="flex justify-end">
+        <div class="form-actions">
           <p-button
             (onClick)="removeEducationRecord(i)"
             severity="danger"
-            [rounded]="true"
-            label="Delete"
+            [outlined]="true"
+            icon="pi pi-trash"
+            label="Remove"
+            type="button"
           ></p-button>
         </div>
       </div>
     </div>
 
-    <p-button (onClick)="addEducationRecord()" label="Add Skills" class="btn-create" type="button">
-    </p-button>
+    <p-button
+      (onClick)="addEducationRecord()"
+      label="+ Add Activity"
+      icon="pi pi-plus"
+      class="btn-add"
+      severity="secondary"
+      [outlined]="true"
+      type="button"
+    ></p-button>
   </form>
 </div>

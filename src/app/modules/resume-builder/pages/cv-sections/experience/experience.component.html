@@ -121,8 +121,10 @@
             <p-button
               (onClick)="removeField(i)"
               severity="danger"
-              [rounded]="true"
-              label="Delete"
+              [outlined]="true"
+              icon="pi pi-trash"
+              label="Remove"
+              type="button"
             ></p-button>
           </div>
         </div>
@@ -134,13 +136,14 @@
     </div>
      
 
-    <section class="py-3">
-    <p-button 
-      class="btn-create"
+    <p-button
+      class="btn-add"
       (onClick)="addEducationRecord()"
       type="button"
-      label="Add Experience"
+      label="+ Add Experience"
+      icon="pi pi-plus"
+      severity="secondary"
+      [outlined]="true"
     ></p-button>
-    </section>
   </form>
 </div>

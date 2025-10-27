@@ -1,0 +1,73 @@
+.form-section {
+  .education-record {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 1rem;
+
+    .form-section {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+
+      .form-group,
+      .example-input {
+        flex: 1;
+        min-width: 0;
+      }
+
+      label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      ::ng-deep {
+        .p-inputtext,
+        .p-dropdown {
+          width: 100%;
+        }
+
+        .p-dropdown {
+          .p-dropdown-trigger {
+            width: 2.5rem;
+          }
+        }
+      }
+    }
+
+    .flex.justify-end {
+      display: flex;
+      justify-content: flex-end;
+      
+      p-button {
+        width: auto;
+      }
+    }
+  }
+
+  .btn-create {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-section {
+    .education-record {
+      .form-section {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .form-group,
+      .example-input {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+

@@ -1,274 +1,131 @@
-.settings-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 24px;
+.settings-container {
   min-height: calc(100vh - 80px);
-}
-
-.page-header {
-  margin-bottom: 40px;
-  text-align: center;
-
-  .page-title {
-    font-size: 36px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0 0 12px 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .page-subtitle {
-    font-size: 16px;
-    color: #6b7280;
-    margin: 0;
-  }
-}
-
-.settings-content {
   display: flex;
-  flex-direction: column;
-  gap: 32px;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #f8f9fa;
 }
 
-// Profile Section
-.settings-section {
+.settings-card {
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 20px;
-  padding: 32px;
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
+  border-radius: 16px;
+  border: 1px solid #e9ecef;
+  max-width: 700px;
+  width: 100%;
+  padding: 2rem;
 }
 
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  border-bottom: 2px solid #f3f4f6;
-
-  .section-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-  }
-
-  .section-title {
-    font-size: 22px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin: 0 0 4px 0;
-  }
-
-  .section-description {
-    font-size: 14px;
-    color: #6b7280;
-    margin: 0;
-  }
-}
-
-// Profile Image
-.profile-card {
+.profile-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
-}
-
-.profile-image-wrapper {
-  position: relative;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e9ecef;
 
   .profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #e9ecef;
+
     img {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border: 4px solid #f3f4f6;
-      transition: all 0.3s ease;
+    }
+
+    .placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      color: #9ca3af;
     }
   }
 
-  .profile-placeholder {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: #f3f4f6;
-    display: flex;
+  .upload-btn {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    border: 4px solid #f3f4f6;
-  }
-
-  .edit-photo-btn {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
     background: #667eea;
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
 
     &:hover {
       background: #5568d3;
-      transform: scale(1.1);
     }
 
     i {
-      font-size: 20px;
-    }
-
-    .file-input {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-  }
-}
-
-// Form Styles
-.settings-form {
-  width: 100%;
-  max-width: 700px;
-}
-
-.form-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.field-row {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.field {
-  label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: #374151;
-    font-size: 14px;
-
-    i {
-      color: #667eea;
       font-size: 16px;
     }
   }
-
-
-
-  &.field-full {
-    grid-column: 1 / -1;
-  }
 }
 
-
-// Settings Grid
-.settings-grid {
+.form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.settings-card-small {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 24px;
-  transition: all 0.3s ease;
+.form-field {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0.5rem;
 
-  &:hover {
-    border-color: #667eea;
-    transform: translateY(-4px);
-  }
-
-  .card-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 22px;
-  }
-
-  .card-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin: 0;
-  }
-
-  .card-description {
+  label {
     font-size: 14px;
-    color: #6b7280;
-    margin: 0;
-    line-height: 1.5;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  ::ng-deep {
+    .p-inputtext,
+    .p-calendar {
+      width: 100%;
+    }
   }
 }
 
-// Responsive
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e9ecef;
+}
+
 @media (max-width: 768px) {
-  .settings-page {
-    padding: 24px 16px;
+  .settings-container {
+    padding: 1rem;
   }
 
-  .page-header {
-    .page-title {
-      font-size: 28px;
-    }
+  .settings-card {
+    padding: 1.5rem;
   }
 
-  .settings-section {
-    padding: 24px;
-  }
-
-  .field-row {
+  .form-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 1rem;
   }
 
-  .form-footer {
-    flex-direction: column-reverse;
+  .form-actions {
+    flex-direction: column;
 
     p-button {
       width: 100%;
     }
-  }
-
-  .settings-grid {
-    grid-template-columns: 1fr;
   }
 }
 
