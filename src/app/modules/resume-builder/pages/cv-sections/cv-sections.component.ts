@@ -24,7 +24,7 @@ import { SummaryComponent } from '../../pages/cv-sections/summary/summary.compon
 import { CvHeaderComponent } from '../../pages/cv-sections/cv-header/cv-header.component';
 import { ExperienceComponent } from '../../pages/cv-sections/experience/experience.component';
 import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
-import { TemplateSunshineComponent } from '../../../../shared/resume-templates/template-sunshine/template-sunshine.component';
+// import { TemplateSunshineComponent } from '../../../templates/template-sunshine/template-sunshine.component';
 
 @Component({
   selector: 'app-builder-ui',
@@ -47,8 +47,7 @@ import { TemplateSunshineComponent } from '../../../../shared/resume-templates/t
     SummaryComponent,
     SkillsComponent,
     ExtraActivitiesComponent,
-
-    TemplateSunshineComponent,
+    // TemplateSunshineComponent,
   ],
 })
 export class CvSectionsComponent implements OnInit {

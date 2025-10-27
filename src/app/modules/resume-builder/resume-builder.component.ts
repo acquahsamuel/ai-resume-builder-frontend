@@ -1,13 +1,14 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PrimeNgModule } from '../../shared/modules/primeNg.module';
 
 @Component({
   selector: 'app-resume-builder',
   templateUrl: './resume-builder.component.html',
   styleUrls: ['./resume-builder.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, PrimeNgModule],
 })
 export class ResumeBuilderComponent implements OnInit {
   isLoading = false;

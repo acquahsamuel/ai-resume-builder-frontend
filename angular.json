@@ -37,10 +37,10 @@
               }
             ],
             "styles": [
-              "src/styles/theme.less",
               "src/styles.scss",
-              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
-              "node_modules/ng-zorro-antd/ng-zorro-antd.css"
+              "node_modules/primeng/resources/themes/aura-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",

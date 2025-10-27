@@ -1,28 +1,80 @@
 <section class="app-container">
-    <section class="builder">
-      <p-accordion>
-        @for (panel of panels; track panel) {
-        <p-accordionTab
-          [header]="panel.name"
-          [selected]="panel.active"
-          [ngStyle]="panel.customStyle"
-        >
-          <ng-container *ngIf="panel.visible">
-            <ng-container *ngComponentOutlet="panel.component"></ng-container>
-          </ng-container>
-        </p-accordionTab>
-        }
-      </p-accordion>
-    </section>
-  
-    <section class="preview">
-     <div class="preview-template">
-      <app-template-sunshine
-      [PersonalDetails]="PersonalDetails"
-      [Education]="Education"
-    ></app-template-sunshine>
-     </div>
-    </section>
-  
+  <!-- Left Column: CV Sections Builder -->
+  <section class="builder">
+    <div class="builder-header">
+      <h2 class="text-xl font-bold mb-4">Build Your Resume</h2>
+      <p class="text-sm text-gray-600 mb-4">Fill in your information section by section</p>
+    </div>
     
+    <p-accordion>
+      @for (panel of panels; track panel) {
+      <p-accordionTab
+        [header]="panel.name"
+        [selected]="panel.active"
+        [ngStyle]="panel.customStyle"
+      >
+        <ng-container *ngIf="panel.visible">
+          <ng-container *ngComponentOutlet="panel.component"></ng-container>
+        </ng-container>
+      </p-accordionTab>
+      }
+    </p-accordion>
   </section>
+
+  <!-- Middle Column: Live Preview -->
+  <section class="preview">
+    <div class="preview-header sticky top-0 bg-white p-4 border-b">
+      <h2 class="text-xl font-bold">Preview</h2>
+      <div class="flex gap-2 mt-2">
+        <button pButton label="Download PDF" icon="pi pi-download" severity="secondary" size="small"></button>
+        <button pButton label="Print" icon="pi pi-print" severity="secondary" size="small"></button>
+      </div>
+    </div>
+    
+    <div class="preview-content">
+     
+    </div>
+  </section>
+
+  <!-- Right Column: Template Selection -->
+  <section class="templates">
+    <div class="templates-header p-4 border-b sticky top-0 bg-white">
+      <h2 class="text-xl font-bold mb-2">Choose Template</h2>
+      <p class="text-sm text-gray-600">Select a professional template</p>
+    </div>
+    
+    <div class="templates-grid p-4">
+      <div class="template-card active">
+        <img src="/assets/images/sample.jpg" alt="Template Sunshine" />
+        <div class="template-info p-3">
+          <h3 class="font-semibold">Sunshine</h3>
+          <span class="text-xs text-gray-500">Currently Active</span>
+        </div>
+      </div>
+      
+      <div class="template-card">
+        <img src="/assets/images/sample.jpg" alt="Template Bright" />
+        <div class="template-info p-3">
+          <h3 class="font-semibold">Bright</h3>
+          <span class="text-xs text-gray-500">Modern</span>
+        </div>
+      </div>
+      
+      <div class="template-card">
+        <img src="/assets/images/sample.jpg" alt="Template Kingdom" />
+        <div class="template-info p-3">
+          <h3 class="font-semibold">Kingdom</h3>
+          <span class="text-xs text-gray-500">Classic</span>
+        </div>
+      </div>
+      
+      <div class="template-card">
+        <img src="/assets/images/sample.jpg" alt="Template Uptown" />
+        <div class="template-info p-3">
+          <h3 class="font-semibold">Uptown</h3>
+          <span class="text-xs text-gray-500">Elegant</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

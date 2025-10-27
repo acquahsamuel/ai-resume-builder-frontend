@@ -1,1 +1,39 @@
-<router-outlet></router-outlet>
+<div class="resume-builder-container">
+  <!-- Header/Navigation -->
+  <header class="builder-header">
+    <div class="header-content">
+      <div class="logo-section">
+        <h1 class="brand-title">Cleansheet AI</h1>
+      </div>
+      
+      <nav class="header-nav">
+        <a class="nav-link" [routerLink]="['/dashboard/getting-started']" routerLinkActive="active">
+          <i class="pi pi-file-edit"></i>
+          <span>Builder</span>
+        </a>
+        <a class="nav-link" [routerLink]="['/dashboard/ats-analysis']" routerLinkActive="active">
+          <i class="pi pi-shield"></i>
+          <span>ATS Analyzer</span>
+        </a>
+        <a class="nav-link" [routerLink]="['/dashboard/cv-rewrite']" routerLinkActive="active">
+          <i class="pi pi-pencil"></i>
+          <span>CV Rewrite</span>
+        </a>
+        <a class="nav-link" [routerLink]="['/dashboard/settings']" routerLinkActive="active">
+          <i class="pi pi-cog"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+      
+      <div class="header-actions">
+        <p-button icon="pi pi-power-off" severity="danger" [text]="true" (onClick)="logout()" 
+          label="Logout" size="small"></p-button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="builder-main">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -9,9 +9,9 @@ import {
 } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import html2canvas from 'html2canvas';
-import { ITemplate } from '../../dto/templates.dto';
+import { ITemplate } from '../../../../shared/dto/templates.dto';
 import jsPDF from 'jspdf';
-import { CvContentService } from '../../services/cv-content.service';
+import { CvContentService } from '../../../../shared/services/cv-content.service';
 
 @Component({
   selector: 'app-template-sunshine',

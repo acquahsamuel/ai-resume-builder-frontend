@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
+
+
 @Component({
-    selector: 'app-started',
-    templateUrl: './started.component.html',
-    styleUrls: ['./started.component.scss'],
-    standalone: true,
-    imports: [PrimeNgModule],
+  selector: 'app-started',
+  templateUrl: './started.component.html',
+  styleUrls: ['./started.component.scss'],
+  standalone: true,
+  imports: [PrimeNgModule],
 })
 export class StartedComponent implements OnInit {
 
@@ -13,13 +15,13 @@ export class StartedComponent implements OnInit {
   username = "Samuel";
   userProfile = "./assets/images/placeholder.png";
 
- 
 
-  getInteractionPrompt() {}
 
-  logout() {}
+  getInteractionPrompt() { }
 
-  OnInit() {}
+  logout() { }
+
+  OnInit() { }
 
   title = "Cleansheet";
 
