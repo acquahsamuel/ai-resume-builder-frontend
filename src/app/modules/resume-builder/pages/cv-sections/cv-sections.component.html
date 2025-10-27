@@ -1,92 +1,149 @@
-<section class="app-container">
-  <!-- Left Column: CV Sections Builder -->
-  <section class="builder">
-    <div class="builder-header">
-      <h2 class="text-xl font-bold mb-4">Build Your Resume</h2>
-      <p class="text-sm text-gray-600 mb-4">Fill in your information section by section</p>
+<div class="resume-builder-page">
+  <div class="page-header">
+    <div class="header-info">
+      <h1 class="page-title">Resume Builder</h1>
+      <p class="page-subtitle">Create your professional resume step by step</p>
     </div>
-    
-    <div class="builder-content">
-    <p-accordion>
-      @for (panel of panels; track panel) {
-      <p-accordionTab [selected]="panel.active">
-        <ng-template pTemplate="header">
-          <div class="accordion-header-content">
-            <i [class]="panel.icon" class="panel-icon"></i>
-            <span class="panel-name">{{ panel.name }}</span>
+    <div class="header-actions">
+      <p-button 
+        icon="pi pi-download" 
+        label="Download PDF" 
+        severity="secondary" 
+        [outlined]="true"
+      ></p-button>
+      <p-button 
+        icon="pi pi-print" 
+        label="Print" 
+        severity="secondary" 
+        [outlined]="true"
+      ></p-button>
+    </div>
+  </div>
+
+  <div class="builder-container">
+    <!-- Left: Form Sections -->
+    <div class="form-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="pi pi-file-edit"></i>
+          Resume Sections
+        </h2>
+        <p class="panel-description">Fill in your information below</p>
+      </div>
+
+      <div class="sections-list">
+        <p-accordion>
+          @for (panel of panels; track panel) {
+          <p-accordionTab [selected]="panel.active">
+            <ng-template pTemplate="header">
+              <div class="section-header">
+                <div class="section-title-group">
+                  <i [class]="panel.icon" class="section-icon"></i>
+                  <span class="section-name">{{ panel.name }}</span>
+                </div>
+              </div>
+            </ng-template>
+            <div class="section-content">
+              <ng-container *ngIf="panel.visible">
+                <ng-container *ngComponentOutlet="panel.component"></ng-container>
+              </ng-container>
+            </div>
+          </p-accordionTab>
+          }
+        </p-accordion>
+      </div>
+    </div>
+
+    <!-- Right: Preview & Templates -->
+    <div class="preview-panel">
+      <!-- Preview Section -->
+      <div class="preview-section">
+        <div class="section-header-inline">
+          <h3 class="section-title-small">
+            <i class="pi pi-eye"></i>
+            Live Preview
+          </h3>
+        </div>
+        <div class="preview-content-wrapper">
+          <app-cv-preview></app-cv-preview>
+        </div>
+      </div>
+
+      <!-- Templates Section -->
+      <div class="templates-section">
+        <div class="section-header-inline">
+          <h3 class="section-title-small">
+            <i class="pi pi-palette"></i>
+            Templates
+          </h3>
+        </div>
+        <div class="templates-wrapper">
+          <div class="template-grid">
+            <div class="template-item active">
+              <div class="template-thumb">
+                <img src="/assets/images/sample.jpg" alt="Template Sunshine" />
+                <div class="active-badge">
+                  <i class="pi pi-check"></i>
+                </div>
+              </div>
+              <div class="template-details">
+                <h4>Sunshine</h4>
+                <span>Modern</span>
+              </div>
+            </div>
+
+            <div class="template-item">
+              <div class="template-thumb">
+                <img src="/assets/images/sample.jpg" alt="Template Bright" />
+              </div>
+              <div class="template-details">
+                <h4>Bright</h4>
+                <span>Clean</span>
+              </div>
+            </div>
+
+            <div class="template-item">
+              <div class="template-thumb">
+                <img src="/assets/images/sample.jpg" alt="Template Kingdom" />
+              </div>
+              <div class="template-details">
+                <h4>Kingdom</h4>
+                <span>Classic</span>
+              </div>
+            </div>
+
+            <div class="template-item">
+              <div class="template-thumb">
+                <img src="/assets/images/sample.jpg" alt="Template Uptown" />
+              </div>
+              <div class="template-details">
+                <h4>Uptown</h4>
+                <span>Elegant</span>
+              </div>
+            </div>
+
+            <div class="template-item">
+              <div class="template-thumb">
+                <img src="/assets/images/sample.jpg" alt="Template SK" />
+              </div>
+              <div class="template-details">
+                <h4>SK</h4>
+                <span>Minimal</span>
+              </div>
+            </div>
+
+            <div class="template-item">
+              <div class="template-thumb">
+                <img src="/assets/images/sample.jpg" alt="Template Scaller" />
+              </div>
+              <div class="template-details">
+                <h4>Scaller</h4>
+                <span>Bold</span>
+              </div>
+            </div>
           </div>
-        </ng-template>
-        <ng-container *ngIf="panel.visible">
-          <ng-container *ngComponentOutlet="panel.component"></ng-container>
-        </ng-container>
-      </p-accordionTab>
-        }
-      </p-accordion>
-    </div>
-  </section>
-
-  <!-- Middle Column: Live Preview -->
-  <section class="preview">
-    <div class="preview-header sticky top-0 bg-white p-4 border-b">
-      <h2 class="text-xl font-bold">Preview</h2>
-      <div class="flex gap-2 mt-2">
-        <button pButton label="Download PDF" icon="pi pi-download" severity="secondary" size="small"></button>
-        <button pButton label="Print" icon="pi pi-print" severity="secondary" size="small"></button>
-      </div>
-    </div>
-    
-    <div class="preview-content">
-      <app-cv-preview></app-cv-preview>
-    </div>
-  </section>
-
-  <!-- Right Column: Template Selection -->
-  <section class="templates">
-    <div class="templates-header p-4 border-b sticky top-0 bg-white">
-      <h2 class="text-xl font-bold mb-2">Choose Template</h2>
-      <p class="text-sm text-gray-600">Select a professional template</p>
-    </div>
-    
-    <div class="templates-grid">
-      <div class="template-card active">
-        <img src="/assets/images/sample.jpg" alt="Template Sunshine" />
-        <div class="template-info p-3">
-          <h3 class="font-semibold">Sunshine</h3>
-          <span class="text-xs text-gray-500">Currently Active</span>
-        </div>
-      </div>
-      
-      <div class="template-card">
-        <img src="/assets/images/sample.jpg" alt="Template Bright" />
-        <div class="template-info p-3">
-          <h3 class="font-semibold">Bright</h3>
-          <span class="text-xs text-gray-500">Modern</span>
-        </div>
-      </div>
-      
-      <div class="template-card">
-        <img src="/assets/images/sample.jpg" alt="Template Kingdom" />
-        <div class="template-info p-3">
-          <h3 class="font-semibold">Kingdom</h3>
-          <span class="text-xs text-gray-500">Classic</span>
-        </div>
-      </div>
-      
-      <div class="template-card">
-        <img src="/assets/images/sample.jpg" alt="Template Uptown" />
-        <div class="template-info p-3">
-          <h3 class="font-semibold">Uptown</h3>
-          <span class="text-xs text-gray-500">Elegant</span>
-        </div>
-      </div>
-
-      <div class="template-card">
-        <img src="/assets/images/sample.jpg" alt="Template Uptown" />
-        <div class="template-info p-3">
-          <h3 class="font-semibold">Uptown</h3>
-          <span class="text-xs text-gray-500">Elegant</span>
         </div>
       </div>
     </div>
-  </section>
-</section>
+  </div>
+</div>
