@@ -55,6 +55,7 @@
 button {
   // border: none;
   outline: none;
+  // margin: 0rem 0.8rem;
 }
 
 /* width */
@@ -129,7 +130,7 @@ label {
 }
 
 .btn-remove {
-  margin-top: 0.5rem;
+  margin: 0.5rem 0.8rem;
   
   ::ng-deep .p-button {
     min-width: auto;
