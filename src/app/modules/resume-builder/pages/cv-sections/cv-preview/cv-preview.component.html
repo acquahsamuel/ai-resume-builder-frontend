@@ -1,0 +1,123 @@
+<div class="cv-preview">
+  <!-- Personal Details Section -->
+  @if (cvData.personalDetails) {
+  <div class="preview-section personal-details">
+    <div class="section-header">
+      <h1 class="full-name">
+        {{ cvData.personalDetails.firstname }}
+        {{ cvData.personalDetails.surname }}
+      </h1>
+      <div class="contact-info">
+        @if (cvData.personalDetails.email) {
+        <span>
+          <i class="pi pi-envelope"></i>
+          {{ cvData.personalDetails.email }}
+        </span>
+        }
+        @if (cvData.personalDetails.phoneNumber) {
+        <span>
+          <i class="pi pi-phone"></i>
+          {{ cvData.personalDetails.phoneNumber }}
+        </span>
+        }
+        @if (cvData.personalDetails.city || cvData.personalDetails.country) {
+        <span>
+          <i class="pi pi-map-marker"></i>
+          {{ cvData.personalDetails.city }}{{ cvData.personalDetails.city &&
+          cvData.personalDetails.country ? ', ' : '' }}{{ cvData.personalDetails.country }}
+        </span>
+        }
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- Professional Summary -->
+  @if (cvData.summary?.summary) {
+  <div class="preview-section">
+    <h2 class="section-title">Professional Summary</h2>
+    <div class="content" [innerHTML]="cvData.summary.summary"></div>
+  </div>
+  }
+
+  <!-- Experience -->
+  @if (cvData.experience && cvData.experience.length > 0) {
+  <div class="preview-section">
+    <h2 class="section-title">Experience</h2>
+      @for (exp of cvData.experience; track $index) {
+    <div class="experience-item">
+      <div class="item-header">
+        <h3 class="job-title">{{ exp.jobTitle }}</h3>
+        <span class="date-range">
+          {{ exp.startYear }} - {{ exp.currentlyHere ? 'Present' : exp.endYear }}
+        </span>
+      </div>
+      <div class="item-subtitle">{{ exp.employerName }}</div>
+      <div class="item-location">
+        <i class="pi pi-map-marker"></i>
+        {{ exp.city }}{{ exp.city && exp.country ? ', ' : '' }}{{ exp.country }}
+      </div>
+      @if (exp.summary) {
+      <div class="item-content" [innerHTML]="exp.summary"></div>
+      }
+    </div>
+    }
+  </div>
+  }
+
+  <!-- Education -->
+  @if (cvData.education && cvData.education.length > 0) {
+  <div class="preview-section">
+    <h2 class="section-title">Education</h2>
+    @for (edu of cvData.education; track $index) {
+    <div class="education-item">
+      <div class="item-header">
+        <h3 class="degree">{{ edu.degreeName }}</h3>
+        <span class="date-range">
+          {{ edu.startYear }} - {{ edu.currentlyEnrolled ? 'Present' : edu.endYear }}
+        </span>
+      </div>
+      <div class="item-subtitle">{{ edu.schoolName }}</div>
+      <div class="item-location">
+        <i class="pi pi-map-marker"></i>
+        {{ edu.city }}{{ edu.city && edu.country ? ', ' : '' }}{{ edu.country }}
+      </div>
+      @if (edu.major) {
+      <div class="item-content">Major: {{ edu.major }}</div>
+      }
+    </div>
+    }
+  </div>
+  }
+
+  <!-- Skills -->
+  @if (cvData.skills && cvData.skills.length > 0) {
+  <div class="preview-section">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-container">
+      @for (skill of cvData.skills; track $index) {
+      <span class="skill-tag">{{ skill.skillName }} @if (skill.proficiency) { ({{ skill.proficiency
+        }}) }</span>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- Languages -->
+  @if (cvData.languages && cvData.languages.length > 0) {
+  <div class="preview-section">
+    <h2 class="section-title">Languages</h2>
+    <div class="languages-container">
+      @for (lang of cvData.languages; track $index) {
+      <div class="language-item">
+        <span class="language-name">{{ lang.language }}</span>
+        @if (lang.proficiency) {
+        <span class="proficiency">{{ lang.proficiency }}</span>
+        }
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>
+

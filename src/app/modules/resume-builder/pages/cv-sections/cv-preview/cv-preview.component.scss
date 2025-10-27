@@ -1,0 +1,164 @@
+.cv-preview {
+  background: white;
+  padding: 24px;
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  line-height: 1.6;
+
+  .preview-section {
+    margin-bottom: 32px;
+  }
+
+  .personal-details {
+    text-align: center;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 32px;
+
+    .full-name {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0 0 16px 0;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: #6b7280;
+      font-size: 14px;
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        i {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 16px 0;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 8px;
+  }
+
+  .experience-item,
+  .education-item {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e9ecef;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 8px;
+
+      .job-title,
+      .degree {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin: 0;
+      }
+
+      .date-range {
+        font-size: 14px;
+        color: #6b7280;
+        white-space: nowrap;
+      }
+    }
+
+    .item-subtitle {
+      font-size: 16px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    .item-location {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      i {
+        font-size: 12px;
+      }
+    }
+
+    .item-content {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.8;
+
+      ::ng-deep p {
+        margin: 8px 0;
+      }
+    }
+  }
+
+  .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .skill-tag {
+      background: #f3f4f6;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #374151;
+      display: inline-block;
+    }
+  }
+
+  .languages-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+
+    .language-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+
+      .language-name {
+        font-weight: 500;
+        color: #374151;
+      }
+
+      .proficiency {
+        font-size: 14px;
+        color: #6b7280;
+      }
+    }
+  }
+
+  .content {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.8;
+
+    ::ng-deep p {
+      margin: 8px 0;
+    }
+  }
+}
+

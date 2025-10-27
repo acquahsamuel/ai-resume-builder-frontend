@@ -24,6 +24,8 @@ import { SummaryComponent } from '../../pages/cv-sections/summary/summary.compon
 import { CvHeaderComponent } from '../../pages/cv-sections/cv-header/cv-header.component';
 import { ExperienceComponent } from '../../pages/cv-sections/experience/experience.component';
 import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
+import { CvContentService } from '../../../../shared/services/cv-content.service';
+import { CvPreviewComponent } from './cv-preview/cv-preview.component';
 // import { TemplateSunshineComponent } from '../../../templates/template-sunshine/template-sunshine.component';
 
 @Component({
@@ -47,6 +49,7 @@ import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
     SummaryComponent,
     SkillsComponent,
     ExtraActivitiesComponent,
+    CvPreviewComponent,
     // TemplateSunshineComponent,
   ],
 })
@@ -92,7 +95,7 @@ export class CvSectionsComponent implements OnInit {
   @Input() ExtraCurricularActivities = [];
   @Input() ExtraFields = [];
 
-  constructor() { }
+  constructor(private cvService: CvContentService) { }
 
   panels = [
     {
@@ -201,10 +204,32 @@ export class CvSectionsComponent implements OnInit {
   onPersonalInfoUpdateEvt(data: any) {
     console.log('PERSONAL INFO UPDATED', data);
     this.PersonalDetails = data;
+    this.cvService.updatePersonalDetails(data);
   }
 
   onEducationFormUpdate(data: any) {
     console.log('DATA PASSED', data);
     this.Education = data.educationRecords;
+    this.cvService.updateEducation(data.educationRecords);
+  }
+
+  onSummaryUpdate(data: any) {
+    console.log('SUMMARY UPDATED', data);
+    this.cvService.updateSummary(data);
+  }
+
+  onExperienceUpdate(data: any) {
+    console.log('EXPERIENCE UPDATED', data);
+    this.cvService.updateExperience(data?.experienceRecords || data);
+  }
+
+  onSkillsUpdate(data: any) {
+    console.log('SKILLS UPDATED', data);
+    this.cvService.updateSkills(data);
+  }
+
+  onLanguagesUpdate(data: any) {
+    console.log('LANGUAGES UPDATED', data);
+    this.cvService.updateLanguages(data);
   }
 }
