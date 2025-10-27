@@ -8,11 +8,13 @@
     
     <p-accordion>
       @for (panel of panels; track panel) {
-      <p-accordionTab
-        [header]="panel.name"
-        [selected]="panel.active"
-        [ngStyle]="panel.customStyle"
-      >
+      <p-accordionTab [selected]="panel.active" [ngStyle]="panel.customStyle">
+        <ng-template pTemplate="header">
+          <div class="accordion-header-content">
+            <i [class]="panel.icon" class="panel-icon"></i>
+            <span class="panel-name">{{ panel.name }}</span>
+          </div>
+        </ng-template>
         <ng-container *ngIf="panel.visible">
           <ng-container *ngComponentOutlet="panel.component"></ng-container>
         </ng-container>

@@ -98,7 +98,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-user',
       name: 'Personal Details',
       component: CvHeaderComponent,
       visible: true,
@@ -112,7 +112,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-file-edit',
       name: 'Professional Summary',
       component: SummaryComponent,
       visible: true,
@@ -126,7 +126,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-briefcase',
       name: 'Experience',
       component: ExperienceComponent,
       visible: true,
@@ -140,7 +140,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-graduation-cap',
       name: 'Education',
       component: EducationComponent,
       visible: true,
@@ -155,7 +155,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-th-large',
       name: 'Skills',
       component: SkillsComponent,
       visible: true,
@@ -169,7 +169,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-heart',
       name: 'Hobbies',
       component: HobbiesComponent,
       visible: true,
@@ -183,7 +183,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-users',
       name: 'References',
       component: ReferencesComponent,
       visible: true,
@@ -197,7 +197,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-globe',
       name: 'Languages',
       component: LanguagesComponent,
       visible: true,
@@ -211,7 +211,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-book',
       name: 'Courses',
       component: CoursesComponent,
       visible: true,
@@ -226,7 +226,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-file-pdf',
       name: 'Publications',
       component: PublicationsComponent,
       visible: true,
@@ -241,7 +241,7 @@ export class CvSectionsComponent implements OnInit {
     {
       active: true,
       disabled: false,
-      icon: 'plus-circle',
+      icon: 'pi pi-calendar',
       name: 'Extra Curricular Activities',
       component: ExtraActivitiesComponent,
       visible: true,

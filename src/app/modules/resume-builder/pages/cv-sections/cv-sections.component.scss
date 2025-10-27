@@ -10,30 +10,87 @@
     background: #f8f9fa;
     padding: 20px;
     overflow-y: auto;
-    border-right: 1px solid #e9ecef;
+    // border-right: 1px solid #e9ecef;
 
     &-header {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e5e7eb;
+
+      h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0 0 8px 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      p {
+        color: #6b7280;
+        font-size: 14px;
+        margin: 0;
+      }
     }
 
     ::ng-deep {
       .p-accordion {
         .p-accordion-header {
-          padding: 12px;
+          padding: 0;
           border-radius: 8px;
-          margin-bottom: 8px;
+          margin-bottom: 12px;
+          background: white;
+          border: 1px solid #e9ecef;
+          transition: all 0.3s ease;
 
           &:hover {
-            background: #e9ecef;
+            border-color: #667eea;
+            background: #f9fafb;
+          }
+
+          .p-accordion-header-link {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
           }
         }
 
         .p-accordion-content {
-          padding: 16px;
+          padding: 20px;
           background: white;
           border-radius: 8px;
-          margin-bottom: 8px;
+          border: 1px solid #e9ecef;
+          border-top: none;
+          margin-bottom: 12px;
+          margin-top: -12px;
+          z-index: 0;
         }
+      }
+    }
+
+    .accordion-header-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+
+      .panel-icon {
+        font-size: 18px;
+        color: #667eea;
+        width: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .panel-name {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1a1a1a;
       }
     }
   }
