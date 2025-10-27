@@ -92,7 +92,7 @@ export class CvSectionsComponent implements OnInit {
   @Input() ExtraCurricularActivities = [];
   @Input() ExtraFields = [];
 
-  constructor() {}
+  constructor() { }
 
   panels = [
     {
@@ -261,11 +261,11 @@ export class CvSectionsComponent implements OnInit {
     return Injector.create({ providers, parent: this.injector });
   }
 
-  saveToLocalStorage() {}
+  saveToLocalStorage() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  updateCv() {}
+  updateCv() { }
 
   onPersonalInfoUpdateEvt(data: any) {
     console.log('PERSONAL INFO UPDATED', data);

@@ -1,140 +1,140 @@
 .app-container {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 0.8fr;
-    gap: 0;
-    min-height: calc(100vh - 5.5em);
-    overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 0.8fr;
+  gap: 0;
+  min-height: calc(100vh - 5.5em);
+  overflow: hidden;
 
-    // Left Column: CV Sections Builder
-    .builder {
-      background: #f8f9fa;
+  // Left Column: CV Sections Builder
+  .builder {
+    background: #f8f9fa;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid #e9ecef;
+
+    &-header {
+      margin-bottom: 20px;
+    }
+
+    ::ng-deep {
+      .p-accordion {
+        .p-accordion-header {
+          padding: 12px;
+          border-radius: 8px;
+          margin-bottom: 8px;
+
+          &:hover {
+            background: #e9ecef;
+          }
+        }
+
+        .p-accordion-content {
+          padding: 16px;
+          background: white;
+          border-radius: 8px;
+          margin-bottom: 8px;
+        }
+      }
+    }
+  }
+
+  // Middle Column: Live Preview
+  .preview {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+    &-header {
+      z-index: 10;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    &-content {
+      flex: 1;
       padding: 20px;
-      overflow-y: auto;
-      border-right: 1px solid #e9ecef;
+      background: #f5f5f5;
 
-      &-header {
-        margin-bottom: 20px;
+      // Scale down preview for better fit
+      transform: scale(0.85);
+      transform-origin: top left;
+      width: 117.64%; // Compensate for scale
+    }
+  }
+
+  // Right Column: Template Selection
+  .templates {
+    background: #ffffff;
+    border-left: 1px solid #e9ecef;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+    &-header {
+      z-index: 10;
+    }
+
+    &-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .template-card {
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+
+      &:hover {
+        border-color: #0d6efd;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.15);
       }
 
-      ::ng-deep {
-        .p-accordion {
-          .p-accordion-header {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            
-            &:hover {
-              background: #e9ecef;
-            }
-          }
-          
-          .p-accordion-content {
-            padding: 16px;
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 8px;
-          }
+      &.active {
+        border-color: #0d6efd;
+        background: #f0f7ff;
+        position: relative;
+
+        &::after {
+          content: '✓ Active';
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background: #0d6efd;
+          color: white;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 11px;
+          font-weight: bold;
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+      }
+
+      .template-info {
+        h3 {
+          margin: 0;
+          color: #212529;
         }
       }
     }
-
-    // Middle Column: Live Preview
-    .preview {
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-
-      &-header {
-        z-index: 10;
-        background: white;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      }
-
-      &-content {
-        flex: 1;
-        padding: 20px;
-        background: #f5f5f5;
-        
-        // Scale down preview for better fit
-        transform: scale(0.85);
-        transform-origin: top left;
-        width: 117.64%; // Compensate for scale
-      }
-    }
-
-    // Right Column: Template Selection
-    .templates {
-      background: #ffffff;
-      border-left: 1px solid #e9ecef;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-
-      &-header {
-        z-index: 10;
-      }
-
-      &-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-
-      .template-card {
-        border: 2px solid #e9ecef;
-        border-radius: 8px;
-        overflow: hidden;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        background: white;
-
-        &:hover {
-          border-color: #0d6efd;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(13, 110, 253, 0.15);
-        }
-
-        &.active {
-          border-color: #0d6efd;
-          background: #f0f7ff;
-          position: relative;
-
-          &::after {
-            content: '✓ Active';
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: #0d6efd;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: bold;
-          }
-        }
-
-        img {
-          width: 100%;
-          height: 150px;
-          object-fit: cover;
-        }
-
-        .template-info {
-          h3 {
-            margin: 0;
-            color: #212529;
-          }
-        }
-      }
-    }
+  }
 }
 
 // Responsive Design
 @media (max-width: 1200px) {
   .app-container {
     grid-template-columns: 1fr 1fr;
-    
+
     .templates {
       display: none;
     }
@@ -144,11 +144,11 @@
 @media (max-width: 768px) {
   .app-container {
     grid-template-columns: 1fr;
-    
+
     .preview {
       display: none;
     }
-    
+
     .templates {
       display: none;
     }
@@ -171,7 +171,7 @@
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 4px;
-  
+
   &:hover {
     background: #555;
   }

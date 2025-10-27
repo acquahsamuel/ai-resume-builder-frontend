@@ -70,6 +70,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TerminalModule } from 'primeng/terminal';
 import { FocusTrapModule } from 'primeng/focustrap';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @NgModule({
   exports: [
@@ -141,6 +142,7 @@ import { FocusTrapModule } from 'primeng/focustrap';
     ProgressSpinnerModule,
     TerminalModule,
     FocusTrapModule,
+    FloatLabelModule,
   ],
   imports: [
     AutoCompleteModule,
@@ -211,6 +213,7 @@ import { FocusTrapModule } from 'primeng/focustrap';
     ProgressSpinnerModule,
     TerminalModule,
     FocusTrapModule,
+    FloatLabelModule,
   ],
   // declarations: [AppComponent, HelloComponent],
   bootstrap: [],

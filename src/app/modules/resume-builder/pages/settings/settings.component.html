@@ -1,134 +1,120 @@
-<div class="file-upload-container mb-6">
-    <div *ngIf="imagePreview; else noTemplate" class="image-preview mb-4">
-      <img
-        [src]="imagePreview"
-        alt="Image preview"
-        class="w-24 h-24 rounded-full"
-      />
-    </div>
-  
-    <ng-template #noTemplate>
-      <img
-        [src]="'/assets/images/placeholder.png'"
-        class="w-24 h-24 rounded-full"
-        alt="Image preview"
-      />
-    </ng-template>
-  
-    <div class="file-drop-area mb-2">
-      <span class="fake-btn">Upload Profile</span>
-      <input
-        (change)="onFileChange($event)"
-        class="file-input"
-        
-        type="file"
-        accept="image/*"
-      />
-    </div>
-  
-    <span class="text-sm text-gray-600"
-      >Headshot profile pictures are preferred</span
-    >
+<div class="settings-page">
+  <div class="page-header">
+    <h1 class="page-title">Account Settings</h1>
+    <p class="page-subtitle">Manage your account information and preferences</p>
   </div>
-  
-  <form [formGroup]="headerInfoForm" (ngSubmit)="submitForm()">
-    <div class="form-section">
-      <div class="flex flex-wrap -mx-2">
-       
-        <div class="form-group w-full px-2 py-2 sm:w-1/2">
-          <label for="firstname" class="block mb-1">Firstname</label>
-          <input
-            formControlName="firstname"
-            type="text"
-            pInputText
-            id="firstname"
-            class="w-full"
-            placeholder="Enter your first name"
-          />
+
+  <div class="settings-content">
+    <!-- Profile Section -->
+    <div class="settings-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="pi pi-user"></i>
         </div>
-  
-        <!-- Surname -->
-        <div class="form-group w-full px-2 py-2 sm:w-1/2">
-          <label for="surname" class="block mb-1">Surname</label>
-          <input
-            formControlName="surname"
-            type="text"
-            pInputText
-            id="surname"
-            class="w-full"
-            placeholder="Your surname"
-          />
+        <div>
+          <h2 class="section-title">Profile Information</h2>
+          <p class="section-description">Update your personal details</p>
         </div>
       </div>
-  
-      <div class="flex flex-wrap -mx-2">
-        <!-- City -->
-        <div class="form-group w-full px-2 py-2 sm:w-1/2">
-          <label for="city" class="block mb-1">City</label>
+
+      <div class="profile-card">
+        <div class="profile-image-wrapper">
+          <div *ngIf="imagePreview; else noImage" class="profile-image">
+            <img [src]="imagePreview" alt="Profile" />
+          </div>
+          <ng-template #noImage>
+            <div class="profile-placeholder">
+              <i class="pi pi-user text-4xl text-gray-400"></i>
+            </div>
+          </ng-template>
+          
+          <label for="profile-upload" class="edit-photo-btn">
+            <i class="pi pi-camera"></i>
+          </label>
           <input
-            formControlName="city"
-            type="text"
-            id="city"
-            pInputText
-            class="w-full"
-            placeholder="Your City"
+            id="profile-upload"
+            (change)="onFileChange($event)"
+            class="file-input"
+            type="file"
+            accept="image/*"
           />
         </div>
-  
-        <!-- Country -->
-        <div class="form-group w-full px-2 py-2 sm:w-1/2">
-          <label for="country" class="block mb-1">Country</label>
-          <input
-            formControlName="country"
-            type="text"
-            id="country"
-            pInputText
-            class="w-full"
-            placeholder="Country"
-          />
-        </div>
-      </div>
-  
-      <div class="flex flex-wrap -mx-2">
-        <!-- Postal Code -->
-        <div class="form-group w-full px-2 py-2 sm:w-1/2">
-          <label for="postalCode" class="block mb-1">Postal Code</label>
-          <input
-            formControlName="postalCode"
-            type="text"
-            id="postalCode"
-            pInputText
-            class="w-full"
-            placeholder="Postal Code"
-          />
-        </div>
-  
-        <!-- Phone Number -->
-        <div class="form-group w-full px-2 py-2 sm:w-1/2">
-          <label for="phoneNumber" class="block mb-1">Phone Number</label>
-          <input
-            formControlName="phoneNumber"
-            type="text"
-            id="phoneNumber"
-            pInputText
-            class="w-full"
-            placeholder="Phone Number"
-          />
-        </div>
-  
-        <!-- Email -->
-        <div class="form-group w-full px-2 py-2 sm:w-1/2">
-          <label for="email" class="block mb-1">Email</label>
-          <input
-            formControlName="email"
-            type="email"
-            id="email"
-            pInputText
-            class="w-full"
-            placeholder="Your email address"
-          />
-        </div>
+
+        <form [formGroup]="headerInfoForm" (ngSubmit)="submitForm()" class="settings-form">
+          <div class="form-fields">
+            <div class="field-row">
+              <div class="field">
+                <label for="firstname">
+                  <i class="pi pi-id-card"></i>
+                  <span>First Name</span>
+                </label>
+                <input pInputText id="firstname" formControlName="firstname" />
+              </div>
+
+              <div class="field">
+                <label for="surname">
+                  <i class="pi pi-id-card"></i>
+                  <span>Last Name</span>
+                </label>
+                <input pInputText id="surname" formControlName="surname" />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="email">
+                  <i class="pi pi-envelope"></i>
+                  <span>Email Address</span>
+                </label>
+                <input pInputText id="email" type="email" formControlName="email" />
+              </div>
+
+              <div class="field">
+                <label for="phoneNumber">
+                  <i class="pi pi-phone"></i>
+                  <span>Phone Number</span>
+                </label>
+                <input pInputText id="phoneNumber" formControlName="phoneNumber" />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="city">
+                  <i class="pi pi-map-marker"></i>
+                  <span>City</span>
+                </label>
+                <input pInputText id="city" formControlName="city" />
+              </div>
+
+              <div class="field">
+                <label for="country">
+                  <i class="pi pi-globe"></i>
+                  <span>Country</span>
+                </label>
+                <input pInputText id="country" formControlName="country" />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field field-full">
+                <label for="postalCode">
+                  <i class="pi pi-map"></i>
+                  <span>Postal Code</span>
+                </label>
+                <input pInputText id="postalCode" formControlName="postalCode" />
+              </div>
+            </div>
+
+            <div class="form-footer">
+              <p-button label="Cancel" severity="secondary" [outlined]="true" [rounded]="true"></p-button>
+              <p-button label="Save Changes" [rounded]="true" type="submit"></p-button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-  </form>
-  
+
+   
+  </div>
+</div>
