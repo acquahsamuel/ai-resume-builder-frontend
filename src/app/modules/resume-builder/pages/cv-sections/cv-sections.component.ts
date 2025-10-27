@@ -102,12 +102,6 @@ export class CvSectionsComponent implements OnInit {
       name: 'Personal Details',
       component: CvHeaderComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '4px',
-        'margin-bottom': '24px',
-        border: '0px',
-      },
     },
     {
       active: true,
@@ -116,12 +110,6 @@ export class CvSectionsComponent implements OnInit {
       name: 'Professional Summary',
       component: SummaryComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '4px',
-        'margin-bottom': '24px',
-        border: '1px solid #',
-      },
     },
     {
       active: true,
@@ -130,12 +118,6 @@ export class CvSectionsComponent implements OnInit {
       name: 'Experience',
       component: ExperienceComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '4px',
-        'margin-bottom': '24px',
-        border: '0px',
-      },
     },
     {
       active: true,
@@ -144,14 +126,7 @@ export class CvSectionsComponent implements OnInit {
       name: 'Education',
       component: EducationComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '4px',
-        'margin-bottom': '24px',
-        border: '0px',
-      },
     },
-
     {
       active: true,
       disabled: false,
@@ -159,12 +134,6 @@ export class CvSectionsComponent implements OnInit {
       name: 'Skills',
       component: SkillsComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '4px',
-        'margin-bottom': '24px',
-        border: '0px',
-      },
     },
     {
       active: true,
@@ -173,12 +142,6 @@ export class CvSectionsComponent implements OnInit {
       name: 'Hobbies',
       component: HobbiesComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '4px',
-        'margin-bottom': '24px',
-        border: '0px',
-      },
     },
     {
       active: true,
@@ -187,12 +150,6 @@ export class CvSectionsComponent implements OnInit {
       name: 'References',
       component: ReferencesComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '4px',
-        'margin-bottom': '24px',
-        border: '0px',
-      },
     },
     {
       active: true,
@@ -201,12 +158,6 @@ export class CvSectionsComponent implements OnInit {
       name: 'Languages',
       component: LanguagesComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '4px',
-        'margin-bottom': '24px',
-        border: '0px',
-      },
     },
     {
       active: true,
@@ -215,14 +166,7 @@ export class CvSectionsComponent implements OnInit {
       name: 'Courses',
       component: CoursesComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '1px',
-        'margin-bottom': '24px',
-        border: '1px solid dogerblue',
-      },
     },
-
     {
       active: true,
       disabled: false,
@@ -230,14 +174,7 @@ export class CvSectionsComponent implements OnInit {
       name: 'Publications',
       component: PublicationsComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '4px',
-        'margin-bottom': '24px',
-        border: '0px',
-      },
     },
-
     {
       active: true,
       disabled: false,
@@ -245,12 +182,6 @@ export class CvSectionsComponent implements OnInit {
       name: 'Extra Curricular Activities',
       component: ExtraActivitiesComponent,
       visible: true,
-      customStyle: {
-        background: '#',
-        'border-radius': '1px',
-        'margin-bottom': '24px',
-        border: '0px',
-      },
     },
   ];
 

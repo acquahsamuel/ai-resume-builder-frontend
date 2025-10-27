@@ -6,9 +6,10 @@
       <p class="text-sm text-gray-600 mb-4">Fill in your information section by section</p>
     </div>
     
+    <div class="builder-content">
     <p-accordion>
       @for (panel of panels; track panel) {
-      <p-accordionTab [selected]="panel.active" [ngStyle]="panel.customStyle">
+      <p-accordionTab [selected]="panel.active">
         <ng-template pTemplate="header">
           <div class="accordion-header-content">
             <i [class]="panel.icon" class="panel-icon"></i>
@@ -19,8 +20,9 @@
           <ng-container *ngComponentOutlet="panel.component"></ng-container>
         </ng-container>
       </p-accordionTab>
-      }
-    </p-accordion>
+        }
+      </p-accordion>
+    </div>
   </section>
 
   <!-- Middle Column: Live Preview -->
@@ -45,7 +47,7 @@
       <p class="text-sm text-gray-600">Select a professional template</p>
     </div>
     
-    <div class="templates-grid p-4">
+    <div class="templates-grid">
       <div class="template-card active">
         <img src="/assets/images/sample.jpg" alt="Template Sunshine" />
         <div class="template-info p-3">
@@ -70,6 +72,14 @@
         </div>
       </div>
       
+      <div class="template-card">
+        <img src="/assets/images/sample.jpg" alt="Template Uptown" />
+        <div class="template-info p-3">
+          <h3 class="font-semibold">Uptown</h3>
+          <span class="text-xs text-gray-500">Elegant</span>
+        </div>
+      </div>
+
       <div class="template-card">
         <img src="/assets/images/sample.jpg" alt="Template Uptown" />
         <div class="template-info p-3">
