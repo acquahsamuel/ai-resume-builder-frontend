@@ -1,149 +1,197 @@
-<div class="resume-builder-page">
-  <div class="page-header">
-    <div class="header-info">
-      <h1 class="page-title">Resume Builder</h1>
-      <p class="page-subtitle">Create your professional resume step by step</p>
+<div class="builder-page">
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="header-left">
+      <h1 class="page-title">Build Your Resume</h1>
+      <p class="page-desc">Fill in the sections below to create your professional resume</p>
     </div>
     <div class="header-actions">
+      <button 
+        class="toggle-btn" 
+        (click)="toggleTemplates()"
+        [class.active]="showTemplates"
+        pTooltip="Toggle Templates"
+      >
+        <i [class]="showTemplates ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+        <span>Template</span>
+      </button>
       <p-button 
         icon="pi pi-download" 
         label="Download PDF" 
         severity="secondary" 
         [outlined]="true"
+        size="small"
       ></p-button>
       <p-button 
         icon="pi pi-print" 
         label="Print" 
         severity="secondary" 
         [outlined]="true"
+        size="small"
       ></p-button>
     </div>
+  </header>
+
+  <!-- Mobile Navigation Tabs -->
+  <div class="mobile-nav-tabs">
+    <button 
+      class="nav-tab" 
+      [class.active]="mobileView === 'sections'"
+      (click)="setMobileView('sections')"
+    >
+      <i class="pi pi-list"></i>
+      <span>Sections</span>
+    </button>
+    <button 
+      class="nav-tab" 
+      [class.active]="mobileView === 'preview'"
+      (click)="setMobileView('preview')"
+    >
+      <i class="pi pi-eye"></i>
+      <span>Preview</span>
+    </button>
+    <button 
+      class="nav-tab" 
+      [class.active]="mobileView === 'templates'"
+      (click)="setMobileView('templates')"
+    >
+      <i class="pi pi-palette"></i>
+      <span>Templates</span>
+    </button>
   </div>
 
-  <div class="builder-container">
-    <!-- Left: Form Sections -->
-    <div class="form-panel">
-      <div class="panel-header">
-        <h2 class="panel-title">
-          <i class="pi pi-file-edit"></i>
-          Resume Sections
-        </h2>
-        <p class="panel-description">Fill in your information below</p>
-      </div>
-
-      <div class="sections-list">
-        <p-accordion>
-          @for (panel of panels; track panel) {
-          <p-accordionTab [selected]="panel.active">
-            <ng-template pTemplate="header">
-              <div class="section-header">
-                <div class="section-title-group">
-                  <i [class]="panel.icon" class="section-icon"></i>
-                  <span class="section-name">{{ panel.name }}</span>
-                </div>
-              </div>
-            </ng-template>
-            <div class="section-content">
-              <ng-container *ngIf="panel.visible">
-                <ng-container *ngComponentOutlet="panel.component"></ng-container>
-              </ng-container>
-            </div>
-          </p-accordionTab>
-          }
-        </p-accordion>
-      </div>
-    </div>
-
-    <!-- Right: Preview & Templates -->
-    <div class="preview-panel">
-      <!-- Preview Section -->
-      <div class="preview-section">
-        <div class="section-header-inline">
-          <h3 class="section-title-small">
-            <i class="pi pi-eye"></i>
-            Live Preview
-          </h3>
+  <!-- Main Content Grid -->
+  <div class="content-grid" [class.with-templates]="showTemplates">
+    
+    <!-- Left: Resume Builder Form -->
+    <aside class="form-sidebar" [class.mobile-visible]="mobileView === 'sections'">
+      <div class="sidebar-content">
+        <div class="sidebar-header">
+          <h2 class="sidebar-title">
+            <i class="pi pi-list"></i>
+            Sections
+          </h2>
         </div>
-        <div class="preview-content-wrapper">
+
+        <div class="sections-accordion">
+          <p-accordion>
+            @for (panel of panels; track panel) {
+            <p-accordionTab>
+              <ng-template pTemplate="header">
+                <div class="accordion-header">
+                  <i [class]="panel.icon" class="icon"></i>
+                  <span class="title">{{ panel.name }}</span>
+                </div>
+              </ng-template>
+              <div class="accordion-body">
+                <ng-container *ngIf="panel.visible">
+                  <ng-container *ngComponentOutlet="panel.component"></ng-container>
+                </ng-container>
+              </div>
+            </p-accordionTab>
+            }
+          </p-accordion>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Center: Live Preview -->
+    <main class="preview-main" [class.mobile-visible]="mobileView === 'preview'">
+      <div class="preview-container">
+        <div class="preview-header">
+          <div class="preview-title-group">
+            <i class="pi pi-desktop"></i>
+            <h3>Live Preview</h3>
+          </div>
+          <div class="preview-controls">
+            <span class="preview-size-label">100%</span>
+          </div>
+        </div>
+        <div class="preview-content">
           <app-cv-preview></app-cv-preview>
         </div>
       </div>
+    </main>
 
-      <!-- Templates Section -->
-      <div class="templates-section">
-        <div class="section-header-inline">
-          <h3 class="section-title-small">
+    <!-- Right: Templates (Toggleable) -->
+    <aside class="templates-sidebar" [class.hidden]="!showTemplates" [class.mobile-visible]="mobileView === 'templates'">
+      <div class="sidebar-content">
+        <div class="sidebar-header">
+          <h2 class="sidebar-title">
             <i class="pi pi-palette"></i>
-            Templates
-          </h3>
+            Choose Template
+          </h2>
         </div>
-        <div class="templates-wrapper">
+        
+        <div class="templates-container">
           <div class="template-grid">
-            <div class="template-item active">
-              <div class="template-thumb">
-                <img src="/assets/images/sample.jpg" alt="Template Sunshine" />
-                <div class="active-badge">
-                  <i class="pi pi-check"></i>
+            <div class="template-card active" (click)="selectTemplate('sunshine')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="Sunshine" />
+                <div class="active-overlay">
+                  <i class="pi pi-check-circle"></i>
+                  <span>Active</span>
                 </div>
               </div>
-              <div class="template-details">
-                <h4>Sunshine</h4>
-                <span>Modern</span>
+              <div class="template-label">
+                <strong>Sunshine</strong>
+                <span>Modern & Clean</span>
               </div>
             </div>
 
-            <div class="template-item">
-              <div class="template-thumb">
-                <img src="/assets/images/sample.jpg" alt="Template Bright" />
+            <div class="template-card" (click)="selectTemplate('bright')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="Bright" />
               </div>
-              <div class="template-details">
-                <h4>Bright</h4>
-                <span>Clean</span>
+              <div class="template-label">
+                <strong>Bright</strong>
+                <span>Professional</span>
               </div>
             </div>
 
-            <div class="template-item">
-              <div class="template-thumb">
-                <img src="/assets/images/sample.jpg" alt="Template Kingdom" />
+            <div class="template-card" (click)="selectTemplate('kingdom')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="Kingdom" />
               </div>
-              <div class="template-details">
-                <h4>Kingdom</h4>
+              <div class="template-label">
+                <strong>Kingdom</strong>
                 <span>Classic</span>
               </div>
             </div>
 
-            <div class="template-item">
-              <div class="template-thumb">
-                <img src="/assets/images/sample.jpg" alt="Template Uptown" />
+            <div class="template-card" (click)="selectTemplate('objection')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="Objection" />
               </div>
-              <div class="template-details">
-                <h4>Uptown</h4>
-                <span>Elegant</span>
+              <div class="template-label">
+                <strong>Objection</strong>
+                <span>Bold</span>
               </div>
             </div>
 
-            <div class="template-item">
-              <div class="template-thumb">
-                <img src="/assets/images/sample.jpg" alt="Template SK" />
+            <div class="template-card" (click)="selectTemplate('sk')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="SK" />
               </div>
-              <div class="template-details">
-                <h4>SK</h4>
+              <div class="template-label">
+                <strong>SK</strong>
                 <span>Minimal</span>
               </div>
             </div>
 
-            <div class="template-item">
-              <div class="template-thumb">
-                <img src="/assets/images/sample.jpg" alt="Template Scaller" />
+            <div class="template-card" (click)="selectTemplate('scaller')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="Scaller" />
               </div>
-              <div class="template-details">
-                <h4>Scaller</h4>
-                <span>Bold</span>
+              <div class="template-label">
+                <strong>Scaller</strong>
+                <span>Creative</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </aside>
+
   </div>
 </div>
