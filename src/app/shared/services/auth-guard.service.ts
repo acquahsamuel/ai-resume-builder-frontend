@@ -24,13 +24,7 @@ export class AuthGuardService implements CanActivate {
         // private stateStorageService: StateStorageService
     ) { }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (!this.auth.isAuthenticated()) {
-
-            // this.stateStorageService.storeUrl(state.url);
-            this.router.navigate(['/auth']);
-            return false;
-        }
-
+        
         return true;
     }
 }

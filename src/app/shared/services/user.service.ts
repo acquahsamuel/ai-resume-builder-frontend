@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { IUser } from '../dto/user.dto';
 import { AuthService } from './auth.service';
-// BASE_URL : 'https://workport.herokuapp.com/api/v1'
+import { environment as env } from '../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private BASE_URL = `${environment.BASE_URL}`;
+  private BASE_URL = `${env.BASE_URL}`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
