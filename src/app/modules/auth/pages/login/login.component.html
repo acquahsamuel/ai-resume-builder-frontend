@@ -1,63 +1,93 @@
-<section class="flex justify-center items-center h-screen">
-  <form
-    [formGroup]="loginForm"
-    class="login-form"
-    (ngSubmit)="submitForm()"
-  >
-    <div>
-      <h1 class="text-3xl font-bold text-center">Log in</h1>
-    </div>
-    <div class="my-4">
-      @if (loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched) {
-        <small class="text-red-500">Enter email!</small>
-      }
-      <input
-        type="text"
-        pInputText
-        formControlName="userName"
-        placeholder="Email"
-        class="w-full"
-      />
-    </div>
-
-    <div class="my-4">
-      @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-        <small class="text-red-500">Enter Password!</small>
-      }
-      <input
-        type="password"
-        pInputText
-        formControlName="password"
-        placeholder="Password"
-        class="w-full"
-      />
-    </div>
-
-    <div class="login-form-margin flex justify-between">
-      <div>
-        <p-checkbox formControlName="remember" inputId="remember">
-          <label for="remember">Remember me</label>
-        </p-checkbox>
-      </div>
-      <div>
-        <a class="login-form-forgot">Forgot password</a>
+<div class="login-container">
+  <!-- Left Side - Image -->
+  <div class="login-image-section">
+    <div class="image-overlay">
+      <div class="image-content">
+        <h2>Welcome Back!</h2>
+        <p>Create professional resumes that stand out. Login to continue your journey.</p>
       </div>
     </div>
+  </div>
 
-    <button
-      pButton
-      type="submit"
-      class="login-form-button login-form-margin w-full"
-      label="Log in"
-    ></button>
-    <div class="btn-group">
-      <button (click)="login()" type="button" class="login-with-google-btn">
-        Continue with google
-      </button>
-    </div>
+  <!-- Right Side - Form -->
+  <div class="login-form-section">
+    <div class="login-form-wrapper">
+      <div class="login-header">
+        <h1>Log In</h1>
+        <p>Enter your credentials to access your account</p>
+      </div>
 
-    <div class="login-form-margin">
-      <a class="login-form-forgot" routerLink="/auth/register"> Register </a>
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="login-form">
+        <!-- Email Field -->
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            pInputText
+            id="email"
+            formControlName="userName"
+            placeholder="Enter your email"
+            [class.error]="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched"
+          />
+          @if (loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched) {
+            <small class="error-message">Email is required</small>
+          }
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-field">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            pInputText
+            id="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          />
+          @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+            <small class="error-message">Password is required</small>
+          }
+        </div>
+
+        <!-- Remember & Forgot -->
+        <div class="login-options">
+          <div class="#">
+            <p-checkbox formControlName="remember" inputId="remember">
+              <label for="remember">Remember me</label>
+            </p-checkbox>
+          </div>
+          <a class="forgot-password">Forgot password?</a>
+        </div>
+
+        <!-- Login Button -->
+        <button
+          pButton
+          type="submit"
+          label="Log In"
+          class="login-submit-btn"
+        ></button>
+
+        <!-- Divider -->
+        <div class="divider">
+          <span>OR</span>
+        </div>
+
+        <!-- Google Login -->
+        <button
+          type="button"
+          class="google-login-btn"
+          (click)="login()"
+        >
+          <i class="pi pi-google"></i>
+          Continue with Google
+        </button>
+
+        <!-- Register Link -->
+        <div class="register-link">
+          Don't have an account? <a routerLink="/auth/register">Sign Up</a>
+        </div>
+      </form>
     </div>
-  </form>
-</section>
+  </div>
+</div>
