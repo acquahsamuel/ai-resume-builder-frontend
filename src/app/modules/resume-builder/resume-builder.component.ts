@@ -17,7 +17,7 @@ export class ResumeBuilderComponent implements OnInit {
   isMobileSidebarOpen = false;
   isMobile = false;
   currentPageTitle = 'Resumes';
-  showHeaderActions = false;
+  showHeaderActions = true;
   showTemplates = false;
   currentComponent: any;
 

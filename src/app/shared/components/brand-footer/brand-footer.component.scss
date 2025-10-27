@@ -16,7 +16,7 @@
 
 
 .footer {
-  background-color: rgb(54, 53, 53);
+  background-color: #004C4C;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -48,7 +48,11 @@
   list-style: none;
   text-transform: capitalize;
   text-decoration: none;
-  color: rgb(231, 201, 144);
+  color: #86efac;
+
+  &:hover {
+    color: #22c55e;
+  }
 }
 
 @media screen and (max-width: 500px) {

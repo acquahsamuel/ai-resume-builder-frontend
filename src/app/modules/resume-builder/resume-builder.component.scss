@@ -42,13 +42,13 @@
 
       i {
         font-size: 28px;
-        color: #667eea;
+        color: #22c55e;
       }
 
       .brand-name {
         font-size: 20px;
         font-weight: 700;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #22c55e 0%, #004C4C 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -109,16 +109,16 @@
 
     &:hover {
       background: #f9fafb;
-      color: #667eea;
+      color: #22c55e;
     }
 
     &.active {
-      background: #f0f7ff;
-      color: #667eea;
-      border-left-color: #667eea;
+      background: #f0fdf4;
+      color: #22c55e;
+      border-left-color: #22c55e;
 
       i {
-        color: #667eea;
+        color: #22c55e;
       }
     }
   }
@@ -223,13 +223,13 @@
       }
 
       &.active {
-        background: #667eea;
-        border-color: #667eea;
+        background: #22c55e;
+        border-color: #22c55e;
         color: white;
 
         &:hover {
-          background: #5a67d8;
-          border-color: #5a67d8;
+          background: #16a34a;
+          border-color: #16a34a;
         }
       }
     }
@@ -279,13 +279,13 @@
 
       i {
         font-size: 28px;
-        color: #667eea;
+        color: #22c55e;
       }
 
       .brand-name {
         font-size: 20px;
         font-weight: 700;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #22c55e 0%, #004C4C 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -336,16 +336,16 @@
 
       &:hover {
         background: #f9fafb;
-        color: #667eea;
+        color: #22c55e;
       }
 
       &.active {
-        background: #f0f7ff;
-        color: #667eea;
-        border-left-color: #667eea;
+        background: #f0fdf4;
+        color: #22c55e;
+        border-left-color: #22c55e;
 
         i {
-          color: #667eea;
+          color: #22c55e;
         }
       }
     }
@@ -379,6 +379,13 @@
   .main-header {
     .menu-toggle {
       display: block;
+    }
+
+    .header-actions {
+      .toggle-btn,
+      ::ng-deep p-button {
+        display: none !important;
+      }
     }
   }
 }

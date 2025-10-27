@@ -37,9 +37,9 @@
 
   .sidebar-header {
     flex-shrink: 0;
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.5rem;
     border-bottom: 1px solid #e5e7eb;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #004C4C 0%, #002e2e 100%);
 
     .sidebar-title {
       font-size: 16px;
@@ -75,7 +75,7 @@
           background: #fafafa;
 
           &:hover {
-            border-color: #667eea;
+            border-color: #22c55e;
             background: #f3f4f6;
           }
 
@@ -86,8 +86,8 @@
 
         &.p-highlight {
           .p-accordion-header-link {
-            background: #f0f7ff;
-            border-color: #667eea;
+            background: #f0fdf4;
+            border-color: #22c55e;
           }
         }
       }
@@ -106,7 +106,7 @@
 
       .icon {
         font-size: 16px;
-        color: #667eea;
+        color: #22c55e;
         width: 20px;
         text-align: center;
         flex-shrink: 0;
@@ -158,7 +158,7 @@
 
       i {
         font-size: 20px;
-        color: #667eea;
+        color: #22c55e;
       }
 
       h3 {
@@ -211,7 +211,7 @@
 
   .sidebar-header {
     flex-shrink: 0;
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.5rem;
     border-bottom: 1px solid #e5e7eb;
 
     .sidebar-title {
@@ -225,7 +225,7 @@
 
       i {
         font-size: 18px;
-        color: #667eea;
+        color: #22c55e;
       }
     }
   }
@@ -238,9 +238,11 @@
 
   .template-grid {
     display: grid;
+    // grid-template-columns: repeat(2, 1fr);
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+ 
 
   .template-card {
     cursor: pointer;
@@ -252,13 +254,13 @@
 
     &:hover {
       transform: translateY(-2px);
-      border-color: #667eea;
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+      border-color: #22c55e;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
     }
 
     &.active {
-      border-color: #667eea;
-      background: #f0f7ff;
+      border-color: #22c55e;
+      background: #f0fdf4;
     }
 
     .template-image {
@@ -275,7 +277,7 @@
         position: absolute;
         top: 0.75rem;
         right: 0.75rem;
-        background: #667eea;
+        background: #22c55e;
         color: white;
         padding: 0.5rem 0.875rem;
         border-radius: 6px;
@@ -311,7 +313,7 @@
     }
 
     &.active .template-label strong {
-      color: #667eea;
+      color: #22c55e;
     }
   }
 }
@@ -364,14 +366,14 @@
     }
 
     &:hover {
-      color: #667eea;
+      color: #22c55e;
       background: #f9fafb;
     }
 
     &.active {
-      color: #667eea;
-      border-bottom-color: #667eea;
-      background: #f0f7ff;
+      color: #22c55e;
+      border-bottom-color: #22c55e;
+      background: #f0fdf4;
     }
   }
 
@@ -436,6 +438,10 @@
 
   .preview-main .preview-content {
     padding: 1rem;
+  }
+
+  .templates-section .template-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
