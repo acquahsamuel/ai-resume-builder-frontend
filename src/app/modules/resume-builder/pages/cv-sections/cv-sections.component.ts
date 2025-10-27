@@ -56,6 +56,8 @@ import { CvPreviewComponent } from './cv-preview/cv-preview.component';
 export class CvSectionsComponent implements OnInit {
   step = 0;
   expandIconPosition: 'start' | 'end' = 'start';
+  showTemplates = false;
+  mobileView: 'sections' | 'preview' | 'templates' = 'sections';
   injector: Injector = Injector.create({
     providers: [
       {
@@ -200,6 +202,18 @@ export class CvSectionsComponent implements OnInit {
   ngOnInit(): void { }
 
   updateCv() { }
+
+  toggleTemplates() {
+    this.showTemplates = !this.showTemplates;
+  }
+
+  selectTemplate(templateName: string) {
+    console.log('Selected template:', templateName);
+  }
+
+  setMobileView(view: 'sections' | 'preview' | 'templates') {
+    this.mobileView = view;
+  }
 
   onPersonalInfoUpdateEvt(data: any) {
     console.log('PERSONAL INFO UPDATED', data);

@@ -1,10 +1,18 @@
 .btn-primary {
-  background-color: blue;
+  background-color: #22c55e;
   color: white;
+  
+  &:hover {
+    background-color: #16a34a;
+  }
 }
 .btn-secondary {
-  background-color: gray;
+  background-color: #004C4C;
   color: white;
+  
+  &:hover {
+    background-color: #003333;
+  }
 }
 .btn-danger {
   background-color: red;

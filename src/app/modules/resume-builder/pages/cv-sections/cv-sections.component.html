@@ -1,92 +1,164 @@
-<section class="app-container">
-  <!-- Left Column: CV Sections Builder -->
-  <section class="builder">
-    <div class="builder-header">
-      <h2 class="text-xl font-bold mb-4">Build Your Resume</h2>
-      <p class="text-sm text-gray-600 mb-4">Fill in your information section by section</p>
-    </div>
+<div class="builder-page">
+  <!-- Mobile Navigation Tabs -->
+  <div class="mobile-nav-tabs">
+    <button 
+      class="nav-tab" 
+      [class.active]="mobileView === 'sections'"
+      (click)="setMobileView('sections')"
+    >
+      <i class="pi pi-list"></i>
+      <span> Builder </span>
+    </button>
+    <button 
+      class="nav-tab" 
+      [class.active]="mobileView === 'preview'"
+      (click)="setMobileView('preview')"
+    >
+      <i class="pi pi-eye"></i>
+      <span>Preview</span>
+    </button>
+    <button 
+      class="nav-tab" 
+      [class.active]="mobileView === 'templates'"
+      (click)="setMobileView('templates')"
+    >
+      <i class="pi pi-palette"></i>
+      <span>Templates</span>
+    </button>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="content-grid" [class.with-templates]="showTemplates">
     
-    <div class="builder-content">
-    <p-accordion>
-      @for (panel of panels; track panel) {
-      <p-accordionTab [selected]="panel.active">
-        <ng-template pTemplate="header">
-          <div class="accordion-header-content">
-            <i [class]="panel.icon" class="panel-icon"></i>
-            <span class="panel-name">{{ panel.name }}</span>
+    <!-- Left: Resume Builder Form -->
+    <aside class="form-sidebar" [class.mobile-visible]="mobileView === 'sections'">
+      <div class="sidebar-content">
+        <div class="sidebar-header">
+          <h2 class="sidebar-title">
+            <i class="pi pi-file"></i>
+            Builder
+          </h2>
+        </div>
+
+        <div class="sections-accordion">
+          <p-accordion>
+            @for (panel of panels; track panel) {
+            <p-accordionTab>
+              <ng-template pTemplate="header">
+                <div class="accordion-header">
+                  <i [class]="panel.icon" class="icon"></i>
+                  <span class="title">{{ panel.name }}</span>
+                </div>
+              </ng-template>
+              <div class="accordion-body">
+                <ng-container *ngIf="panel.visible">
+                  <ng-container *ngComponentOutlet="panel.component"></ng-container>
+                </ng-container>
+              </div>
+            </p-accordionTab>
+            }
+          </p-accordion>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Center: Live Preview -->
+    <main class="preview-main" [class.mobile-visible]="mobileView === 'preview'">
+      <div class="preview-container">
+        <div class="preview-header">
+          <div class="preview-title-group">
+            <i class="pi pi-desktop"></i>
+            <h3>Live Preview</h3>
           </div>
-        </ng-template>
-        <ng-container *ngIf="panel.visible">
-          <ng-container *ngComponentOutlet="panel.component"></ng-container>
-        </ng-container>
-      </p-accordionTab>
-        }
-      </p-accordion>
-    </div>
-  </section>
+          <div class="preview-controls">
+            <span class="preview-size-label">100%</span>
+          </div>
+        </div>
+        <div class="preview-content">
+          <app-cv-preview></app-cv-preview>
+        </div>
+      </div>
+    </main>
 
-  <!-- Middle Column: Live Preview -->
-  <section class="preview">
-    <div class="preview-header sticky top-0 bg-white p-4 border-b">
-      <h2 class="text-xl font-bold">Preview</h2>
-      <div class="flex gap-2 mt-2">
-        <button pButton label="Download PDF" icon="pi pi-download" severity="secondary" size="small"></button>
-        <button pButton label="Print" icon="pi pi-print" severity="secondary" size="small"></button>
-      </div>
-    </div>
-    
-    <div class="preview-content">
-      <app-cv-preview></app-cv-preview>
-    </div>
-  </section>
+    <!-- Right: Templates (Toggleable) -->
+    <aside class="templates-sidebar" [class.hidden]="!showTemplates" [class.mobile-visible]="mobileView === 'templates'">
+      <div class="sidebar-content">
+        <div class="sidebar-header">
+          <h2 class="sidebar-title">
+            <i class="pi pi-palette"></i>
+            Choose Template
+          </h2>
+        </div>
+        
+        <div class="templates-container">
+          <div class="template-grid">
+            <div class="template-card active" (click)="selectTemplate('sunshine')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="Sunshine" />
+                <div class="active-overlay">
+                  <i class="pi pi-check-circle"></i>
+                  <span>Active</span>
+                </div>
+              </div>
+              <div class="template-label">
+                <strong>Sunshine</strong>
+                <span>Modern & Clean</span>
+              </div>
+            </div>
 
-  <!-- Right Column: Template Selection -->
-  <section class="templates">
-    <div class="templates-header p-4 border-b sticky top-0 bg-white">
-      <h2 class="text-xl font-bold mb-2">Choose Template</h2>
-      <p class="text-sm text-gray-600">Select a professional template</p>
-    </div>
-    
-    <div class="templates-grid">
-      <div class="template-card active">
-        <img src="/assets/images/sample.jpg" alt="Template Sunshine" />
-        <div class="template-info p-3">
-          <h3 class="font-semibold">Sunshine</h3>
-          <span class="text-xs text-gray-500">Currently Active</span>
-        </div>
-      </div>
-      
-      <div class="template-card">
-        <img src="/assets/images/sample.jpg" alt="Template Bright" />
-        <div class="template-info p-3">
-          <h3 class="font-semibold">Bright</h3>
-          <span class="text-xs text-gray-500">Modern</span>
-        </div>
-      </div>
-      
-      <div class="template-card">
-        <img src="/assets/images/sample.jpg" alt="Template Kingdom" />
-        <div class="template-info p-3">
-          <h3 class="font-semibold">Kingdom</h3>
-          <span class="text-xs text-gray-500">Classic</span>
-        </div>
-      </div>
-      
-      <div class="template-card">
-        <img src="/assets/images/sample.jpg" alt="Template Uptown" />
-        <div class="template-info p-3">
-          <h3 class="font-semibold">Uptown</h3>
-          <span class="text-xs text-gray-500">Elegant</span>
-        </div>
-      </div>
+            <div class="template-card" (click)="selectTemplate('bright')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="Bright" />
+              </div>
+              <div class="template-label">
+                <strong>Bright</strong>
+                <span>Professional</span>
+              </div>
+            </div>
 
-      <div class="template-card">
-        <img src="/assets/images/sample.jpg" alt="Template Uptown" />
-        <div class="template-info p-3">
-          <h3 class="font-semibold">Uptown</h3>
-          <span class="text-xs text-gray-500">Elegant</span>
+            <div class="template-card" (click)="selectTemplate('kingdom')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="Kingdom" />
+              </div>
+              <div class="template-label">
+                <strong>Kingdom</strong>
+                <span>Classic</span>
+              </div>
+            </div>
+
+            <div class="template-card" (click)="selectTemplate('objection')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="Objection" />
+              </div>
+              <div class="template-label">
+                <strong>Objection</strong>
+                <span>Bold</span>
+              </div>
+            </div>
+
+            <div class="template-card" (click)="selectTemplate('sk')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="SK" />
+              </div>
+              <div class="template-label">
+                <strong>SK</strong>
+                <span>Minimal</span>
+              </div>
+            </div>
+
+            <div class="template-card" (click)="selectTemplate('scaller')">
+              <div class="template-image">
+                <img src="/assets/images/sample.jpg" alt="Scaller" />
+              </div>
+              <div class="template-label">
+                <strong>Scaller</strong>
+                <span>Creative</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-</section>
+    </aside>
+
+  </div>
+</div>

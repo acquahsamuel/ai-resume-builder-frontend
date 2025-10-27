@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, Validators, UntypedFormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  Validators,
+  UntypedFormBuilder,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -8,11 +14,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule
-  ]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
 })
 export class ResetPasswordComponent implements OnInit {
   // @ts-ignore
@@ -38,12 +40,5 @@ export class ResetPasswordComponent implements OnInit {
       // throw new Error('')
       return;
     }
-
-    this.authSerive
-      .forgotPassword(this.resetPasswordForm.value)
-      .subscribe((email) => {
-        // console.log()
-        alert('Email sent to ' + email);
-      });
   }
 }

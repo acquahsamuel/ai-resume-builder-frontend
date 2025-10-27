@@ -1,82 +1,106 @@
-<section class="flex justify-center items-center h-screen">
-  <form
-    [formGroup]="signUpForm"
-    class="login-form"
-    (ngSubmit)="signIn()"
-  >
-    <div>
-      <h1 class="text-3xl font-bold text-center">Register</h1>
-    </div>
-    <div class="my-4">
-      @if (signUpForm.get('userName')?.invalid && signUpForm.get('userName')?.touched) {
-        <small class="text-red-500">Enter email!</small>
-      }
-      <input
-        type="text"
-        pInputText
-        formControlName="userName"
-        placeholder="Email"
-        class="w-full"
-      />
-    </div>
-
-    <div class="my-4">
-      @if (signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) {
-        <small class="text-red-500">Enter Password!</small>
-      }
-      <input
-        type="password"
-        pInputText
-        formControlName="password"
-        placeholder="Password"
-        class="w-full"
-      />
-    </div>
-
-    <div class="my-4">
-      @if (signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched) {
-        <small class="text-red-500">Confirm Password!</small>
-      }
-      <input
-        type="password"
-        pInputText
-        formControlName="confirmPassword"
-        placeholder="Confirm Password"
-        class="w-full"
-      />
-    </div>
-
-    <div class="login-form-margin flex justify-between">
-      <div>
-        <p-checkbox formControlName="remember" inputId="remember">
-          <label for="remember">Remember me</label>
-        </p-checkbox>
-      </div>
-      <div>
-        <a class="login-form-forgot">Forgot password</a>
+<div class="signup-container">
+  <!-- Left Side - Image -->
+  <div class="signup-image-section">
+    <div class="image-overlay">
+      <div class="image-content">
+        <h2>Create Your Account</h2>
+        <p>Start building professional resumes in minutes. Join thousands of job seekers who've landed their dream jobs.</p>
       </div>
     </div>
+  </div>
 
-    <button
-      pButton
-      type="submit"
-      class="login-form-button login-form-margin w-full"
-      label="Sign Up"
-    ></button>
-    <div class="btn-group">
-      <button
-        (click)="loginWithGoogle()"
-        type="button"
-        class="login-with-google-btn"
-      >
-        Continue with google
-      </button>
-    </div>
+  <!-- Right Side - Form -->
+  <div class="signup-form-section">
+    <div class="signup-form-wrapper">
+      <div class="signup-header">
+        <h1>Sign Up</h1>
+        <p>Create your account to get started</p>
+      </div>
 
-    <div class="login-form-margin">
-      <a class="login-form-forgot" routerLink="/auth/login">
-        Alrady have an account?
-      </a>
+      <form [formGroup]="signUpForm" (ngSubmit)="signIn()" class="signup-form">
+        <!-- Email Field -->
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            pInputText
+            id="email"
+            formControlName="userName"
+            placeholder="Enter your email"
+            [class.error]="signUpForm.get('userName')?.invalid && signUpForm.get('userName')?.touched"
+          />
+          @if (signUpForm.get('userName')?.invalid && signUpForm.get('userName')?.touched) {
+            <small class="error-message">Email is required</small>
+          }
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-field">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            pInputText
+            id="password"
+            form天府Name="password"
+            placeholder="Enter your password"
+            [class.error]="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched"
+          />
+          @if (signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) {
+            <small class="error-message">Password is required</small>
+          }
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="form-field">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            pInputText
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            placeholder="Confirm your password"
+            [class.error]="signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched"
+          />
+          @if (signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched) {
+            <small class="error-message">Please confirm your password</small>
+          }
+        </div>
+
+        <!-- Terms & Conditions -->
+        <div class="terms-checkbox">
+          <p-checkbox formControlName="remember" inputId="remember">
+            <label for="remember">I agree to the Terms & Conditions</label>
+          </p-checkbox>
+        </div>
+
+        <!-- Sign Up Button -->
+        <button
+          pButton
+          type="submit"
+          label="Sign Up"
+          class="signup-submit-btn"
+        ></button>
+
+        <!-- Divider -->
+        <div class="divider">
+          <span>OR</span>
+        </div>
+
+        <!-- Google Login -->
+        <button
+          type="button"
+          class="google-signup-btn"
+          (click)="loginWithGoogle()"
+        >
+          <i class="pi pi-google"></i>
+          Continue with Google
+        </button>
+
+        <!-- Login Link -->
+        <div class="login-link">
+          Already have an account? <a routerLink="/auth/login">Log In</a>
+        </div>
+      </form>
     </div>
-  </form>
-</section>
+  </div>
+</div>
