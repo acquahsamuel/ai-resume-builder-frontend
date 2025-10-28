@@ -100,7 +100,7 @@
   <!-- Features Section -->
   <section class="py-20 lg:py-32 bg-white">
     <div class="container mx-auto px-4">
-      <div class="text-center max trustees 3xl mx-auto mb-16">
+      <div class="text-center max-w-3xl mx-auto mb-16">
         <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
           Everything You Need to Create the Perfect Resume
         </h2>
@@ -117,7 +117,41 @@
               class="absolute top-0 right-0 w-24 h-24 bg-green-100 rounded-bl-full opacity-50 group-hover:opacity-100 transition-opacity">
             </div>
             <div class="shooting-icon mb-4 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <!-- Github Icon -->
+              <svg *ngIf="feature.icon === 'github'" class="w-6 h-6 text-green-600" fill="currentColor"
+                viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.33 1.266-.891.946-1.627-.128-.243-.364-.888-.641-1.094-.498-.259-1.303-.9-1.421-1.32-.125-.415-.199-.385-.178-.218-.125.385-.611 1.235-.955 1.526-.344.291-.178.431.178.523.689.169 1.446.169 2.126 0 .356-.092.522-.232.178-.523-.344-.291-.83-1.141-.955-1.526.021-.167.053-.197-.178.218-.118.42-.923 1.061-1.421 1.32-.277.206-.513.851-.641 1.094-.32.736 1.027 1.957.946 1.627 4.769-1.587 8.207-6.085 8.207-11.387 0-6.627-5.373-12-12-12z" />
+              </svg>
+              <!-- Lock Icon -->
+              <svg *ngIf="feature.icon === 'lock'" class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <!-- Settings Icon -->
+              <svg *ngIf="feature.icon === 'settings'" class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <!-- Document Icon -->
+              <svg *ngIf="feature.icon === 'document'" class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <!-- Brain Icon -->
+              <svg *ngIf="feature.icon === 'brain'" class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              <!-- Check Circle Icon -->
+              <svg *ngIf="feature.icon === 'check-circle'" class="w-6 h-6 text-green-600" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -128,6 +162,116 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- Template Gallery Section -->
+  <section class="py-20 lg:py-32 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          Choose Your Perfect Template
+        </h2>
+        <p class="text-xl text-gray-600">
+          Browse our collection of professionally designed CV templates
+        </p>
+      </div>
+
+      <!-- Horizontal Scrolling Gallery -->
+      <div class="relative">
+        <!-- Scroll Container -->
+        <div class="overflow-x-auto scrollbar-hide pb-8 scroll-smooth"
+          style="scrollbar-width: none; -ms-overflow-style: none;">
+          <div class="flex gap-6 px-2" style="min-width: fit-content;">
+            <!-- Template Cards -->
+            <div *ngFor="let template of TEMPLATES" class="group flex-shrink-0 w-80">
+              <div
+                class="relative bg-white rounded-lg overflow-hidden border border-gray-200 hover:border-emerald-400 transition-all duration-300">
+                <!-- Template Image Placeholder -->
+                <div class="relative h-64 bg-gray-50 overflow-hidden">
+                  <div class="absolute inset-0 flex items-center justify-center p-4">
+                    <div class="text-center">
+                      <!-- Sample CV Preview -->
+                      <div
+                        class="bg-white rounded p-3 border border-gray-200 transform rotate-2 group-hover:rotate-0 transition-transform duration-300">
+                        <div class="h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-t mb-2"></div>
+                        <div class="space-y-1.5">
+                          <div class="h-2.5 bg-gray-700 rounded w-3/4"></div>
+                          <div class="h-2 bg-gray-200 rounded w-full"></div>
+                          <div class="h-2 bg-gray-200 rounded w-5/6"></div>
+                          <div class="  bg-gray-100 rounded mt-3"></div>
+                          <div class="h-2 bg-gray-200 rounded w-full"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overlay on hover -->
+                  <div
+                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  </div>
+                  <!-- View button on hover -->
+                  <div
+                    class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button (click)="login()"
+                      class="px-6 py-2.5 bg-white text-emerald-600 font-medium rounded-md hover:bg-emerald-50 transition-colors">
+                      View Template
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Template Info -->
+                <div class="p-4 border-t border-gray-200">
+                  <div class="mb-2">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1.5">{{ template.name }}</h3>
+                    <span class="inline-block px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded">
+                      {{ template.category }}
+                    </span>
+                  </div>
+                  <p class="text-sm text-gray-600 mb-3">{{ template.description }}</p>
+
+                  <!-- Action Button -->
+                  <button (click)="login()"
+                    class="w-full py-2.5 bg-white text-emerald-600 font-medium rounded-md hover:bg-emerald-50 border border-gray-200 hover:border-emerald-400 transition-all duration-200 flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 15l-2-5M9.396 2.649a9 9 0 0112.802 0l-1.149-.827a4.5 4.5 0 00-6.79.681L10 8l-2.447 2.446a4.5 4.5 0 00-.681 6.79l.827 1.148a9 9 0 01-1.699 1.7z" />
+                    </svg>
+                    Start with this Template
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Arrows for Desktop -->
+        <button
+          class="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-white rounded-full border border-gray-200 shadow-md flex items-center justify-center hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300 z-10"
+          onclick="document.querySelector('.scrollbar-hide').scrollBy({ left: -400, behavior: 'smooth' })">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          class="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-white rounded-full border border-gray-200 shadow-md flex items-center justify-center hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300 z-10"
+          onclick="document.querySelector('.scrollbar-hide').scrollBy({ left: 400, behavior: 'smooth' })">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- View All Button -->
+      <div class="text-center mt-12">
+        <button (click)="login()"
+          class="inline-flex items-center gap-2 px-8 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transform hover:-translate-y-0.5 transition-all duration-200 shadow-lg hover:shadow-xl">
+          Explore All Templates
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
   </section>
 
   <!-- Benefits Section -->
@@ -196,45 +340,50 @@
   <section class="relative py-24 lg:py-32 overflow-hidden">
     <!-- Animated Background -->
     <div class="absolute inset-0 bg-gradient-to-br from-emerald-500 via-green-600 to-teal-600">
-      <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
+      <div class="absolute inset-0 opacity-20"
+        style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;">
+      </div>
     </div>
-    
+
     <!-- Content -->
     <div class="relative container mx-auto px-4 max-w-5xl">
-      <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 md:p-12 lg:p-16">
+      <div class="bg-white/95 backdrop-blur-sm rounded-3xl  p-8 md:p-12 lg:p-16">
         <div class="text-center">
           <!-- Badge -->
           <div class="inline-block mb-6 px-6 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold">
             ⚡ Get Started in 60 Seconds
           </div>
-          
+
           <!-- Heading -->
           <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
-            Ready to Land Your 
+            Ready to Land Your
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">
               Dream Job?
             </span>
           </h2>
-          
+
           <!-- Description -->
           <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Join over 10,000 professionals who've transformed their careers with AI-powered resumes.
           </p>
-          
+
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <button (click)="login()"
               class="group relative px-10 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-lg rounded-xl overflow-hidden transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
               <span class="relative z-10 flex items-center gap-2">
                 Create Your Resume Free
-                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
-              <div class="absolute inset-0 bg-gradient-to-r from-teal-600 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-teal-600 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity">
+              </div>
             </button>
-            
-            <a href="#features" 
+
+            <a href="#features"
               class="px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:border-emerald-500 hover:text-emerald-600 transition-all duration-300 flex items-center gap-2">
               View Features
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -242,24 +391,27 @@
               </svg>
             </a>
           </div>
-          
+
           <!-- Social Proof -->
           <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
             <div class="flex items-center gap-2">
               <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.378 2.325a1 1 0 00-.756.756 period1.993c.085.511.256.998.503 1.445l.11.196.061.128c.169.354.169.743 0 1.097l-.061.128-.11.196c-.247.447-.418.934-.503 1.445a1 1 0 00.756 1.193c.511.085.998.256 1.445.503l.196.11.128.061c.354.169.743.169 1.097 0l.128-.061.196-.11c.447-.247.934-.418 1.445-.503a1 1 0 00.756-.756c.085-.511.256-.998.503-1.445l.11-.196.061-.128c.169-.354.169-.743 0-1.097l-.061-.128-.11-.196c-.247-.447-.418-.934-.503-1.445a1 1 0 00-.756-1.193c-.511-.085-.998-.256-1.445-.503l-.196-.11-.128-.061c-.354-.169-.743-.169-1.097 0l-.128.061-.196.11c-.447.247-.934.418-1.445.503zm-.756-.756a1 1 0  arrivals1.193.756 1.993.085.511.256.998.503 1.445l.11.196.061.128c.169.354.169.743 0 1.097l-.061.128-.11.196c-.247.447-.418.934-.503 1.445a1 1 0 00.756 1.193c.511.085.998.256 1.445.503l.196.11.128.061c.354.169.743.169 1.097 0l.128-.061.196-.11c.447-.247.934-.418 1.445-.503a1 1 0 00.756-.756c.085-.511.256-.998.503-1.445l.11-.196.061-.128c.169-.354.169-.743 0-1.097l-.061-.128-.11-.196c-.247-.447-.418-.934-.503-1.445a1 1 0 00-.756-1.193c-.511-.085-.998-.256-1.445-.503l-.196-.11-.128-.061c-.354-.169-.743-.169-1.097 0l-.128.061-.196.11c-.447.247-.934.418-1.445.503z"/>
+                <path
+                  d="M9.378 2.325a1 1 0 00-.756.756 period1.993c.085.511.256.998.503 1.445l.11.196.061.128c.169.354.169.743 0 1.097l-.061.128-.11.196c-.247.447-.418.934-.503 1.445a1 1 0 00.756 1.193c.511.085.998.256 1.445.503l.196.11.128.061c.354.169.743.169 1.097 0l.128-.061.196-.11c.447-.247.934-.418 1.445-.503a1 1 0 00.756-.756c.085-.511.256-.998.503-1.445l.11-.196.061-.128c.169-.354.169-.743 0-1.097l-.061-.128-.11-.196c-.247-.447-.418-.934-.503-1.445a1 1 0 00-.756-1.193c-.511-.085-.998-.256-1.445-.503l-.196-.11-.128-.061c-.354-.169-.743-.169-1.097 0l-.128.061-.196.11c-.447.247-.934.418-1.445.503zm-.756-.756a1 1 0  arrivals1.193.756 1.993.085.511.256.998.503 1.445l.11.196.061.128c.169.354.169.743 0 1.097l-.061.128-.11.196c-.247.447-.418.934-.503 1.445a1 1 0 00.756 1.193c.511.085.998.256 1.445.503l.196.11.128.061c.354.169.743.169 1.097 0l.128-.061.196-.11c.447-.247.934-.418 1.445-.503a1 1 0 00.756-.756c.085-.511.256-.998.503-1.445l.11-.196.061-.128c.169-.354.169-.743 0-1.097l-.061-.128-.11-.196c-.247-.447-.418-.934-.503-1.445a1 1 0 00-.756-1.193c-.511-.085-.998-.256-1.445-.503l-.196-.11-.128-.061c-.354-.169-.743-.169-1.097 0l-.128.061-.196.11c-.447.247-.934.418-1.445.503z" />
               </svg>
               <span>4.9/5 Rating</span>
             </div>
             <div class="flex items-center gap-2">
               <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
               </svg>
               <span>10,000+ Users</span>
             </div>
             <div class="flex items-center gap-2">
               <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd" />
               </svg>
               <span>100% Free</span>
             </div>
@@ -277,67 +429,109 @@
         <!-- Company Info -->
         <div class="col-span-1 md:col-span-2">
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
+            <div
+              class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
               <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
             <span class="text-2xl font-bold text-white">Cleansheet</span>
           </div>
           <p class="text-gray-400 mb-4 max-w-md">
-            The ultimate AI-powered resume builder. Create professional, ATS-optimized resumes in minutes. Free forever, privacy-focused.
+            The ultimate AI-powered resume builder. Create professional, ATS-optimized resumes in minutes. Free forever,
+            privacy-focused.
           </p>
           <div class="flex gap-4">
-            <a href="https://github.com/acquahsamuel/cleansheet-ai-resume-builder" target="_blank" class="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
+            <a href="https://github.com/acquahsamuel/cleansheet-ai-resume-builder" target="_blank"
+              class="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.33 1.266-.891.946-1.627-.128-.243-.364-.888-.641-1.094-.498-.259-1.303-.9-1.421-1.32-.125-.415-.199-.385-.178-.218-.125.385-.611 1.235-.955 1.526-.344.291-.178.431.178.523.689.169 1.446.169 2.126 0 .356-.092.522-.232.178-.523-.344-.291-.83-1.141-.955-1.526.021-.167.053-.197-.178.218-.118.42-.923 1.061-1.421 1.32-.277.206-.513.851-.641 1.094-.32.736 1.027 1.957.946 1.627 4.769-1.587 8.207-6.085 8.207-11.387 0-6.627-5.373-12-12-12z"/>
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.33 1.266-.891.946-1.627-.128-.243-.364-.888-.641-1.094-.498-.259-1.303-.9-1.421-1.32-.125-.415-.199-.385-.178-.218-.125.385-.611 1.235-.955 1.526-.344.291-.178.431.178.523.689.169 1.446.169 2.126 0 .356-.092.522-.232.178-.523-.344-.291-.83-1.141-.955-1.526.021-.167.053-.197-.178.218-.118.42-.923 1.061-1.421 1.32-.277.206-.513.851-.641 1.094-.32.736 1.027 1.957.946 1.627 4.769-1.587 8.207-6.085 8.207-11.387 0-6.627-5.373-12-12-12z" />
               </svg>
             </a>
-            <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
+            <a href="#"
+              class="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
               </svg>
             </a>
-            <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
+            <a href="#"
+              class="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                <path
+                  d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
               </svg>
             </a>
           </div>
         </div>
 
-        <!-- Quick Links -->
+
         <div>
-          <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+          <h3 class="text-white font-semibold mb-4 text-lg">Quick Links</h3>
           <ul class="space-y-3">
-            <li><a href="#features" class="hover:text-emerald-400 transition-colors">Features</a></li>
-            <li><a href="#faq" class="hover:text-emerald-400 transition-colors">FAQ</a></li>
-            <li><a href="https://github.com/acquahsamuel/cleansheet-ai-resume-builder" target="_blank" class="hover:text-emerald-400 transition-colors">Documentation</a></li>
-            <li><a href="#" class="hover:text-emerald-400 transition-colors">Blog</a></li>
+            <li><a href="#features" class="text-white hover:text-emerald-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Features</a></li>
+            <li><a href="#faq" class="text-white hover:text-emerald-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              FAQ</a></li>
+            <li><a href="https://github.com/acquahsamuel/cleansheet-ai-resume-builder" target="_blank"
+                class="text-white hover:text-emerald-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Documentation</a></li>
+            <li><a href="#" class="text-white hover:text-emerald-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Blog</a></li>
           </ul>
         </div>
 
         <!-- Support -->
         <div>
-          <h3 class="text-white font-semibold mb-4">Support</h3>
+          <h3 class="text-white font-semibold mb-4 text-lg">Support</h3>
           <ul class="space-y-3">
-            <li><a href="#" class="hover:text-emerald-400 transition-colors">Contact Us</a></li>
-            <li><a href="#" class="hover:text-emerald-400 transition-colors">Help Center</a></li>
-            <li><a href="#" class="hover:text-emerald-400 transition-colors">Privacy Policy</a></li>
-            <li><a href="#" class="hover:text-emerald-400 transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="text-white hover:text-white-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Contact Us</a></li>
+            <li><a href="#" class="text-white hover:text-white-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Help Center</a></li>
+            <li><a href="#" class="text-white hover:text-white-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Privacy Policy</a></li>
+            <li><a href="#" class="text-white hover:text-white-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Terms of Service</a></li>
           </ul>
         </div>
       </div>
 
       <!-- Bottom Bar -->
-      <div class="pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="pt-8 border-t border-gray-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
         <div class="flex items-center gap-6 text-sm">
-          <p class="text-gray-400">
-            Made with <span class="text-red-500">♥</span> by 
-            <span class="text-emerald-400 font-semibold">Guglex Technologies</span>
+          <p class="text-gray-300">
+            Made with <span class="text-red-500 text-lg">♥</span> by
+            <span class="text-emerald-400 font-semibold hover:text-emerald-300 transition-colors">Guglex Technologies</span>
           </p>
         </div>
-        <p class="text-gray-400 text-sm">© 2024 Cleansheet. All rights reserved.</p>
+        <p class="text-gray-400 text-sm">© {{ getCurrentYear() }} Cleansheet. All rights reserved.</p>
       </div>
     </div>
   </footer>

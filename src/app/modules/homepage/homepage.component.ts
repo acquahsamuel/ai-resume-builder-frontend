@@ -1,8 +1,6 @@
-import { CommonModule , } from '@angular/common';
+import { CommonModule, } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
- 
-
 
 @Component({
   selector: 'app-homepage',
@@ -13,7 +11,7 @@ import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router'
 })
 export class HomepageComponent {
 
-  constructor(private router: Router){}
+  constructor(private router: Router) { }
 
 
   FAQS = [
@@ -26,34 +24,34 @@ export class HomepageComponent {
       question: 'How does the AI help me with my resume?',
       answer:
         'The AI analyzes your input and suggests improvements based on keyword optimization, formatting, and best practices, ensuring your resume stands out to recruiters.',
-        iconClass: 'text-green-500',
+      iconClass: 'text-green-500',
     },
     {
       question: 'Can I use the platform for free?',
       answer:
         'Yes, our platform offers a free basic version with essential features. For advanced tools and personalized feedback, consider upgrading to our premium plan.',
-        iconClass: 'text-green-500',
+      iconClass: 'text-green-500',
     },
     {
       question: 'Is my data secure on the platform?',
       answer:
         'Absolutely. We prioritize your privacy and data security, using encryption and secure protocols to protect your information.',
-        iconClass: 'text-green-500',
-      },
+      iconClass: 'text-green-500',
+    },
 
     {
       question: 'What kind of jobs can I apply for with the optimized resume?',
       answer:
         'Our AI helps optimize resumes for a wide range of industries and job roles, increasing your chances of matching with relevant job openings.',
-        iconClass: 'text-green-500',
-      },
+      iconClass: 'text-green-500',
+    },
 
     {
       question: 'Can I customize the templates offered?',
       answer:
         'Yes, our platform offers a variety of customizable templates that you can adjust to fit your personal style and professional needs.',
-        iconClass: 'text-green-500',
-      },
+      iconClass: 'text-green-500',
+    },
 
     {
       question: 'How often should I update my resume?',
@@ -107,40 +105,54 @@ export class HomepageComponent {
   EXTRA_FEATURES = [
     {
       title: 'Open-Source & Free Forever',
-      description:'Contribute, customize, and use the tool with no costs involved, now or in the future.',
-      iconClass: 'text-green-500',
+      description: 'Contribute, customize, and use the tool with no costs involved, now or in the future.',
+      icon: 'github',
     },
     {
       title: 'Privacy-Centric',
       description: 'Your data stays with you—no external storage or third-party access.',
-      iconClass: 'text-green-500',
+      icon: 'lock',
     },
     {
       title: 'Fully Customizable',
       description: 'Tailor your CV to any profession or industry with flexible design and format options.',
-      iconClass: 'text-green-500',
+      icon: 'settings',
     },
 
     {
       title: 'Customizable Templates & Input Validation',
-      description:'Multiple resume templates to choose from.',
-      iconClass: 'text-green-500',
+      description: 'Multiple resume templates to choose from.',
+      icon: 'document',
     },
     {
       title: 'AI Features',
-      description:'Auto Generate CVs with AI, ensuring your resume is unique and tailored to your skills and experiences.',
-      iconClass: 'text-green-500',
+      description: 'Auto Generate CVs with AI, ensuring your resume is unique and tailored to your skills and experiences.',
+      icon: 'brain',
     },
     {
       title: 'ATS-Optimized',
       description: 'Generate CVs that comply with Applicant Tracking Systems (ATS), ensuring your resume passes automated screening algorithms',
-      iconClass: 'text-green-500',
+      icon: 'check-circle',
     },
   ];
 
+  TEMPLATES = [
+    { name: 'Bright', description: 'Modern and vibrant', category: 'Creative' },
+    { name: 'Kingdom', description: 'Classic elegance', category: 'Professional' },
+    { name: 'Objection', description: 'Bold and striking', category: 'Creative' },
+    { name: 'Pincode', description: 'Clean minimalist', category: 'Modern' },
+    { name: 'Scaller', description: 'Executive style', category: 'Professional' },
+    { name: 'SK', description: 'Tech-focused', category: 'Modern' },
+    { name: 'Sunshine', description: 'Friendly approach', category: 'Creative' },
+    { name: 'Toastr', description: 'Professional clean', category: 'Traditional' },
+    { name: 'Uptown', description: 'Sophisticated look', category: 'Executive' },
+  ];
 
+  getCurrentYear(): number {
+    return new Date().getFullYear();
+  }
 
-  login(){
+  login() {
     this.router.navigateByUrl('/auth/login');
   }
 }
