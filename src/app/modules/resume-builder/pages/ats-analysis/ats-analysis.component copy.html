@@ -1,0 +1,213 @@
+<div class="min-h-screen bg-gray-50 p-4 md:p-8">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">ATS Resume Analysis</h1>
+      <p class="text-gray-600">See how your resume matches against ATS requirements</p>
+    </div>
+
+    <!-- Overall Score Card -->
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 mb-8">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="relative">
+          <div class="w-48 h-48 relative flex items-center justify-center">
+            <!-- Circular Progress -->
+            <svg class="transform -rotate-90 w-48 h-48">
+              <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="8" fill="none" class="text-gray-200"/>
+              <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="8" fill="none"
+                      stroke-dasharray="553.52"
+                      [attr.stroke-dashoffset]="553.52 - (553.52 * overallScore / 100)"
+                      class="text-green-600 transition-all duration-1000"
+                      stroke-linecap="round"/>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span class="text-5xl font-bold" [ngClass]="getScoreColor()">{{ overallScore }}</span>
+              <span class="text-gray-500">out of {{ maxScore }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Overall ATS Compatibility</h2>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between p-3 rounded-lg" [ngClass]="getScoreBgColor()">
+              <span class="font-medium text-gray-700">Keyword Match</span>
+              <span class="font-bold text-green-700">85%</span>
+            </div>
+            <div class="flex items-center justify-between p-3 rounded-lg bg-blue-100">
+              <span class="font-medium text-gray-700">Skills Match</span>
+              <span class="font-bold text-blue-700">83%</span>
+            </div>
+            <div class="flex items-center justify-between p-3 rounded-lg bg-purple-100">
+              <span class="font-medium text-gray-700">Experience Match</span>
+              <span class="font-bold text-purple-700">120%</span>
+            </div>
+            <div class="flex items-center justify-between p-3 rounded-lg bg-indigo-100">
+              <span class="font-medium text-gray-700">Format Score</span>
+              <span class="font-bold text-indigo-700">75%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keyword Analysis -->
+    <div class="grid md:grid-cols-2 gap-8 mb-8">
+      <!-- Matched Keywords -->
+      <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold text-gray-900">Matched Keywords</h3>
+          <span class="text-2xl font-bold text-green-600">
+            {{ getMatchedKeywordsCount() }}/{{ getTotalKeywordsCount() }}
+          </span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span *ngFor="let keyword of jobKeywords" 
+                [ngClass]="keyword.matched ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
+                class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg font-medium text-sm">
+            <svg *ngIf="keyword.matched" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <svg *ngIf="!keyword.matched" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+            {{ keyword.word }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Skills Comparison -->
+      <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold text-gray-900">Skills Analysis</h3>
+          <span class="text-2xl font-bold text-blue-600">
+            {{ getMatchedSkills().length }}/{{ requiredSkills.length }}
+          </span>
+        </div>
+        <div class="space-y-3">
+          <div>
+            <p class="text-sm font-medium text-gray-600 mb-2">Matched Skills:</p>
+            <div class="flex flex-wrap gap-2">
+              <span *ngFor="let skill of getMatchedSkills()" 
+                    class="bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-medium">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-gray-600 mb-2">Missing Skills:</p>
+            <div class="flex flex-wrap gap-2">
+              <span *ngFor="let skill of getMissingSkills()" 
+                    class="bg-red-100 text-red-700 px-3 py-1 rounded-lg text-sm font-medium">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience & Education -->
+    <div class="grid md:grid-cols-2 gap-8 mb-8">
+      <!-- Experience Match -->
+      <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-4">Experience Matching</h3>
+        <div class="space-y-4">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-gray-600">Required</span>
+              <span class="text-sm font-medium text-gray-600">Your Experience</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-500 rounded-full" [style.width.%]="100"></div>
+              </div>
+              <span class="text-sm font-bold text-blue-600">{{ requiredExperience }} years</span>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center gap-4">
+              <div class="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
+                <div class="h-full bg-green-500 rounded-full" [style.width.%]="(actualExperience / requiredExperience) * 100"></div>
+              </div>
+              <span class="text-sm font-bold text-green-600">{{ actualExperience }} years</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-green-600">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span class="text-sm font-medium">You meet the experience requirement</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education Match -->
+      <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-4">Education Matching</h3>
+        <div class="space-y-4">
+          <div>
+            <p class="text-sm font-medium text-gray-600 mb-2">Required:</p>
+            <p class="text-gray-800">{{ requiredEducation }}</p>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-gray-600 mb-2">Your Education:</p>
+            <p class="text-gray-800">{{ actualEducation }}</p>
+          </div>
+          <div class="flex items-center gap-2 text-green-600">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span class="text-sm font-medium">Education requirement met</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6 mb-8">
+      <div class="flex items-center gap-3 mb-6">
+        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+        </svg>
+        <h2 class="text-2xl font-bold text-gray-900">Recommendations to Improve Score</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div *ngFor="let rec of recommendations" 
+             [ngClass]="rec.priority === 'high' ? 'border-l-4 border-red-500' : rec.priority === 'medium' ? 'border-l-4 border-yellow-500' : 'border-l-4 border-green-500'"
+             class="bg-gray-50 p-4 rounded-r-lg">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-bold text-gray-900">{{ rec.title }}</h4>
+            <span [ngClass]="rec.priority === 'high' ? 'bg-red-100 text-red-700' : rec.priority === 'medium' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'"
+                  class="px-2 py-1 rounded text-xs font-semibold uppercase">
+              {{ rec.priority }}
+            </span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">{{ rec.description }}</p>
+          <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-sm font-medium">
+            {{ rec.impact }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formatting Issues -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+      <h3 class="text-xl font-bold text-gray-900 mb-4">Formatting Issues</h3>
+      <div class="space-y-3">
+        <div *ngFor="let issue of formattingIssues" 
+             [ngClass]="issue.severity === 'high' ? 'bg-red-50 border-red-200' : issue.severity === 'medium' ? 'bg-yellow-50 border-yellow-200' : 'bg-green-50 border-green-200'"
+             class="flex items-start gap-3 p-4 rounded-lg border">
+          <svg class="w-5 h-5 flex-shrink-0 mt-0.5" 
+               [ngClass]="issue.severity === 'high' ? 'text-red-600' : issue.severity === 'medium' ? 'text-yellow-600' : 'text-green-600'"
+               fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+          <div>
+            <p class="font-medium text-gray-900">{{ issue.type }} Issue</p>
+            <p class="text-sm text-gray-600">{{ issue.issue }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
