@@ -3,36 +3,55 @@
     <!-- Page Header -->
     <div class="mb-8 text-center">
       <h1 class="text-4xl font-bold text-gray-900 mb-2">ATS Resume Analyzer</h1>
-      <p class="text-gray-600 text-lg">Analyze your resume against any job description</p>
+      <p class="text-gray-600 text-lg">
+        Analyze your resume against any job description
+      </p>
     </div>
 
     <!-- Two Column Layout -->
     <div class="grid lg:grid-cols-2 gap-8">
-      
       <!-- Left Column: Job Description -->
       <div class="space-y-6">
         <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            <div
+              class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-blue-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
             </div>
             <h2 class="text-2xl font-bold text-gray-900">Job Description</h2>
           </div>
-          
+
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Paste Job Description</label>
-              <textarea 
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >Paste Job Description</label
+              >
+              <textarea
                 [(ngModel)]="jobDescription"
+                rows="10"
+                contentEditable="true"
                 placeholder="Paste the complete job description here. Include requirements, responsibilities, and qualifications..."
                 class="w-full h-64 p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none text-gray-700"
               ></textarea>
-              <p class="text-xs text-gray-500 mt-2">{{ jobDescription.length }} characters</p>
+              <p class="text-xs text-gray-500 mt-2">
+                {{ jobDescription.length }} characters
+              </p>
             </div>
-            
-            <button 
+
+            <button
               (click)="analyzeResume()"
               [disabled]="!jobDescription"
               class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
@@ -43,29 +62,63 @@
         </div>
 
         <!-- Quick Tips -->
-        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6">
-          <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-            <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1的关注0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1obbies0 00.951-.69l1.07-3.292z"/>
+        <div
+          class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6"
+        >
+          <h3
+            class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2"
+          >
+            <svg
+              class="w-5 h-5 text-blue-600"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1的关注0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1obbies0 00.951-.69l1.07-3.292z"
+              />
             </svg>
             Pro Tips
           </h3>
           <ul class="space-y-2 text-sm text-gray-700">
             <li class="flex items-start gap-2">
-              <svg class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              <svg
+                class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                />
               </svg>
               Include the complete job description for best results
             </li>
             <li class="flex items-start gap-2">
-              <svg class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              <svg
+                class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                />
               </svg>
               Upload your resume in PDF or DOCX format
             </li>
             <li class="flex items-start gap-2">
-              <svg class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 眨眨眨8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              <svg
+                class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 眨眨眨8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"
+                />
               </svg>
               Review recommendations to improve your score
             </li>
@@ -78,40 +131,103 @@
         <!-- CV Upload Section -->
         <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2iven5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            <div
+              class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2iven5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
             </div>
             <h2 class="text-2xl font-bold text-gray-900">Upload Resume</h2>
           </div>
 
           <!-- Upload Area -->
-          <div (dragover)="onDragOver($event)" (drop)="onDrop($event)" (click)="triggerFileInput()"
-               class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-green-400 transition-colors bg-gray-50 cursor-pointer">
-            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+          <div
+            (dragover)="onDragOver($event)"
+            (drop)="onDrop($event)"
+            (click)="triggerFileInput()"
+            class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-green-400 transition-colors bg-gray-50 cursor-pointer"
+          >
+            <svg
+              class="w-16 h-16 text-gray-400 mx-auto mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              />
             </svg>
-            <p class="text-gray-700 font-medium mb-1">Click to upload or drag and drop</p>
+            <p class="text-gray-700 font-medium mb-1">
+              Click to upload or drag and drop
+            </p>
             <p class="text-sm text-gray-500">PDF or DOCX (max 10MB)</p>
-            <input type="file" accept=".pdf,.docx" class="hidden" #fileInput (change)="onFileSelected($event)" (click)="$event.stopPropagation()">
+            <input
+              type="file"
+              accept=".pdf,.docx"
+              class="hidden"
+              #fileInput
+              (change)="onFileSelected($event)"
+              (click)="$event.stopPropagation()"
+            />
           </div>
 
           <!-- File Info -->
-          <div *ngIf="uploadedFileName" class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div
+            *ngIf="uploadedFileName"
+            class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg"
+          >
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-3">
-                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                <svg
+                  class="w-6 h-6 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
                 </svg>
                 <div>
-                  <p class="font-medium text-gray-900">{{ uploadedFileName }}</p>
+                  <p class="font-medium text-gray-900">
+                    {{ uploadedFileName }}
+                  </p>
                   <p class="text-sm text-gray-500">{{ uploadedFileSize }}</p>
                 </div>
               </div>
-              <button (click)="removeFile()" class="text-red-600 hover:text-red-700">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              <button
+                (click)="removeFile()"
+                class="text-red-600 hover:text-red-700"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
@@ -120,23 +236,48 @@
 
         <!-- Analysis Summary -->
         <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-          <h2 class="text-2xl font-bold text-gray-900 mb-6">Analysis Summary</h2>
-          
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">
+            Analysis Summary
+          </h2>
+
           <!-- Overall Score -->
-          <div class="bg-gradient-to-br from-gray-50 to-white rounded-xl p-6 mb-6">
+          <div
+            class="bg-gradient-to-br from-gray-50 to-white rounded-xl p-6 mb-6"
+          >
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm font-medium text-gray-600 mb-1">Overall ATS Score</p>
-                <p class="text-3xl font-bold" [ngClass]="getScoreColor()">{{ overallScore }}%</p>
+                <p class="text-sm font-medium text-gray-600 mb-1">
+                  Overall ATS Score
+                </p>
+                <p class="text-3xl font-bold" [ngClass]="getScoreColor()">
+                  {{ overallScore }}%
+                </p>
               </div>
               <div class="w-20 h-20 relative flex items-center justify-center">
                 <svg class="transform -rotate-90 w-20 h-20">
-                  <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="4" fill="none" class="text-gray-200"/>
-                  <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="4" fill="none"
-                          stroke-dasharray="226.2"
-                          [attr.stroke-dashoffset]="226.2 - (226.2 * overallScore / 100)"
-                          [ngClass]="getScoreColor()"
-                          stroke-linecap="round"/>
+                  <circle
+                    cx="40"
+                    cy="40"
+                    r="36"
+                    stroke="currentColor"
+                    stroke-width="4"
+                    fill="none"
+                    class="text-gray-200"
+                  />
+                  <circle
+                    cx="40"
+                    cy="40"
+                    r="36"
+                    stroke="currentColor"
+                    stroke-width="4"
+                    fill="none"
+                    stroke-dasharray="226.2"
+                    [attr.stroke-dashoffset]="
+                      226.2 - (226.2 * overallScore) / 100
+                    "
+                    [ngClass]="getScoreColor()"
+                    stroke-linecap="round"
+                  />
                 </svg>
               </div>
             </div>
@@ -146,19 +287,30 @@
           <div class="grid grid-cols-2 gap-4 mb-6">
             <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
               <p class="text-xs font-medium text-blue-600 mb-1">Keywords</p>
-              <p class="text-2xl font-bold text-blue-700">{{ getMatchedKeywordsCount() }}/{{ getTotalKeywordsCount() }}</p>
+              <p class="text-2xl font-bold text-blue-700">
+                {{ getMatchedKeywordsCount() }}/{{ getTotalKeywordsCount() }}
+              </p>
             </div>
             <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-              <p class="text-xs font-medium text-green-600 mb-1">Skills Match</p>
-              <p class="text-2xl font-bold text-green-700">{{ getMatchedSkills().length }}/{{ requiredSkills.length }}</p>
+              <p class="text-xs font-medium text-green-600 mb-1">
+                Skills Match
+              </p>
+              <p class="text-2xl font-bold text-green-700">
+                {{ getMatchedSkills().length }}/{{ requiredSkills.length }}
+              </p>
             </div>
           </div>
 
           <!-- Missing Skills -->
           <div *ngIf="getMissingSkills().length > 0" class="mb-6">
-            <h4 class="text-sm font-semibold text-gray-700 mb-3">Missing Skills</h4>
+            <h4 class="text-sm font-semibold text-gray-700 mb-3">
+              Missing Skills
+            </h4>
             <div class="flex flex-wrap gap-2">
-              <span *ngFor="let skill of getMissingSkills()" class="bg-red-100 text-red-700 px-3 py-1 rounded-lg text-sm font-medium">
+              <span
+                *ngFor="let skill of getMissingSkills()"
+                class="bg-red-100 text-red-700 px-3 py-1 rounded-lg text-sm font-medium"
+              >
                 {{ skill }}
               </span>
             </div>
@@ -166,19 +318,35 @@
 
           <!-- Top Recommendations -->
           <div class="space-y-3">
-            <h4 class="text-sm font-semibold text-gray-700 mb-3">Top Recommendations</h4>
-            <div *ngFor="let rec of recommendations.slice(0, 2)" 
-                 [ngClass]="rec.priority === 'high' ? 'border-l-4 border-red-500' : 'border-l-4 border-yellow-500'"
-                 class="bg-gray-50 p-4 rounded-r-lg">
+            <h4 class="text-sm font-semibold text-gray-700 mb-3">
+              Top Recommendations
+            </h4>
+            <div
+              *ngFor="let rec of recommendations.slice(0, 2)"
+              [ngClass]="
+                rec.priority === 'high'
+                  ? 'border-l-4 border-red-500'
+                  : 'border-l-4 border-yellow-500'
+              "
+              class="bg-gray-50 p-4 rounded-r-lg"
+            >
               <div class="flex items-start justify-between mb-2">
                 <h5 class="font-bold text-gray-900 text-sm">{{ rec.title }}</h5>
-                <span class="px-2 py-0.5 rounded text-xs font-semibold uppercase"
-                      [ngClass]="rec.priority === 'high' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'">
+                <span
+                  class="px-2 py-0.5 rounded text-xs font-semibold uppercase"
+                  [ngClass]="
+                    rec.priority === 'high'
+                      ? 'bg-red-100 text-red-700'
+                      : 'bg-yellow-100 text-yellow-700'
+                  "
+                >
                   {{ rec.priority }}
                 </span>
               </div>
               <p class="text-xs text-gray-600">{{ rec.description }}</p>
-              <span class="inline-block mt-2 px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-xs font-medium">
+              <span
+                class="inline-block mt-2 px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-xs font-medium"
+              >
                 {{ rec.impact }}
               </span>
             </div>
