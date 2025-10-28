@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
    * @returns
    */
   submitForm() {
-    this.router.navigateByUrl('/builder/resume-builder');
+    this.router.navigateByUrl('/dashboard');
     if (this.loginForm.valid) {
       const { userName, password, remember } = this.loginForm.value;
     } else {
