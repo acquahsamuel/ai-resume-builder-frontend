@@ -1,9 +1,9 @@
-<!-- <section class="main-wrapper"></section> -->
+<section class="main-wrapper px-2">
   <div class="grid xl:grid-cols-1 grid-cols-1 container mx-auto">
     <div class="py-5">
       <div class="py-3 px-3 rounded-xl border w-full bg-green-900">
-        <div class="flex justify-between items-center">
-          <div class="flex justify-items-center items-center gap-2">
+        <div class="flex">
+          <div class="flex gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -18,91 +18,102 @@
                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
               />
             </svg>
-            <p class="font-semibold text-white">LOGO</p>
+            <p class="font-semibold text-white">Cleansheet Resume</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  
-
-
   <section class="relatve container mx-auto">
     <div class="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-24 lg:py-32">
-      <div class="mx-auto  w-full max-w-3xl text-center md:mb-16 lg:mb-20">
-        <h1 class="mb-4 text-4xl font-semibold md:text-6xl"> Cleansheet <span class="bg-[url('https://assets.website-files.com/63904f663019b0d8edf8d57c/6390526ac2a607693620c97b_Rectangle%2010.svg')] bg-cover bg-center px-4 text-white"> AI</span>.</h1>
-        <p class="mx-auto mb-5 max-w-[528px] text-xl text-[#636262] lg:mb-8">  Cleansheet is a platform that helps you create, optimize, and tailor your resumes to better match job descriptions and industry standards. With its user-friendly interface, effortlessly tap into the world of AI-generated text.</p>
-      
-        <div class="flex justify-center">
-          <a href="#" class="mr-5 inline-block rounded-xl bg-black px-8 py-4 text-center font-semibold text-white [box-shadow:rgb(19,_83,_254)_6px_6px] md:mr-6">Get Started</a>
-          <a href="#" class="flex max-w-full flex-row items-center justify-center rounded-xl border border-solid border-[#006400] px-6 py-3 font-semibold text-[#006400] [box-shadow:rgb(19,_83,_254)_6px_6px]">
-          
-            <p class="text-black"> Create Account </p>
+      <div class="mx-auto w-full max-w-3xl text-center md:mb-16 lg:mb-20">
+        <h1 class="mb-4 text-4xl font-semibold md:text-6xl">
+          Cleansheet
+          <span class="inline-block bg-green-700 text-white px-2 transform skew-x-3 ml-1">
+            AI</span
+          >.
+        </h1>
+        <p class="mx-auto mb-5 max-w-[628px] text-xl text-[#636262] leading-normal lg:mb-8">
+          A one-of-a-kind resume builder that keeps your privacy in mind.
+          Completely secure, customizable, portable, open-source and free
+          forever. Try it out today!
+        </p>
+
+        <div class="flex justify-center items-center">
+          <a
+            class="group relative inline-block text-sm rounded-md font-medium  text-white !important focus:outline-none focus:ring"
+            (click)="login()"
+          >
+            <span
+              class="absolute inset-0 border rounded-md border-green-600 group-active:border-green-700"
+            ></span>
+            <span 
+             
+              class="block border rounded-md border-green-600 bg-green-700 px-12 py-3 transition-transform active:border-green-500 active:bg-green-500 group-hover:-translate-x-1 group-hover:-translate-y-1"
+            >
+              Create Account
+            </span>
           </a>
         </div>
       </div>
     </div>
-    <!-- BG Images -->
-    <img src="https://assets.website-files.com/63904f663019b0d8edf8d57c/63905b9f809b5c8180ce30c5_pattern-1.svg" alt="" class="absolute bottom-0 left-0 right-auto top-auto -z-10 inline-block md:bottom-1/2 md:left-0 md:right-auto md:top-auto" />
-    <img src="https://assets.website-files.com/63904f663019b0d8edf8d57c/63905ba1538296b3f50a905e_pattern-2.svg" alt="" class="absolute bottom-auto left-auto right-0 top-0 -z-10 hidden sm:inline-block" />
- </section>
 
+    <img
+      src="/icons/svgs/pattern-1.svg"
+      alt=""
+      class="absolute bottom-0 bg-cover bg-center px-4 left-0 right-auto top-auto -z-10 inline-block md:bottom-1/2 md:left-0 md:right-auto md:top-auto"
+    />
 
-  <!-- <section class="mx-auto container">
-    <div class="px-2 py-10">
-      <div id="features">
-        <p class="text-center text-2xl leading-7 text-white">Features</p>
-        <h2
-          class="text-center font-display text-3xl font-bold tracking-tight text-white md:text-4xl"
-        >
-          Writing has never been so easy
-        </h2>
-
-        <ul
-          class="mt-16 grid grid-cols-1 gap-6 text-center text-slate-700 md:grid-cols-3"
-        >
-          <li
-            *ngFor="let feature of FEATURES"
-            class="rounded-xl bg-green-900 px-8 py-8 shadow-sm"
-          >
-            <a
-              *ngIf="feature.link; else noLink"
-              [href]="feature.link"
-              class="group"
-            >
-              <img [src]="feature.image" alt="" class="mx-auto h-10 w-10" />
-              <h3
-                class="my-3 font-display text-white group-hover:text-primary-500"
-              >
-                {{ feature.title }}
-              </h3>
-              <p class="mt-1.5 text-sm text-white font-roboto">
-                {{ feature.description }}
-              </p>
-            </a>
-            <ng-template #noLink>
-              <img [src]="feature.image" alt="" class="mx-auto h-10 w-10" />
-              <h3 class="my-3 font-display text-white">{{ feature.title }}</h3>
-              <p class="mt-1.5 text-sm text-white font-roboto">
-                {{ feature.description }}
-              </p>
-            </ng-template>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section> -->
-
-
-  <section>
-     
+    <img
+      src="/icons/svgs/pattern-1.svg"
+      alt=""
+      class="absolute bottom-auto bg-cover bg-center px-4 left-auto right-0 top-0 -z-10 hidden sm:inline-block"
+    />
   </section>
 
+  <section class="container mx-auto">
+    <div
+      class="flex pt-12 px-6 md:px-20 items-center justify-center bg-hero overflow-hidden"
+    >
+      <div class="flex flex-col gap-6 md:flex-row items-center max-w-8xl">
+        <div class="w-full md:w-1/2 lg:pr-32">
+          <h2
+            class="text-4xl lg:text-5xl text-center md:text-left text-green-900 leading-tight font-medium"
+          >
+            Achieve a 100% match between your resume and the job description.
+          </h2>
+          <h3
+            class="mt-6 md:mt-10 text-md lg:text-xl text-center md:text-left text-gray-700 font-light"
+          >
+            Create the prefect resume for your next job
+          </h3>
+          <div
+            class="mt-10 flex flex-col sm:flex-row justify-center md:justify-start"
+          >
+            <button
+            (click)="login()"
+              class="w-full sm:w-40 px-4 py-3 rounded font-semibold text-md bg-green-500 text-white border-2 border-green-500"
+            >
+              Get started
+            </button>
+            <a
+              href="https://github.com/acquahsamuel/cleansheet-ai-resume-builder"
+              class="w-full mt-4 sm:mt-0 sm:ml-4 sm:w-48 px-4 py-3 rounded font-semibold text-md bg-white text-black !important border-2 border-gray-500"
+            >
+               Contribute on Github
+           </a>
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 flex justify-center md:justify-end">
+          <img src="/images/sample.jpg" />
+        </div>
+      </div>
+    </div>
+  </section>
 
-
- <section>
-    <div class="rounded-xl py-24 my-20 sm:py-32">
+  <section>
+    <div class="rounded-xl py-2 my-2 sm:py-32 bg-green-500">
       <div class="px-6 lg:px-8 mx-auto container">
         <div
           class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3"
@@ -118,33 +129,38 @@
             >
               All-in-one platform
             </p>
-            <p class="mt-6 text-base leading-7 text-gray-600">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
-              impedit perferendis suscipit eaque, iste dolor cupiditate
-              blanditiis ratione.
+            <p class="mt-6 text-base leading-7 text-white">
+              Open-Source, Secure, and ATS-Optimized This project is a unique,
+              privacy-focused resume builder designed to help you create
+              professional CVs with ease. It offers complete security,
+              customization options, and portability, ensuring your personal
+              data remains protected
             </p>
           </div>
           <dl
             class="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:gap-y-16"
           >
-            <div *ngFor="let feature of EXTRA_FEATURES" class="relative pl-9">
-              <dt class="font-semibold text-gray-900">
-                <svg
-                  class="absolute top-1 left-0 h-5 w-5 {{ feature.iconClass }}"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+            <div *ngFor="let feature of EXTRA_FEATURES">
+              <div class="relative h-full ml-0 mr-0 sm:mr-2">
+                <span
+                  class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-green-900 rounded-lg"
+                ></span>
+                <div
+                  class="relative h-full p-5 bg-white border-2 border-green-900 rounded-lg"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                {{ feature.title }}
-              </dt>
-              <p class="mt-2">{{ feature.description }}</p>
+                  <div class="flex items-center -mt-1">
+                    <h3 class="my-2 text-lg font-bold text-gray-800 underline">
+                      {{ feature.title }}
+                    </h3>
+                  </div>
+                  <p
+                    class="mt-1 mb-1 text-xs font-medium text-green-500 uppercase"
+                  ></p>
+                  <p class="mb-2 text-gray-600">
+                    {{ feature.description }}
+                  </p>
+                </div>
+              </div>
             </div>
           </dl>
         </div>
@@ -152,52 +168,80 @@
     </div>
   </section>
 
-<section class="faq-section container mx-auto max-w-5xl py-10">
-  <div class="flex justify-center items-center">
-    <h3 class="text-3xl text-green-800 py-2 font-semibold">
-      Frequently Asked Question
-    </h3>
-  </div>
+  <section class="faq-section container mx-auto max-w-5xl py-10">
+    <div class="flex justify-center items-center">
+      <h3 class="text-3xl text-green-800 py-2 font-semibold">
+        Frequently Asked Question
+      </h3>
+    </div>
 
-  <div class="space-y-4">
-    <details
-      class="group [&_summary::-webkit-details-marker]:hidden"
-      *ngFor="let item of FAQS"
-    >
-      <summary
-        id="summary"
-        class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900"
+    <div class="space-y-4">
+      <details
+        class="group [&_summary::-webkit-details-marker]:hidden"
+        *ngFor="let item of FAQS"
       >
-        <h2 class="font-medium">{{ item.question }}</h2>
-
-        <svg
-          class="size-5 shrink-0 transition duration-300 group-open:-rotate-180"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+        <summary
+          id="summary"
+          class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-100 p-4 text-gray-900"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </summary>
+          <h2 class="font-medium">{{ item.question }}</h2>
 
-      <p class="mt-4 px-4 leading-relaxed text-gray-700">
-        {{ item.answer }}
+          <svg
+            class="size-5 shrink-0 transition duration-300 group-open:-rotate-180"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </summary>
+
+        <p class="mt-4 px-4 leading-relaxed text-gray-700">
+          {{ item.answer }}
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <section class="container mx-auto py-10">
+    <div class="p-12 rounded-xl bg-gradient-to-r from-green-500">
+      <h2 class="px-4 font-medium mb-2 font-roboto text-white">
+        Take your resume one step further.
+      </h2>
+      <p class="px-4 text-2xl text-white font-roboto">
+        Utilize AI-Enhanced resumes to tailor your skills and secure your dream
+        job with confidence.
       </p>
-    </details>
-  </div>
-</section>
 
-<section class="container mx-auto py-20">
-  <div class="bg-green-900 bg-card-b p-6 rounded-xl">
-    <h2 class="px-4 text-6xl font-medium mb-2 font-roboto text-white">
-      Footer
-    </h2>
-    <p class="px-4 text-2xl text-white font-roboto">Guglex Technologies</p>
+      <div>
+        <div
+          class="w-52 max-w-sm rounded-xl bg-gradient-to-tr from-green-300 to-green-800 p-0.5 shadow-lg"
+        >
+          <button
+            class="w-52 font-bold text-xl bg-green-700 text-white px-6 py-3 rounded-xl"
+          >
+            Try now
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid xl:grid-cols-1 grid-cols-1 container mx-auto">
+    <div class="py-5">
+      <div class="py-3 px-3 rounded-xl border w-full bg-green-900">
+        <div class="flex justify-between items-center">
+          <div class="flex justify-items-center items-center gap-2">
+            <p class="font-semibold text-white">Guglex Technologies</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
