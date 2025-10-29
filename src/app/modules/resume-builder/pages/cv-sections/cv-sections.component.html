@@ -71,6 +71,14 @@
             <h3>Live Preview</h3>
           </div>
           <div class="preview-controls">
+            <button 
+              class="settings-btn" 
+              (click)="toggleTemplateSettings()"
+              aria-label="Template Settings"
+              title="Template Settings"
+            >
+              <i class="pi pi-cog"></i>
+            </button>
             <span class="preview-size-label">100%</span>
           </div>
         </div>
@@ -161,4 +169,10 @@
     </aside>
 
   </div>
+
+  <!-- Template Settings Panel -->
+  <app-template-settings
+    [(visible)]="showTemplateSettings"
+    (settingsChange)="onSettingsChange($event)"
+  ></app-template-settings>
 </div>

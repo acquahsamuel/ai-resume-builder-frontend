@@ -26,6 +26,7 @@ import { ExperienceComponent } from '../../pages/cv-sections/experience/experien
 import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
 import { CvContentService } from '../../../../shared/services/cv-content.service';
 import { CvPreviewComponent } from './cv-preview/cv-preview.component';
+import { TemplateSettingsComponent, TemplateSettings } from './template-settings/template-settings.component';
 // import { TemplateSunshineComponent } from '../../../templates/template-sunshine/template-sunshine.component';
 
 @Component({
@@ -50,6 +51,7 @@ import { CvPreviewComponent } from './cv-preview/cv-preview.component';
     SkillsComponent,
     ExtraActivitiesComponent,
     CvPreviewComponent,
+    TemplateSettingsComponent,
     // TemplateSunshineComponent,
   ],
 })
@@ -57,6 +59,7 @@ export class CvSectionsComponent implements OnInit {
   step = 0;
   expandIconPosition: 'start' | 'end' = 'start';
   showTemplates = false;
+  showTemplateSettings = false;
   mobileView: 'sections' | 'preview' | 'templates' = 'sections';
   injector: Injector = Injector.create({
     providers: [
@@ -245,5 +248,15 @@ export class CvSectionsComponent implements OnInit {
   onLanguagesUpdate(data: any) {
     console.log('LANGUAGES UPDATED', data);
     this.cvService.updateLanguages(data);
+  }
+
+  toggleTemplateSettings() {
+    this.showTemplateSettings = !this.showTemplateSettings;
+  }
+
+  onSettingsChange(settings: TemplateSettings) {
+    console.log('Template settings updated:', settings);
+    // Apply settings to preview
+    // This can be passed to the preview component or used to generate CSS
   }
 }
