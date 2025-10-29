@@ -61,6 +61,7 @@ export class CvSectionsComponent implements OnInit {
   showTemplates = false;
   showTemplateSettings = false;
   mobileView: 'sections' | 'preview' | 'templates' = 'sections';
+  selectedTemplate: string = 'sunshine';
   injector: Injector = Injector.create({
     providers: [
       {
@@ -212,6 +213,9 @@ export class CvSectionsComponent implements OnInit {
 
   selectTemplate(templateName: string) {
     console.log('Selected template:', templateName);
+    this.selectedTemplate = templateName;
+    // Force reload of preview with new template
+    this.showTemplates = false; // Optional: close template panel after selection
   }
 
   setMobileView(view: 'sections' | 'preview' | 'templates') {

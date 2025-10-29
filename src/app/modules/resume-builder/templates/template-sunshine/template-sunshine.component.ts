@@ -30,27 +30,88 @@ export class TemplateSunshineComponent implements OnInit {
   loading: WritableSignal<boolean> = signal<boolean>(true);
 
   @Input() selectedTemplate!: string;
+  @Input() cvData: any; // CV data from CvContentService
   @Input() PersonalDetails: any;
   @Input() Hobbies = [];
-  @Input() Summary = [];
-  @Input() Experience = [];
-  @Input() Education = [];
-  @Input() Skills = [];
+  @Input() Summary: any;
+  @Input() Experience: any[] = [];
+  @Input() Education: any[] = [];
+  @Input() Skills: any[] = [];
   @Input() References = [];
   @Input() Internship = [];
   @Input() Courses = [];
   @Input() Publication = [];
   @Input() Project = [];
-  @Input() Languages = [];
+  @Input() Languages: any[] = [];
   @Input() ExtraCurricularActivities = [];
   @Input() ExtraFields = [];
   @Output() updateInfo = new EventEmitter<any>();
 
-  constructor(private cvContentService: CvContentService) {
-    this.loadProfile();
+  constructor(private cvContentService: CvContentService) {}
+
+  ngOnInit(): void {
+    // If CV data is passed in, use it; otherwise fetch from API
+    if (this.cvData && Object.keys(this.cvData).length > 0) {
+      this.loading.set(false);
+      // Map CV data to profileData format
+      this.mapCvDataToProfile();
+    } else {
+      // Fallback to API fetch if no data provided
+      this.loadProfile();
+    }
   }
 
-  ngOnInit(): void {}
+  private mapCvDataToProfile(): void {
+    // Map the CV data structure to match template expectations
+    if (this.PersonalDetails) {
+      this.profileData.set({
+        HeaderProfileInfo: {
+          firstname: this.PersonalDetails.firstname || '',
+          lastname: this.PersonalDetails.surname || '',
+          fullname: `${this.PersonalDetails.firstname || ''} ${this.PersonalDetails.surname || ''}`.trim(),
+          email: this.PersonalDetails.email || '',
+          phone: this.PersonalDetails.phoneNumber || '',
+          city: this.PersonalDetails.city || '',
+          country: this.PersonalDetails.country || '',
+          socialMedia: []
+        },
+        ProfessionalSummary: this.Summary || { summary: '' },
+        Experience: (this.Experience || []).map((exp: any) => ({
+          company: exp.employerName || '',
+          position: exp.jobTitle || '',
+          startDate: exp.startYear || '',
+          endDate: exp.currentlyHere ? 'Present' : (exp.endYear || ''),
+          description: exp.summary || '',
+          responsibilities: []
+        })),
+        Education: (this.Education || []).map((edu: any) => ({
+          institution: edu.schoolName || '',
+          degree: edu.degreeName || '',
+          fieldOfStudy: edu.major || '',
+          city: edu.city || '',
+          country: edu.country || '',
+          startDate: edu.startYear || '',
+          endDate: edu.currentlyEnrolled ? 'Present' : (edu.endYear || '')
+        })),
+        Skills: (this.Skills || []).map((skill: any) => ({
+          skill: skill.skillName || '',
+          proficiency: skill.proficiency || '',
+          level: 0
+        })),
+        Hobbies: this.Hobbies || [],
+        Languages: (this.Languages || []).map((lang: any) => ({
+          language: lang.language || '',
+          proficiency: lang.proficiency || ''
+        })),
+        Projects: this.Project || [],
+        Certifications: [],
+        templateId: this.selectedTemplate || 'sunshine',
+        AdditionalSections: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      } as unknown as ITemplate);
+    }
+  }
 
   private loadProfile() {
     this.cvContentService.fetchProfileData().subscribe({

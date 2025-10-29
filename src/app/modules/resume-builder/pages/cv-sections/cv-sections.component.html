@@ -2,7 +2,7 @@
   <!-- Mobile Navigation Tabs -->
   <div class="mobile-nav-tabs">
     <button class="nav-tab" [class.active]="mobileView === 'sections'" (click)="setMobileView('sections')">
-      <i class="pi pi-list"></i>
+      <i class="pi pi-wrench"></i>
       <span> Builder </span>
     </button>
     <button class="nav-tab" [class.active]="mobileView === 'preview'" (click)="setMobileView('preview')">
@@ -23,7 +23,7 @@
       <div class="sidebar-content">
         <div class="sidebar-header">
           <h2 class="sidebar-title">
-            <i class="pi pi-file"></i>
+            <i class="pi pi-wrench"></i>
             Builder
           </h2>
         </div>
@@ -73,7 +73,7 @@
         </div>
         <div class="preview-body">
           <div class="preview-content">
-            <app-cv-preview></app-cv-preview>
+            <app-cv-preview [selectedTemplate]="selectedTemplate"></app-cv-preview>
           </div>
         </div>
       </div>
@@ -92,13 +92,15 @@
 
         <div class="templates-container">
           <div class="template-grid">
-            <div class="template-card active" (click)="selectTemplate('sunshine')">
+            <div class="template-card" [class.active]="selectedTemplate === 'sunshine'" (click)="selectTemplate('sunshine')">
               <div class="template-image">
-                <img src="/assets/images/sample.jpg" alt="Sunshine" />
+                <img src="/images/cvs/azurill.jpg" alt="SK" />
+                @if (selectedTemplate === 'sunshine') {
                 <div class="active-overlay">
                   <i class="pi pi-check-circle"></i>
                   <span>Active</span>
                 </div>
+                }
               </div>
               <div class="template-label">
                 <strong>Sunshine</strong>
@@ -106,9 +108,9 @@
               </div>
             </div>
 
-            <div class="template-card" (click)="selectTemplate('bright')">
+            <div class="template-card" [class.active]="selectedTemplate === 'bright'" (click)="selectTemplate('bright')">
               <div class="template-image">
-                <img src="/assets/images/sample.jpg" alt="Bright" />
+                <img src="/assets/images/cvs/ditto.jpg" alt="SK" />
               </div>
               <div class="template-label">
                 <strong>Bright</strong>
@@ -116,9 +118,9 @@
               </div>
             </div>
 
-            <div class="template-card" (click)="selectTemplate('kingdom')">
+            <div class="template-card" [class.active]="selectedTemplate === 'kingdom'" (click)="selectTemplate('kingdom')">
               <div class="template-image">
-                <img src="/assets/images/sample.jpg" alt="Kingdom" />
+                <img src="/assets/images/cvs/ditto.jpg" alt="SK" />
               </div>
               <div class="template-label">
                 <strong>Kingdom</strong>
@@ -126,19 +128,19 @@
               </div>
             </div>
 
-            <div class="template-card" (click)="selectTemplate('objection')">
+            <div class="template-card" [class.active]="selectedTemplate === 'objection'" (click)="selectTemplate('objection')">
               <div class="template-image">
-                <img src="/assets/images/sample.jpg" alt="Objection" />
+                <img src="/images/sample.jpg" alt="Objection" />
               </div>
               <div class="template-label">
                 <strong>Objection</strong>
                 <span>Bold</span>
               </div>
             </div>
-
-            <div class="template-card" (click)="selectTemplate('sk')">
+           
+            <div class="template-card" [class.active]="selectedTemplate === 'sk'" (click)="selectTemplate('sk')">
               <div class="template-image">
-                <img src="/assets/images/sample.jpg" alt="SK" />
+                <img src="/assets/images/cvs/ditto.jpg" alt="SK" />
               </div>
               <div class="template-label">
                 <strong>SK</strong>
@@ -146,9 +148,9 @@
               </div>
             </div>
 
-            <div class="template-card" (click)="selectTemplate('scaller')">
+            <div class="template-card" [class.active]="selectedTemplate === 'scaller'" (click)="selectTemplate('scaller')">
               <div class="template-image">
-                <img src="/assets/images/sample.jpg" alt="Scaller" />
+                <img src="/images/sample.jpg" alt="Scaller" />
               </div>
               <div class="template-label">
                 <strong>Scaller</strong>
@@ -159,6 +161,5 @@
         </div>
       </div>
     </aside>
-
   </div>
 </div>
