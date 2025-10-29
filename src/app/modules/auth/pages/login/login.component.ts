@@ -15,6 +15,7 @@ import { AuthService } from '../../../../shared/services/auth.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
+import { NotificationService } from '../../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -25,22 +26,28 @@ import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup<{
-    userName: FormControl<string>;
+    email: FormControl<string>;
     password: FormControl<string>;
     remember: FormControl<boolean>;
   }>;
 
+  showPassword = false;
+  isLoading = false;
+
   constructor(
     public _fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {
     this.loginForm = this._fb.group({
-      userName: this._fb.control('', [
+      email: this._fb.control('', [
         Validators.required,
+        Validators.email,
       ]) as FormControl<string>,
       password: this._fb.control('', [
         Validators.required,
+        Validators.minLength(6),
       ]) as FormControl<string>,
       remember: this._fb.control(true) as FormControl<boolean>,
     });
@@ -48,7 +55,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  login() {}
+  /**
+   * Toggle password visibility
+   */
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
 
    
 
@@ -71,22 +83,43 @@ export class LoginComponent implements OnInit {
    * @description handles login
    * @returns
    */
-  submitForm() {
-    this.router.navigateByUrl('/dashboard');
+  submitForm(): void {
     if (this.loginForm.valid) {
-      const { userName, password, remember } = this.loginForm.value;
+      this.isLoading = true;
+      const { email, password } = this.loginForm.value;
+
+      this.authService.login({ email: email!, password: password! }).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          if (response.token) {
+            // Save token to localStorage
+            this.authService.saveToken(response.token);
+            
+            // Show success message
+            this.notificationService.notify(
+              response.message || 'Login successful',
+              'success-toast'
+            );
+
+            // Navigate to dashboard
+            this.router.navigateByUrl('/dashboard');
+          }
+        },
+        error: (error) => {
+          this.isLoading = false;
+          const errorMessage = error?.error?.message || error?.message || 'Login failed. Please try again.';
+          this.notificationService.notify(errorMessage, 'error-toast');
+          console.error('Login error:', error);
+        },
+      });
     } else {
       // Handle form errors
-      if (this.loginForm.valid) {
-        console.log('submit', this.loginForm.value);
-      } else {
-        Object.values(this.loginForm.controls).forEach((control) => {
-          if (control.invalid) {
-            control.markAsDirty();
-            control.updateValueAndValidity({ onlySelf: true });
-          }
-        });
-      }
+      Object.values(this.loginForm.controls).forEach((control) => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
     }
   }
 
@@ -95,5 +128,13 @@ export class LoginComponent implements OnInit {
    */
   get formField() {
     return this.loginForm.controls;
+  }
+
+  loginWithGoogleAuth(): void {
+    // this.authService.loginWithGoogleAuth().subscribe({
+    //   next: (response) => {
+    //     this.isLoading = false;
+    //   },
+    // });
   }
 }

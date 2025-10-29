@@ -22,47 +22,85 @@
         <div class="form-field">
           <label for="email">Email</label>
           <input
-            type="text"
+            type="email"
             pInputText
             id="email"
-            formControlName="userName"
+            formControlName="email"
             placeholder="Enter your email"
-            [class.error]="signUpForm.get('userName')?.invalid && signUpForm.get('userName')?.touched"
+            [class.error]="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched"
           />
-          @if (signUpForm.get('userName')?.invalid && signUpForm.get('userName')?.touched) {
-            <small class="error-message">Email is required</small>
+          @if (signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched) {
+            <small class="error-message">
+              @if (signUpForm.get('email')?.errors?.['required']) {
+            Email is required
+              } @else if (signUpForm.get('email')?.errors?.['email']) {
+                Please enter a valid email address
+              }
+            </small>
           }
         </div>
 
         <!-- Password Field -->
         <div class="form-field">
           <label for="password">Password</label>
-          <input
-            type="password"
-            pInputText
-            id="password"
-            form天府Name="password"
-            placeholder="Enter your password"
-            [class.error]="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched"
-          />
+          <div class="password-input-wrapper">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              pInputText
+              id="password"
+              formControlName="password"
+              placeholder="Enter your password"
+              [class.error]="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched"
+            />
+            <button
+              type="button"
+              class="password-toggle-btn"
+              (click)="togglePasswordVisibility()"
+              aria-label="Toggle password visibility"
+            >
+              <i [class]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+            </button>
+          </div>
           @if (signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) {
-            <small class="error-message">Password is required</small>
+            <small class="error-message">
+              @if (signUpForm.get('password')?.errors?.['required']) {
+                Password is required
+              } @else if (signUpForm.get('password')?.errors?.['minlength']) {
+                Password must be at least 6 characters
+              }
+            </small>
           }
         </div>
 
         <!-- Confirm Password Field -->
         <div class="form-field">
           <label for="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            pInputText
-            id="confirmPassword"
-            formControlName="confirmPassword"
-            placeholder="Confirm your password"
-            [class.error]="signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched"
-          />
+          <div class="password-input-wrapper">
+            <input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              pInputText
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              placeholder="Confirm your password"
+              [class.error]="signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched"
+            />
+            <button
+              type="button"
+              class="password-toggle-btn"
+              (click)="toggleConfirmPasswordVisibility()"
+              aria-label="Toggle confirm password visibility"
+            >
+              <i [class]="showConfirmPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+            </button>
+          </div>
           @if (signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched) {
-            <small class="error-message">Please confirm your password</small>
+            <small class="error-message">
+              @if (signUpForm.get('confirmPassword')?.errors?.['required']) {
+                Please confirm your password
+              } @else if (signUpForm.get('confirmPassword')?.errors?.['confirm']) {
+                Passwords do not match
+              }
+            </small>
           }
         </div>
 
@@ -77,9 +115,10 @@
         <button
           pButton
           type="submit"
-          label="Sign Up"
+          [label]="isLoading ? 'Signing up...' : 'Sign Up'"
           severity="success"
           class="signup-submit-btn"
+          [disabled]="isLoading || signUpForm.invalid"
         ></button>
 
         <!-- Divider -->

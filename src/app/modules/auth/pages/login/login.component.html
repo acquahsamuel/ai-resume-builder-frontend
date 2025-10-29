@@ -22,31 +22,53 @@
         <div class="form-field">
           <label for="email">Email</label>
           <input
-            type="text"
+            type="email"
             pInputText
             id="email"
-            formControlName="userName"
+            formControlName="email"
             placeholder="Enter your email"
-            [class.error]="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched"
+            [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
           />
-          @if (loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched) {
-            <small class="error-message">Email is required</small>
+          @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+            <small class="error-message">
+              @if (loginForm.get('email')?.errors?.['required']) {
+                Email is required
+              } @else if (loginForm.get('email')?.errors?.['email']) {
+                Please enter a valid email address
+              }
+            </small>
           }
         </div>
 
         <!-- Password Field -->
         <div class="form-field">
           <label for="password">Password</label>
-          <input
-            type="password"
-            pInputText
-            id="password"
-            formControlName="password"
-            placeholder="Enter your password"
-            [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-          />
+          <div class="password-input-wrapper">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              pInputText
+              id="password"
+              formControlName="password"
+              placeholder="Enter your password"
+              [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            />
+            <button
+              type="button"
+              class="password-toggle-btn"
+              (click)="togglePasswordVisibility()"
+              aria-label="Toggle password visibility"
+            >
+              <i [class]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+            </button>
+          </div>
           @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-            <small class="error-message">Password is required</small>
+            <small class="error-message">
+              @if (loginForm.get('password')?.errors?.['required']) {
+                Password is required
+              } @else if (loginForm.get('password')?.errors?.['minlength']) {
+                Password must be at least 6 characters
+              }
+            </small>
           }
         </div>
 
@@ -64,9 +86,10 @@
         <button
           pButton
           type="submit"
-          label="Log In"
+          [label]="isLoading ? 'Logging in...' : 'Log In'"
           severity="success"
           class="login-submit-btn"
+          [disabled]="isLoading || loginForm.invalid"
         ></button>
 
         <!-- Divider -->
@@ -78,7 +101,7 @@
         <button
           type="button"
           class="google-login-btn"
-          (click)="login()"
+          (click)="loginWithGoogleAuth()"
         >
           <i class="pi pi-google"></i>
           Continue with Google
