@@ -209,7 +209,7 @@
     
     &:focus {
       outline: none;
-      border-color: #3b82f6;
+      border-color: #015527;
       // box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
     
@@ -252,11 +252,11 @@
     
     // Primary button
     &-primary {
-      background: linear-gradient(to right, #2563eb, #1d4ed8);
+      background: linear-gradient(to right, #051d0a, #041303);
       color: white;
       
       &:hover:not(:disabled) {
-        background: linear-gradient(to right, #1d4ed8, #1e40af);
+        background: linear-gradient(to right, #0a351a, #082614);
         // box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
       }
       
@@ -702,7 +702,7 @@ input[type="file"] {
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #04380f;
   outline-offset: 2px;
 }
 
