@@ -99,7 +99,7 @@ export class AtsAnalysisComponent implements OnInit {
 
   ngOnInit(): void {
     // Initialize with sample data
-    this.jobDescription = 'We are looking for a Senior Software Engineer with expertise in JavaScript, React, and Node.js. The ideal candidate should have 5+ years of experience in full-stack development, strong knowledge of TypeScript, REST APIs, Git, and experience with cloud platforms like AWS. Knowledge of Docker and CI/CD pipelines is a plus.';
+    this.jobDescription = '';
   }
 
   // File Upload Methods

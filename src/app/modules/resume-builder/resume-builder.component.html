@@ -35,14 +35,7 @@
         <span>Builder</span>
       </a>
       
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard/settings" 
-        routerLinkActive="active"
-      >
-        <i class="pi pi-cog"></i>
-        <span>Settings</span>
-      </a>
+     
       
       <a 
         class="nav-item" 
@@ -61,6 +54,17 @@
         <i class="pi pi-pencil"></i>
         <span>CV Rewrite</span>
       </a>
+
+
+      <a 
+      class="nav-item" 
+      routerLink="/dashboard/settings" 
+      routerLinkActive="active"
+    >
+      <i class="pi pi-cog"></i>
+      <span>Settings</span>
+    </a>
+
     </nav>
 
     <div class="sidebar-footer">
@@ -164,15 +168,7 @@
         <span>Builder</span>
       </a>
       
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard/settings" 
-        routerLinkActive="active"
-        (click)="closeMobileSidebar()"
-      >
-        <i class="pi pi-cog"></i>
-        <span>Settings</span>
-      </a>
+    
       
       <a 
         class="nav-item" 
@@ -192,6 +188,16 @@
       >
         <i class="pi pi-pencil"></i>
         <span>CV Rewrite</span>
+      </a>
+
+      <a 
+      class="nav-item" 
+      routerLink="/dashboard/settings" 
+      routerLinkActive="active"
+      (click)="closeMobileSidebar()"
+      >
+      <i class="pi pi-cog"></i>
+      <span>Settings</span>
       </a>
       
       <button class="nav-item logout-btn" (click)="logout()">

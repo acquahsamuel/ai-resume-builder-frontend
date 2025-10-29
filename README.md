@@ -45,3 +45,4 @@ Before running the project, ensure you have the following installed:
    Run `npm install -g @angular/cli` command
    Open package.json
    Run `ng serve` command
+

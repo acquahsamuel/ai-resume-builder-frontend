@@ -12,7 +12,7 @@
     <div class="grid lg:grid-cols-2 gap-8">
       <!-- Left Column: Job Description -->
       <div class="space-y-6">
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+        <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-2">
           <div class="flex items-center gap-3 mb-4">
             <div
               class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"
@@ -41,8 +41,6 @@
               >
               <textarea
                 [(ngModel)]="jobDescription"
-                rows="10"
-                contentEditable="true"
                 placeholder="Paste the complete job description here. Include requirements, responsibilities, and qualifications..."
                 class="w-full h-64 p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none text-gray-700"
               ></textarea>
@@ -54,7 +52,7 @@
             <button
               (click)="analyzeResume()"
               [disabled]="!jobDescription"
-              class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-sm transform hover:-translate-y-0.5"
             >
               Analyze Resume
             </button>
@@ -74,7 +72,7 @@
               viewBox="0 0 20 20"
             >
               <path
-                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1的关注0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1obbies0 00.951-.69l1.07-3.292z"
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
               />
             </svg>
             Pro Tips
@@ -116,7 +114,7 @@
               >
                 <path
                   fill-rule="evenodd"
-                  d="M10 眨眨眨8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                   clip-rule="evenodd"
                 />
               </svg>
@@ -129,10 +127,10 @@
       <!-- Right Column: CV Upload & Analysis -->
       <div class="space-y-6">
         <!-- CV Upload Section -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
           <div class="flex items-center gap-3 mb-4">
             <div
-              class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center"
+              class="w-10 h-10 bg-green-100 rounded-sm flex items-center justify-center"
             >
               <svg
                 class="w-6 h-6 text-green-600"
@@ -144,7 +142,7 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2iven5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                 />
               </svg>
             </div>
@@ -235,7 +233,7 @@
         </div>
 
         <!-- Analysis Summary -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
           <h2 class="text-2xl font-bold text-gray-900 mb-6">
             Analysis Summary
           </h2>
