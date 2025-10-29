@@ -149,13 +149,7 @@
     }
 
     &.with-settings {
-      .preview-header-row {
-        .preview-header {
-          width: 28rem;
-          max-width: 28rem;
-          transition: width 0.3s ease, max-width 0.3s ease;
-        }
-      }
+      
 
       ::ng-deep app-template-settings {
         position: absolute;
@@ -165,7 +159,7 @@
         width: 380px;
         display: flex;
         z-index: 10;
-        
+
         .template-settings-panel {
           height: 100%;
           margin-top: 0;
@@ -188,7 +182,7 @@
 
   .preview-header {
     flex-shrink: 0;
-    padding: 1rem 1.5rem;
+    padding: .7rem;
     border-bottom: 1px solid #e5e7eb;
     background: #fafafa;
     display: flex;
@@ -210,7 +204,8 @@
         font-size: 16px;
         font-weight: 600;
         color: #111827;
-        margin: 0;
+        margin-right: .5rem;
+        // margin: 0;
       }
     }
 
@@ -223,8 +218,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 2rem;
+        height: 2rem;
         border: 1px solid #e5e7eb;
         background: white;
         border-radius: 6px;
@@ -336,7 +331,7 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
- 
+
 
   .template-card {
     cursor: pointer;
