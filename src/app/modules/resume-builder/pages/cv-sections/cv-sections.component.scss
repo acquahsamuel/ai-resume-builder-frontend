@@ -140,6 +140,43 @@
     flex-direction: column;
     height: 100%;
     overflow: hidden;
+    position: relative;
+
+    .preview-header-row {
+      flex-shrink: 0;
+      display: flex;
+      align-items: stretch;
+    }
+
+    &.with-settings {
+      .preview-header-row {
+        .preview-header {
+          width: 28rem;
+          max-width: 28rem;
+          transition: width 0.3s ease, max-width 0.3s ease;
+        }
+      }
+
+      ::ng-deep app-template-settings {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 380px;
+        display: flex;
+        z-index: 10;
+        
+        .template-settings-panel {
+          height: 100%;
+          margin-top: 0;
+        }
+      }
+
+      .preview-body {
+        margin-right: 380px;
+        transition: margin-right 0.3s ease;
+      }
+    }
 
     .preview-body {
       flex: 1;
@@ -157,6 +194,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: width 0.3s ease, max-width 0.3s ease;
 
     .preview-title-group {
       display: flex;
@@ -206,7 +244,6 @@
 
         &:hover {
           background: #f3f4f6;
-          border-color: #22c55e;
           color: #22c55e;
           transform: rotate(90deg);
         }
