@@ -29,7 +29,6 @@ export class SkillsComponent implements OnInit {
 
   ngOnInit(): void {
     this.skillsForm.valueChanges.subscribe((value: any) => {
-      console.log(value, 'SKILLS INFO');
       // this.onPersonalInfoUpdateEvt.emit(value);
     });
   }
