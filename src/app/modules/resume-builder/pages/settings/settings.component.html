@@ -4,11 +4,11 @@
     <div class="profile-section">
       <div class="profile-image">
         @if (imagePreview) {
-          <img [src]="imagePreview" alt="Profile" />
+        <img [src]="imagePreview" alt="Profile" />
         } @else {
-          <div class="placeholder">
-            <i class="pi pi-user text-5xl"></i>
-          </div>
+        <div class="placeholder">
+          <i class="pi pi-user text-5xl"></i>
+        </div>
         }
       </div>
       <label for="profile-upload" class="upload-btn">
@@ -50,21 +50,11 @@
           <label>Country</label>
           <input pInputText formControlName="country" placeholder="United States" />
         </div>
-
-        <div class="form-field">
-          <label>Postal Code</label>
-          <input pInputText formControlName="postalCode" placeholder="10001" />
-        </div>
-
-        <div class="form-field">
-          <label>Date of Birth</label>
-          <p-calendar formControlName="dateOfBirth" dateFormat="mm/dd/yy" placeholder="Select date"></p-calendar>
-        </div>
       </div>
 
       <div class="form-actions">
-        <p-button label="Cancel" severity="secondary" [outlined]="true" type="button"></p-button>
-        <p-button label="Save Changes" type="submit"></p-button>
+        <p-button label="Cancel" severity="success" [outlined]="true" type="button"></p-button>
+        <p-button label="Save Changes" severity="success" type="submit"></p-button>
       </div>
     </form>
   </div>

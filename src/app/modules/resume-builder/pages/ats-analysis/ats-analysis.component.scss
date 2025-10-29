@@ -6,6 +6,52 @@
   width: 100%;
 }
 
+// PrimeNG TabView Customization
+::ng-deep {
+  .p-tabview {
+    .p-tabview-nav {
+      background: transparent;
+      border: none;
+      padding: 0.5rem;
+
+      li {
+        .p-tabview-nav-link {
+          padding: 0.75rem 1.5rem;
+          border-radius: 0.5rem 0.5rem 0 0;
+          transition: all 0.2s ease;
+          border: none;
+          background: transparent;
+          color: #6b7280;
+          font-weight: 500;
+
+          &:not(.p-disabled):focus {
+            outline: none;
+            box-shadow: none;
+          }
+
+          &:hover:not(.p-disabled) {
+            background: #f0fdf4;
+            color: #22c55e;
+          }
+        }
+
+        &.p-highlight .p-tabview-nav-link {
+          background: white;
+          color: #22c55e;
+          // border-bottom: 2px solid #22c55e;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .p-tabview-panels {
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+  }
+}
+
 .ats-analyzer {
   &-container {
     min-height: 100vh;

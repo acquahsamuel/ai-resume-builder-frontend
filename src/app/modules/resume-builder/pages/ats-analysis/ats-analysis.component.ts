@@ -1,28 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
 
 @Component({
     selector: 'app-ats-analysis',
     templateUrl: './ats-analysis.component.html',
     styleUrls: ['./ats-analysis.component.scss'],
     standalone: true,
-    imports: [CommonModule, FormsModule]
+    imports: [CommonModule, FormsModule, PrimeNgModule]
 })
 export class AtsAnalysisComponent implements OnInit {
+  activeTabIndex = 0;
 
-  // Job Description
+  // Tab 1: CV Only Analysis
+  cvOnly = {
+    uploadedFileName: '',
+    uploadedFileSize: '',
+    overallScore: 0,
+    analysisResults: {
+      keywordCount: 0,
+      skillsIdentified: [] as string[],
+      formattingScore: 0,
+      recommendations: [] as any[]
+    }
+  };
+
+  // Tab 2: Job Description & CV Compare (existing functionality)
   jobDescription = '';
-  
-  // File Upload
   uploadedFileName = '';
   uploadedFileSize = '';
-  
-  // Mock ATS Score
   overallScore = 78;
   maxScore = 100;
 
-  // Job Description Keywords
   jobKeywords = [
     { word: 'JavaScript', matched: true, importance: 'high' },
     { word: 'React', matched: true, importance: 'high' },
@@ -36,38 +46,21 @@ export class AtsAnalysisComponent implements OnInit {
     { word: 'CI/CD', matched: false, importance: 'medium' },
   ];
 
-  // Skills Analysis
   requiredSkills = ['JavaScript', 'React', 'Node.js', 'TypeScript', 'Git', 'AWS'];
   resumeSkills = ['JavaScript', 'React', 'Node.js', 'TypeScript', 'Git', 'MongoDB', 'Express.js'];
 
-  getMatchedSkills() {
-    return this.requiredSkills.filter(skill => 
-      this.resumeSkills.some(resumeSkill => resumeSkill.toLowerCase().includes(skill.toLowerCase()))
-    );
-  }
-
-  getMissingSkills() {
-    return this.requiredSkills.filter(skill => 
-      !this.resumeSkills.some(resumeSkill => resumeSkill.toLowerCase().includes(skill.toLowerCase()))
-    );
-  }
-
-  // Experience Matching
   requiredExperience = 5;
   actualExperience = 6;
 
-  // Education Check
   requiredEducation = "Bachelor's degree in Computer Science or related field";
   actualEducation = "Bachelor's degree in Computer Science";
 
-  // Formatting Issues
   formattingIssues = [
     { type: 'Header', issue: 'Missing proper section headings', severity: 'medium' },
     { type: 'Dates', issue: 'Inconsistent date formats', severity: 'low' },
     { type: 'Font', issue: 'Using decorative fonts in headers', severity: 'low' },
   ];
 
-  // ATS Recommendations
   recommendations = [
     {
       priority: 'high',
@@ -95,25 +88,55 @@ export class AtsAnalysisComponent implements OnInit {
     },
   ];
 
+  // Tab 3: CV Rewrite
+  cvRewrite = {
+    jobDescription: '',
+    uploadedFileName: '',
+    uploadedFileSize: '',
+    originalCv: '',
+    rewrittenCv: '',
+    improvements: [] as any[],
+    isProcessing: false
+  };
+
   constructor() { }
 
   ngOnInit(): void {
-    // Initialize with sample data
     this.jobDescription = '';
   }
 
   // File Upload Methods
-  onFileSelected(event: any) {
+  onFileSelected(event: any, tab: 'cvOnly' | 'compare' | 'rewrite' = 'compare') {
     const file = event.target.files[0];
     if (file) {
-      this.uploadedFileName = file.name;
-      this.uploadedFileSize = this.formatFileSize(file.size);
+      const fileName = file.name;
+      const fileSize = this.formatFileSize(file.size);
+      
+      if (tab === 'cvOnly') {
+        this.cvOnly.uploadedFileName = fileName;
+        this.cvOnly.uploadedFileSize = fileSize;
+        this.analyzeCvOnly();
+      } else if (tab === 'rewrite') {
+        this.cvRewrite.uploadedFileName = fileName;
+        this.cvRewrite.uploadedFileSize = fileSize;
+      } else {
+        this.uploadedFileName = fileName;
+        this.uploadedFileSize = fileSize;
+      }
     }
   }
 
-  removeFile() {
-    this.uploadedFileName = '';
-    this.uploadedFileSize = '';
+  removeFile(tab: 'cvOnly' | 'compare' | 'rewrite' = 'compare') {
+    if (tab === 'cvOnly') {
+      this.cvOnly.uploadedFileName = '';
+      this.cvOnly.uploadedFileSize = '';
+    } else if (tab === 'rewrite') {
+      this.cvRewrite.uploadedFileName = '';
+      this.cvRewrite.uploadedFileSize = '';
+    } else {
+      this.uploadedFileName = '';
+      this.uploadedFileSize = '';
+    }
   }
 
   formatFileSize(bytes: number): string {
@@ -124,13 +147,67 @@ export class AtsAnalysisComponent implements OnInit {
     return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
   }
 
-  // Analyze Resume
+  // Tab 1: Analyze CV Only
+  analyzeCvOnly() {
+    if (!this.cvOnly.uploadedFileName) return;
+    // Simulate analysis
+    this.cvOnly.overallScore = 72;
+    this.cvOnly.analysisResults = {
+      keywordCount: 45,
+      skillsIdentified: ['JavaScript', 'React', 'Node.js', 'TypeScript', 'MongoDB', 'Express.js', 'Git'],
+      formattingScore: 85,
+      recommendations: [
+        {
+          priority: 'medium',
+          title: 'Improve Section Headers',
+          description: 'Use standard section headings for better ATS parsing',
+          impact: '+5 points'
+        },
+        {
+          priority: 'low',
+          title: 'Optimize Keyword Placement',
+          description: 'Include key skills in multiple sections',
+          impact: '+3 points'
+        }
+      ]
+    };
+  }
+
+  // Tab 2: Analyze Resume with Job Description
   analyzeResume() {
     if (!this.jobDescription) return;
-    // In a real app, this would call an API
     console.log('Analyzing resume...');
-    // Simulate analysis
     this.overallScore = 78;
+  }
+
+  // Tab 3: Rewrite CV
+  rewriteCv() {
+    if (!this.cvRewrite.jobDescription || !this.cvRewrite.uploadedFileName) return;
+    
+    this.cvRewrite.isProcessing = true;
+    
+    // Simulate API call
+    setTimeout(() => {
+      this.cvRewrite.rewrittenCv = 'Your optimized CV will appear here...';
+      this.cvRewrite.improvements = [
+        {
+          section: 'Summary',
+          change: 'Added industry-specific keywords',
+          impact: 'High'
+        },
+        {
+          section: 'Experience',
+          change: 'Enhanced action verbs and quantified achievements',
+          impact: 'High'
+        },
+        {
+          section: 'Skills',
+          change: 'Aligned skills with job requirements',
+          impact: 'Medium'
+        }
+      ];
+      this.cvRewrite.isProcessing = false;
+    }, 2000);
   }
 
   // Drag and Drop
@@ -138,30 +215,43 @@ export class AtsAnalysisComponent implements OnInit {
     event.preventDefault();
   }
 
-  onDrop(event: DragEvent) {
+  onDrop(event: DragEvent, tab: 'cvOnly' | 'compare' | 'rewrite' = 'compare') {
     event.preventDefault();
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
       const file = files[0];
-      this.uploadedFileName = file.name;
-      this.uploadedFileSize = this.formatFileSize(file.size);
+      const fileName = file.name;
+      const fileSize = this.formatFileSize(file.size);
+      
+      if (tab === 'cvOnly') {
+        this.cvOnly.uploadedFileName = fileName;
+        this.cvOnly.uploadedFileSize = fileSize;
+        this.analyzeCvOnly();
+      } else if (tab === 'rewrite') {
+        this.cvRewrite.uploadedFileName = fileName;
+        this.cvRewrite.uploadedFileSize = fileSize;
+      } else {
+        this.uploadedFileName = fileName;
+        this.uploadedFileSize = fileSize;
+      }
     }
   }
 
-  triggerFileInput() {
-    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+  triggerFileInput(tab: 'cvOnly' | 'compare' | 'rewrite' = 'compare') {
+    const inputId = `file-input-${tab}`;
+    const fileInput = document.getElementById(inputId) as HTMLInputElement;
     fileInput?.click();
   }
 
-  getScoreColor() {
-    if (this.overallScore >= 80) return 'text-green-600';
-    if (this.overallScore >= 60) return 'text-yellow-600';
+  getScoreColor(score: number = this.overallScore) {
+    if (score >= 80) return 'text-green-600';
+    if (score >= 60) return 'text-yellow-600';
     return 'text-red-600';
   }
 
-  getScoreBgColor() {
-    if (this.overallScore >= 80) return 'bg-green-100';
-    if (this.overallScore >= 60) return 'bg-yellow-100';
+  getScoreBgColor(score: number = this.overallScore) {
+    if (score >= 80) return 'bg-green-100';
+    if (score >= 60) return 'bg-yellow-100';
     return 'bg-red-100';
   }
 
@@ -172,6 +262,18 @@ export class AtsAnalysisComponent implements OnInit {
       case 'low': return 'bg-green-100 text-green-700';
       default: return 'bg-gray-100 text-gray-700';
     }
+  }
+
+  getMatchedSkills() {
+    return this.requiredSkills.filter(skill => 
+      this.resumeSkills.some(resumeSkill => resumeSkill.toLowerCase().includes(skill.toLowerCase()))
+    );
+  }
+
+  getMissingSkills() {
+    return this.requiredSkills.filter(skill => 
+      !this.resumeSkills.some(resumeSkill => resumeSkill.toLowerCase().includes(skill.toLowerCase()))
+    );
   }
 
   getMatchedKeywords() {
@@ -189,5 +291,4 @@ export class AtsAnalysisComponent implements OnInit {
   getTotalKeywordsCount() {
     return this.jobKeywords.length;
   }
-
 }
