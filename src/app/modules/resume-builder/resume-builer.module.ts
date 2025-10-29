@@ -8,7 +8,7 @@ import { EducationComponent } from "./pages/cv-sections/education/education.comp
 import { SkillsComponent } from "./pages/cv-sections/skills/skills.component";
 import { SummaryComponent } from "./pages/cv-sections/summary/summary.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { BuilderUiComponent } from "./components/builder-ui/builder-ui.component";
+// import { BuilderUiComponent } from "./components/builder-ui/builder-ui.component";
 import { HobbiesComponent } from "./pages/cv-sections/hobbies/hobbies.component";
 import { ReferencesComponent } from "./pages/cv-sections/references/references.component";
 import { InternshipsComponent } from "./pages/cv-sections/internships/internships.component";
@@ -19,8 +19,6 @@ import { LanguagesComponent } from "./pages/cv-sections/languages/languages.comp
 import { ExtraActivitiesComponent } from "./pages/cv-sections/extra-activities/extra-activities.component";
 import { SettingsComponent } from "./pages/settings/settings.component";
 import { AtsAnalysisComponent } from "./pages/ats-analysis/ats-analysis.component";
-import { CvRewriteComponent } from "./pages/cv-rewrite/cv-rewrite.component";
-// import { CvBuilderStartComponent } from './pages/cv-builder-start/cv-builder-start.component';
 import { StartedComponent } from './pages/started/started.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ResumeBuiderRoutes } from "./resume-builder.routes";
@@ -37,7 +35,6 @@ import { ResumeBuiderRoutes } from "./resume-builder.routes";
     EducationComponent,
     SkillsComponent,
     SummaryComponent,
-    BuilderUiComponent,
     HobbiesComponent,
     ReferencesComponent,
     InternshipsComponent,
@@ -48,8 +45,6 @@ import { ResumeBuiderRoutes } from "./resume-builder.routes";
     ExtraActivitiesComponent,
     SettingsComponent,
     AtsAnalysisComponent,
-    CvRewriteComponent,
-    // CvBuilderStartComponent,
     StartedComponent,
     RouterModule.forChild(ResumeBuiderRoutes),
 ],
