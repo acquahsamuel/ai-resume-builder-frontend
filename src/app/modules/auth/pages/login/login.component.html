@@ -75,9 +75,8 @@
         <!-- Remember & Forgot -->
         <div class="login-options">
           <div class="#">
-            <p-checkbox formControlName="remember" inputId="remember">
-              <label for="remember">Remember me</label>
-            </p-checkbox>
+            <p-checkbox formControlName="remember" severity="success" inputId="remember" label="Remember me" [binary]="true"></p-checkbox>
+
           </div>
           <a class="forgot-password">Forgot password?</a>
         </div>

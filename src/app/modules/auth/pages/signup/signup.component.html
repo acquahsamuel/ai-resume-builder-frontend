@@ -106,9 +106,7 @@
 
         <!-- Terms & Conditions -->
         <div class="terms-checkbox">
-          <p-checkbox formControlName="remember" inputId="remember">
-            <label for="remember">I agree to the Terms & Conditions</label>
-          </p-checkbox>
+          <p-checkbox formControlName="remember" inputId="remember" severity="success" label="I agree to the Terms & Conditions" [binary]="true"></p-checkbox>
         </div>
 
         <!-- Sign Up Button -->
