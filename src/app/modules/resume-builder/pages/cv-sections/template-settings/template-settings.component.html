@@ -1,5 +1,4 @@
-<div class="template-settings-overlay" *ngIf="visible" (click)="closePanel()">
-  <div class="template-settings-panel" (click)="$event.stopPropagation()">
+<div class="template-settings-panel" *ngIf="visible">
     <!-- Header -->
     <div class="settings-header">
       <div class="header-title">
@@ -247,6 +246,4 @@
         Done
       </button>
     </div>
-  </div>
-</div>
 
