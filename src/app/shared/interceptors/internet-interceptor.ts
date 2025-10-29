@@ -8,13 +8,14 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 
-import { AuthService } from '../auth.service';
+// import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InternetInterceptorService implements HttpInterceptor {
-  constructor(private authenticationService: AuthService) {}
+  constructor(private authenticationService: AuthService) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -24,7 +25,7 @@ export class InternetInterceptorService implements HttpInterceptor {
       catchError((err) => {
         if (err.status === 401) {
           // auto logout if 401 response returned from api
-          this.authenticationService.logout();
+          // this.authenticationService.logout();
           // location.reload(true);
         }
 

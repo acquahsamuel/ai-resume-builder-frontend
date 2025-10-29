@@ -9,8 +9,10 @@ import {
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { retry, catchError } from "rxjs/operators";
-import { AuthService } from "../auth.service";
-import { NotificationService } from "../notification.service";
+// import { AuthService } from "../auth.service";
+import { AuthService } from "../services/auth.service";
+// import { NotificationService } from "../notification.service";
+import { NotificationService } from "../services/notification.service";
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -31,7 +33,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
         if (error.status === 401) {
           //remove current token
-          this.authService.removeUserToken();
           window.location.href = "/login";
         }
 
