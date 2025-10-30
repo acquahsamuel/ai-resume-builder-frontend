@@ -19,7 +19,7 @@ export type CvData = StandardCvData;
   providedIn: 'root'
 })
 export class CvContentService {
-  private apiUrl = `${environment.BASE_URL}/cv/2`;
+  private apiUrl = `${environment.BASE_URL}/cvs`;
 
   // Using BehaviorSubject for real-time updates with standardized format
   private cvDataSubject = new BehaviorSubject<StandardCvData>({});

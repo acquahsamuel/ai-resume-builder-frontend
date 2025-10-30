@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ResumeBuilderComponent } from "./resume-builder.component";
 // import { ResumeBuilderRoutingModule } from "./resume-routing.module";
-import { CvHeaderComponent } from "./pages/cv-sections/cv-header/cv-header.component";
+import { CvHeaderComponent } from "./pages/cv-sections/cv-header-profile/cv-header.component";
 import { ExperienceComponent } from "./pages/cv-sections/experience/experience.component";
 import { EducationComponent } from "./pages/cv-sections/education/education.component";
 import { SkillsComponent } from "./pages/cv-sections/skills/skills.component";

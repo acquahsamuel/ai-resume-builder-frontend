@@ -4,24 +4,32 @@
  */
 
 export interface PersonalDetails {
+  // New API format (primary)
+  firstName?: string;
+  lastName?: string;
+  otherName?: string;
+  title?: string;
+  email?: string;
+  phone?: string;
+  dateOfBirth?: string;
+  nationality?: string;
+  zipCode?: string;
+  country?: string;
+  state?: string;
+  city?: string;
+  socialMedia?: Array<{
+    platform: string;
+    link: string;
+  }>;
+  // Legacy format support (for backward compatibility)
   firstname?: string;
   lastname?: string;
   surname?: string;
   othername?: string;
   fullname?: string;
-  title?: string;
-  email?: string;
   phoneNumber?: string;
-  phone?: string;
   address?: string;
-  city?: string;
-  country?: string;
   postalCode?: string;
-  dateOfBirth?: string;
-  socialMedia?: Array<{
-    platform: string;
-    link: string;
-  }>;
 }
 
 export interface Summary {

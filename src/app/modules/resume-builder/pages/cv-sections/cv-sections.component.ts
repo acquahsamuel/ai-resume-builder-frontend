@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 import { SkillsComponent } from '../../pages/cv-sections/skills/skills.component';
 import { EducationComponent } from '../../pages/cv-sections/education/education.component';
 import { SummaryComponent } from '../../pages/cv-sections/summary/summary.component';
-import { CvHeaderComponent } from '../../pages/cv-sections/cv-header/cv-header.component';
+import { CvHeaderComponent } from './cv-header-profile/cv-header.component';
 import { ExperienceComponent } from '../../pages/cv-sections/experience/experience.component';
 import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
 import { CvContentService } from '../../../../shared/services/cv-content.service';

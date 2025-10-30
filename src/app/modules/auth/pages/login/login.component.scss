@@ -110,7 +110,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: .5rem;
 }
 
 .form-field {
@@ -278,7 +278,7 @@
 
 .google-login-btn {
   width: 100%;
-  padding: 0.875rem 1rem;
+  padding: 0.5rem 1rem;
   background: white;
   color: #374151;
   border: 2px solid #e5e7eb;
@@ -297,10 +297,7 @@
     color: #4285f4;
   }
 
-  &:hover {
-    background: #f9fafb;
-    border-color: #22c55e;
-  }
+
 
   &:active {
     background: #f3f4f6;
