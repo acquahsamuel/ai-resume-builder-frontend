@@ -12,6 +12,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
 
 
 export function createTranslateLoader(http: HttpClient): TranslateLoader {
@@ -35,6 +36,7 @@ export const appConfig: ApplicationConfig = {
       },
     })),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    MessageService
   ],
 };

@@ -5,6 +5,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     NzLayoutModule,
     NzMenuModule,
     TranslateModule,
+    ToastModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
