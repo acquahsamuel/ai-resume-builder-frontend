@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   enableDebug : false,
-  BASE_URL: 'http://localhost:4200/api/v1',
+  BASE_URL: 'https://cleansheet-ai.onrender.com/api/v1',
 };

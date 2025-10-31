@@ -41,11 +41,11 @@ export class LoginComponent implements OnInit {
     private notificationService: NotificationService
   ) {
     this.loginForm = this._fb.group({
-      email: this._fb.control('iamsamuelacquah@gmail.com', [
+      email: this._fb.control('', [
         Validators.required,
         Validators.email,
       ]) as FormControl<string>,
-      password: this._fb.control('Test@123456', [
+      password: this._fb.control('', [
         Validators.required,
         Validators.minLength(6),
       ]) as FormControl<string>,
