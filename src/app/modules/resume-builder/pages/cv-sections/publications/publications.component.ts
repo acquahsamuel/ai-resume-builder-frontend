@@ -1,8 +1,11 @@
- import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule, NgFor } from "@angular/common";
 import { CustomEditorComponent } from "../../../../../shared/components/custom-editor/custom-editor.component";
 import { PrimeNgModule } from "../../../../../shared/modules/primeNg.module";
+import { CvContentService } from "../../../../../shared/services/cv-content.service";
+import { Subscription } from "rxjs";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 @Component({
     selector: 'app-publications',
@@ -12,18 +15,47 @@ import { PrimeNgModule } from "../../../../../shared/modules/primeNg.module";
     imports: [ReactiveFormsModule, CommonModule, PrimeNgModule, CustomEditorComponent]
 })
 
-export class PublicationsComponent implements OnInit {
+export class PublicationsComponent implements OnInit, OnDestroy {
   publicationsForm: FormGroup;
   editorContent: string = '';
+  private formSubscription?: Subscription;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private cvService: CvContentService
+  ) {
     this.publicationsForm = this.fb.group({
       educationRecords: this.fb.array([this.createEducationRecord()])
     });
   }
 
   ngOnInit(): void {
-  
+    // Subscribe to form changes with debounce for performance
+    this.formSubscription = this.publicationsForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe((value: any) => {
+        const publicationRecords = value.educationRecords || [];
+        
+        // Map to service format
+        const publications = publicationRecords.map((pub: any) => ({
+          title: pub.name || pub.title,
+          publisher: pub.proficiency || pub.publisher,
+          publishDate: pub.skillDescription || pub.publishDate,
+          link: pub.link || ''
+        }));
+        
+        // Update service (single source of truth)
+        this.cvService.updatePublications(publications);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
   }
 
   // Create a new FormGroup for an education record

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,6 +9,9 @@ import {
 import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
 import { CustomEditorComponent } from '../../../../../shared/components/custom-editor/custom-editor.component';
+import { CvContentService } from '../../../../../shared/services/cv-content.service';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-education',
@@ -19,22 +22,43 @@ import { CustomEditorComponent } from '../../../../../shared/components/custom-e
   changeDetection : ChangeDetectionStrategy.OnPush
 })
 
-export class EducationComponent implements OnInit {
+export class EducationComponent implements OnInit, OnDestroy {
   educationForm: FormGroup;
   @Output() onEducationFormUpdate = new EventEmitter<any>();
-  @Input() Education : any
+  @Input() Education : any;
+  private formSubscription?: Subscription;
   
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private cvService: CvContentService
+  ) {
     this.educationForm = this.fb.group({
       educationRecords: this.fb.array([this.createEducationRecord()]),
     });
   }
 
   ngOnInit(): void {
-    this.educationForm.valueChanges.subscribe((value: any) => {
-      console.log(value, 'EDUCTION FORMS:::');
-      this.onEducationFormUpdate.emit(value);
-    });
+    // Subscribe to form changes with debounce for performance
+    this.formSubscription = this.educationForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe((value: any) => {
+        const educationRecords = value.educationRecords || [];
+        
+        // Update service (single source of truth)
+        this.cvService.updateEducation(educationRecords);
+        
+        // Emit event for backward compatibility
+        this.onEducationFormUpdate.emit(value);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
   }
 
   // Create a new FormGroup for an education record

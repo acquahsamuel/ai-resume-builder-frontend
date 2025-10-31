@@ -4,8 +4,8 @@ import { signal } from '@angular/core';
 import { environment } from '../../../environments/environment.prod';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
-import { StandardCvData } from '../models/cv-data.model';
-import { CvDataMapperService } from './cv-data-mapper.service';
+import { StandardCvData, PersonalDetails, Summary, Experience, Education, Skill, Language, Project, Certification, Reference, Hobby, Course, Publication, ExtraActivity } from '../models/cv-data.model';
+// import { CvDataMapperService } from './cv-data-mapper.service';
 
 // Export StandardCvData as CvData for backward compatibility
 export type CvData = StandardCvData;
@@ -14,6 +14,7 @@ export type CvData = StandardCvData;
  * CV Content Service
  * Central service for managing CV data throughout the application
  * Uses StandardCvData as the canonical format
+ * This is the single source of truth for CV data
  */
 @Injectable({
   providedIn: 'root'
@@ -25,12 +26,14 @@ export class CvContentService {
   private cvDataSubject = new BehaviorSubject<StandardCvData>({});
   public cvData$ = this.cvDataSubject.asObservable();
 
+  // Current CV data state
+  private currentCvData: StandardCvData = {};
+
   dataSignal = signal<StandardCvData | null>(null);
 
   constructor(
     private http: HttpClient,
-    private mapper: CvDataMapperService
-  ) {}
+  ) { }
 
   /**
    * Fetch profile data from API
@@ -41,92 +44,129 @@ export class CvContentService {
   }
 
   /**
-   * Update CV data with normalized form data
+   * Update personal details section
    */
-  updateCvData(data: Partial<StandardCvData>): void {
-    const current = this.cvDataSubject.value;
-    const normalized = this.mapper.normalizeFormData(data);
-    this.cvDataSubject.next({ ...current, ...normalized });
-    this.dataSignal.set({ ...current, ...normalized });
+  updatePersonalDetails(personalDetails: PersonalDetails): void {
+    this.currentCvData.personalDetails = { ...this.currentCvData.personalDetails, ...personalDetails };
+    this.emitUpdate();
   }
 
   /**
-   * Update Personal Details section
+   * Update summary section
    */
-  updatePersonalDetails(data: any): void {
-    const current = this.cvDataSubject.value;
-    const normalized = this.mapper.normalizeFormData({ personalDetails: data });
-    this.cvDataSubject.next({ ...current, personalDetails: normalized.personalDetails });
-    this.dataSignal.set({ ...current, personalDetails: normalized.personalDetails });
+  updateSummary(summary: Summary): void {
+    this.currentCvData.summary = summary;
+    this.emitUpdate();
   }
 
   /**
-   * Update Summary section
+   * Update experience section
    */
-  updateSummary(data: any): void {
-    const current = this.cvDataSubject.value;
-    const normalized = this.mapper.normalizeFormData({ summary: data });
-    this.cvDataSubject.next({ ...current, summary: normalized.summary });
-    this.dataSignal.set({ ...current, summary: normalized.summary });
+  updateExperience(experience: Experience[]): void {
+    this.currentCvData.experience = experience;
+    this.emitUpdate();
   }
 
   /**
-   * Update Experience section
+   * Update education section
    */
-  updateExperience(data: any): void {
-    const current = this.cvDataSubject.value;
-    // Handle both array and object with array property (like experienceRecords)
-    const experiences = Array.isArray(data) ? data : (data?.experienceRecords || data?.experience || []);
-    const normalized = this.mapper.normalizeFormData({ experience: experiences });
-    this.cvDataSubject.next({ ...current, experience: normalized.experience });
-    this.dataSignal.set({ ...current, experience: normalized.experience });
+  updateEducation(education: Education[]): void {
+    this.currentCvData.education = education;
+    this.emitUpdate();
   }
 
   /**
-   * Update Education section
+   * Update skills section
    */
-  updateEducation(data: any): void {
-    const current = this.cvDataSubject.value;
-    // Handle both array and object with array property (like educationRecords)
-    const educations = Array.isArray(data) ? data : (data?.educationRecords || data?.education || []);
-    const normalized = this.mapper.normalizeFormData({ education: educations });
-    this.cvDataSubject.next({ ...current, education: normalized.education });
-    this.dataSignal.set({ ...current, education: normalized.education });
+  updateSkills(skills: Skill[]): void {
+    this.currentCvData.skills = skills;
+    this.emitUpdate();
   }
 
   /**
-   * Update Skills section
+   * Update languages section
    */
-  updateSkills(data: any): void {
-    const current = this.cvDataSubject.value;
-    const normalized = this.mapper.normalizeFormData({ skills: data });
-    this.cvDataSubject.next({ ...current, skills: normalized.skills });
-    this.dataSignal.set({ ...current, skills: normalized.skills });
+  updateLanguages(languages: Language[]): void {
+    this.currentCvData.languages = languages;
+    this.emitUpdate();
   }
 
   /**
-   * Update Languages section
+   * Update projects section
    */
-  updateLanguages(data: any): void {
-    const current = this.cvDataSubject.value;
-    const normalized = this.mapper.normalizeFormData({ languages: data });
-    this.cvDataSubject.next({ ...current, languages: normalized.languages });
-    this.dataSignal.set({ ...current, languages: normalized.languages });
+  updateProjects(projects: Project[]): void {
+    this.currentCvData.projects = projects;
+    this.emitUpdate();
   }
 
   /**
-   * Get current CV data in standardized format
+   * Update certifications section
    */
-  getCvData(): StandardCvData {
-    return this.cvDataSubject.value;
+  updateCertifications(certifications: Certification[]): void {
+    this.currentCvData.certifications = certifications;
+    this.emitUpdate();
   }
 
   /**
-   * Get CV data in template format (ITemplate)
-   * Useful when passing data to template components
+   * Update references section
    */
-  getCvDataForTemplate(templateId: string = 'sunshine'): any {
-    const cvData = this.getCvData();
-    return this.mapper.mapToTemplateFormat(cvData, templateId);
+  updateReferences(references: Reference[]): void {
+    this.currentCvData.references = references;
+    this.emitUpdate();
+  }
+
+  /**
+   * Update hobbies section
+   */
+  updateHobbies(hobbies: Hobby[]): void {
+    this.currentCvData.hobbies = hobbies;
+    this.emitUpdate();
+  }
+
+  /**
+   * Update courses section
+   */
+  updateCourses(courses: Course[]): void {
+    this.currentCvData.courses = courses;
+    this.emitUpdate();
+  }
+
+  /**
+   * Update publications section
+   */
+  updatePublications(publications: Publication[]): void {
+    this.currentCvData.publications = publications;
+    this.emitUpdate();
+  }
+
+  /**
+   * Update extra activities section
+   */
+  updateExtraActivities(extraActivities: ExtraActivity[]): void {
+    this.currentCvData.extraActivities = extraActivities;
+    this.emitUpdate();
+  }
+
+  /**
+   * Update entire CV data (used for initialization or bulk updates)
+   */
+  updateCvData(cvData: Partial<StandardCvData>): void {
+    this.currentCvData = { ...this.currentCvData, ...cvData };
+    this.emitUpdate();
+  }
+
+  /**
+   * Get current CV data snapshot
+   */
+  getCurrentCvData(): StandardCvData {
+    return { ...this.currentCvData };
+  }
+
+  /**
+   * Emit updated CV data to all subscribers
+   */
+  private emitUpdate(): void {
+    this.cvDataSubject.next({ ...this.currentCvData });
+    this.dataSignal.set({ ...this.currentCvData });
   }
 }

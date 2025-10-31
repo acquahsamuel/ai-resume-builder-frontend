@@ -1,7 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CvContentService } from '../../../../../shared/services/cv-content.service';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
     selector: 'app-languages',
@@ -14,10 +17,15 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
       CommonModule
     ],
 })
-export class LanguagesComponent implements OnInit {
+export class LanguagesComponent implements OnInit, OnDestroy {
   languagesForm: FormGroup;
-   @Input() Languages : any;
-  constructor(private fb: FormBuilder) {
+  @Input() Languages : any;
+  private formSubscription?: Subscription;
+  
+  constructor(
+    private fb: FormBuilder,
+    private cvService: CvContentService
+  ) {
 
     this.languagesForm = this.fb.group({
       skillsRecords: this.fb.array([this.createSkillsRecord()])
@@ -27,11 +35,30 @@ export class LanguagesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
-    this.languagesForm.valueChanges.subscribe((value : any) => {
-      console.log(value, "SKILLS INFO");
-      // this.onPersonalInfoUpdateEvt.emit(value);
-    })
+    // Subscribe to form changes with debounce for performance
+    this.formSubscription = this.languagesForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe((value: any) => {
+        const languagesRecords = value.skillsRecords || [];
+        
+        // Map to service format
+        const languages = languagesRecords.map((lang: any) => ({
+          language: lang.name || lang.language,
+          proficiency: lang.proficiency
+        }));
+        
+        // Update service (single source of truth)
+        this.cvService.updateLanguages(languages);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
   }
 
   // Create a new FormGroup for an education record

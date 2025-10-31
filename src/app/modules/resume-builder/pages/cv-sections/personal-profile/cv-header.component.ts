@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,9 +7,6 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
-import { CvContentService } from '../../../../../shared/services/cv-content.service';
-import { Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cv-header',
@@ -18,14 +15,13 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   standalone: true,
   imports: [ReactiveFormsModule, PrimeNgModule, CommonModule],
 })
-export class CvHeaderComponent implements OnInit, OnDestroy {
+export class CvHeaderComponent implements OnInit {
   @Input() PersonalDetails: any;
   @Output() onPersonalInfoUpdateEvt = new EventEmitter<any>();
 
   headerInfoForm: FormGroup;
   selectedFileName: string | null = null;
   imagePreview: string | ArrayBuffer | null = null;
-  private formSubscription?: Subscription;
 
   fieldTypes = [
     'Passport ID',
@@ -56,10 +52,7 @@ export class CvHeaderComponent implements OnInit, OnDestroy {
     'Product Hunt',
   ];
 
-  constructor(
-    private _fb: FormBuilder,
-    private cvService: CvContentService
-  ) {
+  constructor(private _fb: FormBuilder) {
     this.headerInfoForm = this._fb.group({
       firstName: [''],
       lastName: [''],
@@ -79,7 +72,6 @@ export class CvHeaderComponent implements OnInit, OnDestroy {
           link: ['']
         })
       ]),
-      // Legacy fields for backward compatibility
       fields: this._fb.array([]),
     });
   }
@@ -88,7 +80,7 @@ export class CvHeaderComponent implements OnInit, OnDestroy {
     if (this.PersonalDetails) {
       // Map legacy format to new format
       const mappedData = this.mapLegacyToNewFormat(this.PersonalDetails);
-      
+
       // Patch basic fields
       this.headerInfoForm.patchValue({
         firstName: mappedData.firstName,
@@ -104,11 +96,11 @@ export class CvHeaderComponent implements OnInit, OnDestroy {
         state: mappedData.state,
         city: mappedData.city
       });
-      
+
       // Handle socialMedia array separately
       const socialMediaArray = this.headerInfoForm.get('socialMedia') as FormArray;
       socialMediaArray.clear();
-      
+
       if (mappedData.socialMedia && mappedData.socialMedia.length > 0) {
         mappedData.socialMedia.forEach((social: any) => {
           socialMediaArray.push(this._fb.group({
@@ -125,28 +117,11 @@ export class CvHeaderComponent implements OnInit, OnDestroy {
       }
     }
 
-    // Subscribe to form changes with debounce for performance
-    this.formSubscription = this.headerInfoForm.valueChanges
-      .pipe(
-        debounceTime(300), // Wait 300ms after user stops typing
-        distinctUntilChanged() // Only emit if value actually changed
-      )
-      .subscribe((value: any) => {
-        // Transform to API format
-        const apiFormat = this.transformToApiFormat(value);
-        
-        // Update service (single source of truth)
-        this.cvService.updatePersonalDetails(apiFormat);
-        
-        // Emit event for backward compatibility
-        this.onPersonalInfoUpdateEvt.emit(apiFormat);
-      });
-  }
-
-  ngOnDestroy(): void {
-    if (this.formSubscription) {
-      this.formSubscription.unsubscribe();
-    }
+    this.headerInfoForm.valueChanges.subscribe((value: any) => {
+      // Transform to API format before emitting
+      const apiFormat = this.transformToApiFormat(value);
+      this.onPersonalInfoUpdateEvt.emit(apiFormat);
+    });
   }
 
   /**
@@ -175,7 +150,7 @@ export class CvHeaderComponent implements OnInit, OnDestroy {
    */
   private transformToApiFormat(formValue: any): any {
     // Filter out empty social media entries
-    const validSocialMedia = (formValue.socialMedia || []).filter((sm: any) => 
+    const validSocialMedia = (formValue.socialMedia || []).filter((sm: any) =>
       sm.platform || sm.link
     );
 

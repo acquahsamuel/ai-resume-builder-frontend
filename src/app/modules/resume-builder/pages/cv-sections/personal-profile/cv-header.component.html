@@ -1,0 +1,176 @@
+<div class="file-upload-container mb-6">
+  <div class="flex items-center gap-4">
+    <div *ngIf="imagePreview; else noTemplate" class="image-preview">
+      <img
+        [src]="imagePreview"
+        alt="Image preview"
+        class="w-24 h-24 rounded-full object-cover"
+      />
+    </div>
+
+    <ng-template #noTemplate>
+      <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
+        <i class="pi pi-user text-4xl text-gray-400"></i>
+      </div>
+    </ng-template>
+
+    <div class="flex-1">
+      <label for="profile-upload" class="file-upload-label">
+        <span class="file-upload-icon"><i class="pi pi-upload"></i></span>
+        <span class="file-upload-text">Upload Profile Picture</span>
+        <input
+          id="profile-upload"
+          (change)="onFileChange($event)"
+          class="file-input"
+          type="file"
+          accept="image/*"
+        />
+      </label>
+      <p class="text-xs text-gray-500 mt-2">Headshot profile pictures are preferred (max 5MB)</p>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="headerInfoForm" (ngSubmit)="submitForm()">
+  <div class="form-section">
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="firstName">First Name *</label>
+        <input pInputText id="firstName" formControlName="firstName" placeholder="Enter first name" />
+      </div>
+
+      <div class="form-field">
+        <label for="lastName">Last Name *</label>
+        <input pInputText id="lastName" formControlName="lastName" placeholder="Enter last name" />
+      </div>
+
+      <div class="form-field">
+        <label for="nationality">Nationality</label>
+        <input pInputText id="nationality" formControlName="nationality" placeholder="e.g., Ghanaian" />
+      </div>
+
+      <div class="form-field">
+        <label for="city">City</label>
+        <input pInputText id="city" formControlName="city" placeholder="Enter city" />
+      </div>
+
+      <div class="form-field">
+        <label for="state">State / Province</label>
+        <input pInputText id="state" formControlName="state" placeholder="Enter state or province" />
+      </div>
+
+      <div class="form-field">
+        <label for="country">Country</label>
+        <input pInputText id="country" formControlName="country" placeholder="Enter country" />
+      </div>
+
+      <div class="form-field">
+        <label for="zipCode">Zip Code / Postal Code</label>
+        <input pInputText id="zipCode" formControlName="zipCode" placeholder="Enter zip code" />
+      </div>
+
+      <div class="form-field">
+        <label for="phone">Phone Number</label>
+        <input pInputText id="phone" formControlName="phone" placeholder="+1234567890" />
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email Address *</label>
+        <input pInputText id="email" type="email" formControlName="email" placeholder="your.email@example.com" />
+      </div>
+
+      <div class="form-field">
+        <label for="otherName">Other Name / Middle Name</label>
+        <input pInputText id="otherName" formControlName="otherName" placeholder="Enter middle name (optional)" />
+      </div>
+
+      <div class="form-field">
+        <label for="title">Professional Title</label>
+        <input pInputText id="title" formControlName="title" placeholder="e.g., Software Engineer" />
+      </div>
+
+      <div class="form-field">
+        <label for="dateOfBirth">Date of Birth</label>
+        <p-calendar formControlName="dateOfBirth" id="dateOfBirth" styleClass="w-full" 
+          dateFormat="yy-mm-dd" [showIcon]="true" placeholder="Select date"></p-calendar>
+      </div>
+    </div>
+
+    <!-- Social Media Links -->
+    <div class="social-fields-section">
+      <h3 class="section-title">Social Media Links</h3>
+      
+      <div class="social-fields">
+        <div
+          *ngFor="let social of socialMedia.controls; let i = index"
+          [formGroup]="social"
+          class="social-item"
+        >
+          <div class="social-inputs">
+            <div class="form-field">
+              <label [for]="'platform-' + i">Platform</label>
+              <div class="input-wrapper">
+                <i [class]="getFieldIcon(social.get('platform')?.value || '')" class="input-icon"></i>
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="platform"
+                  [id]="'platform-' + i"
+                  placeholder="LinkedIn, GitHub, Twitter..."
+                  (input)="onSocialChange(i)"
+                />
+              </div>
+            </div>
+            
+            <div class="form-field">
+              <label [for]="'link-' + i">URL</label>
+              <input
+                type="url"
+                pInputText
+                formControlName="link"
+                [id]="'link-' + i"
+                placeholder="https://..."
+              />
+            </div>
+          </div>
+          
+          <button
+            *ngIf="socialMedia.length > 1"
+            type="button"
+            class="remove-btn"
+            (click)="removeSocialMedia(i)"
+            title="Remove"
+          >
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+        
+      </div>
+
+      <button
+        type="button"
+        class="add-btn"
+        (click)="addSocialMedia()"
+      >
+        <i class="pi pi-plus"></i>
+        Add Link
+      </button>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions-footer">
+      <p-button
+        label="Cancel"
+        severity="secondary"
+        [outlined]="true"
+        icon="pi pi-times"
+        type="button"
+      ></p-button>
+      <p-button
+        label="Save"
+        type="submit"
+        icon="pi pi-check"
+      ></p-button>
+    </div>
+  </div>
+</form>

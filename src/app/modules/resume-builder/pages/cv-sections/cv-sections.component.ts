@@ -225,33 +225,33 @@ export class CvSectionsComponent implements OnInit {
   onPersonalInfoUpdateEvt(data: any) {
     console.log('PERSONAL INFO UPDATED', data);
     this.PersonalDetails = data;
-    this.cvService.updatePersonalDetails(data);
+    // this.cvService.updatePersonalDetails(data);
   }
 
   onEducationFormUpdate(data: any) {
     console.log('DATA PASSED', data);
     this.Education = data.educationRecords;
-    this.cvService.updateEducation(data.educationRecords);
+    // this.cvService.updateEducation(data.educationRecords);
   }
 
   onSummaryUpdate(data: any) {
     console.log('SUMMARY UPDATED', data);
-    this.cvService.updateSummary(data);
+    // this.cvService.updateSummary(data);
   }
 
   onExperienceUpdate(data: any) {
     console.log('EXPERIENCE UPDATED', data);
-    this.cvService.updateExperience(data?.experienceRecords || data);
+    // this.cvService.updateExperience(data?.experienceRecords || data);
   }
 
   onSkillsUpdate(data: any) {
     console.log('SKILLS UPDATED', data);
-    this.cvService.updateSkills(data);
+    // this.cvService.updateSkills(data);
   }
 
   onLanguagesUpdate(data: any) {
     console.log('LANGUAGES UPDATED', data);
-    this.cvService.updateLanguages(data);
+    // this.cvService.updateLanguages(data);
   }
 
   toggleTemplateSettings() {

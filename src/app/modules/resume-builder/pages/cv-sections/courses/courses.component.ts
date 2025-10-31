@@ -1,8 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule, NgFor } from "@angular/common";
 import { CustomEditorComponent } from "../../../../../shared/components/custom-editor/custom-editor.component";
 import { PrimeNgModule } from "../../../../../shared/modules/primeNg.module";
+import { CvContentService } from "../../../../../shared/services/cv-content.service";
+import { Subscription } from "rxjs";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 @Component({
     selector: 'app-courses',
@@ -12,10 +15,14 @@ import { PrimeNgModule } from "../../../../../shared/modules/primeNg.module";
     imports: [ReactiveFormsModule, CommonModule, PrimeNgModule, CustomEditorComponent]
 })
 
-export class CoursesComponent implements OnInit {
+export class CoursesComponent implements OnInit, OnDestroy {
   educationForm: FormGroup;
+  private formSubscription?: Subscription;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private cvService: CvContentService
+  ) {
 
     this.educationForm = this.fb.group({
       educationRecords: this.fb.array([this.createEducationRecord()])
@@ -23,7 +30,31 @@ export class CoursesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+    // Subscribe to form changes with debounce for performance
+    this.formSubscription = this.educationForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe((value: any) => {
+        const courseRecords = value.educationRecords || [];
+        
+        // Map to service format
+        const courses = courseRecords.map((course: any) => ({
+          name: course.nameofCourse || course.name,
+          institution: course.institution,
+          completionDate: course.endYear || course.completionDate
+        }));
+        
+        // Update service (single source of truth)
+        this.cvService.updateCourses(courses);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
   }
 
   // Create a new FormGroup for an education record

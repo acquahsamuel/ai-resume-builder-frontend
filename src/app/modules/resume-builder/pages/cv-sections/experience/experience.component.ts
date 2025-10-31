@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,6 +9,9 @@ import {
 import { CommonModule, NgFor } from '@angular/common';
 import { CustomEditorComponent } from '../../../../../shared/components/custom-editor/custom-editor.component';
 import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
+import { CvContentService } from '../../../../../shared/services/cv-content.service';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-experience',
@@ -22,21 +25,39 @@ import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
     CustomEditorComponent,
   ],
 })
-export class ExperienceComponent implements OnInit {
+export class ExperienceComponent implements OnInit, OnDestroy {
   experienceForm: FormGroup;
   @Input() Experience: any;
+  private formSubscription?: Subscription;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private cvService: CvContentService
+  ) {
     this.experienceForm = this.fb.group({
       experienceRecords: this.fb.array([this.createExperienceRecord()]),
     });
   }
 
   ngOnInit(): void {
-    this.experienceForm.valueChanges.subscribe((value: any) => {
-      console.log(value, 'value');
-      // this.onPersonalInfoUpdateEvt.emit(value);
-    });
+    // Subscribe to form changes with debounce for performance
+    this.formSubscription = this.experienceForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe((value: any) => {
+        const experienceRecords = value.experienceRecords || [];
+        
+        // Update service (single source of truth)
+        this.cvService.updateExperience(experienceRecords);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
   }
 
   // Create a new FormGroup for an education record
