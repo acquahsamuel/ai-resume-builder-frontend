@@ -1,0 +1,5 @@
+{
+    "HELLO": "Bonjour le monde",
+    "WELCOME": "Bienvenue, {{name}}!"
+  }
+  

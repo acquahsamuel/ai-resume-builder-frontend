@@ -10,10 +10,33 @@
             </svg>
           <span class="text-xl font-bold text-gray-900">Cleansheet</span>
         </div>
-        <button (click)="login()"
-          class="px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors">
-          Get Started
-        </button>
+        <div class="flex items-center gap-3" #langMenuRoot>
+          <button type="button" (click)="toggleLangMenu($event)" aria-label="Select language"
+            class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-200 bg-white/80 backdrop-blur text-gray-700 text-sm hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+            <svg class="h-4 w-4 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3a9 9 0 100 18 9 9 0 000-18zm0 0c2.5 2.5 2.5 15.5 0 18m0-18C9.5 5.5 8 10 8 12s1.5 6.5 4 9m0-18c2.5 2.5 4 7 4 9s-1.5 6.5-4 9M3 12h18"/>
+            </svg>
+            <span class="hidden sm:inline">{{ currentLang | uppercase }}</span>
+          </button>
+
+          <div *ngIf="isLangMenuOpen" class="absolute right-20 sm:right-36 mt-40 sm:mt-44 z-50">
+            <div class="w-44 sm:w-56 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+              <ul class="max-h-64 overflow-auto py-1">
+                <li *ngFor="let l of languages">
+                  <button type="button" (click)="changeLanguage(l.code)"
+                    class="w-full text-left px-3 py-2 text-sm hover:bg-emerald-50">
+                    <span class="font-medium text-gray-900">{{ l.native }}</span>
+                    <span class="text-gray-500 ml-1">— {{ l.label }}</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <button (click)="login()"
+            class="px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors">
+            Get Started
+          </button>
+        </div>
       </div>
     </div>
   </header>

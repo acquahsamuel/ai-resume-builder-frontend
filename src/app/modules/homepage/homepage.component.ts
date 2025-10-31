@@ -1,17 +1,20 @@
-import { CommonModule, } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink],
+  imports: [CommonModule, RouterModule, TranslateModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
 })
-export class HomepageComponent {
+export class HomepageComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private translate: TranslateService, @Inject(PLATFORM_ID) private platformId: Object) {
+    this.currentLang = this.translate.currentLang || this.translate.getDefaultLang() || 'en';
+  }
 
 
   FAQS = [
@@ -154,5 +157,54 @@ export class HomepageComponent {
 
   login() {
     this.router.navigateByUrl('/auth/login');
+  }
+
+  languages = [
+    { code: 'en', label: 'English', native: 'English', dir: 'ltr' },
+    { code: 'zh', label: 'Chinese', native: '中文', dir: 'ltr' },
+    { code: 'hi', label: 'Hindi', native: 'हिन्दी', dir: 'ltr' },
+    { code: 'es', label: 'Spanish', native: 'Español', dir: 'ltr' },
+    { code: 'fr', label: 'French', native: 'Français', dir: 'ltr' },
+    { code: 'ar', label: 'Arabic', native: 'العربية', dir: 'rtl' },
+    { code: 'bn', label: 'Bengali', native: 'বাংলা', dir: 'ltr' },
+    { code: 'pt', label: 'Portuguese', native: 'Português', dir: 'ltr' },
+    { code: 'ru', label: 'Russian', native: 'Русский', dir: 'ltr' },
+    { code: 'ur', label: 'Urdu', native: 'اردو', dir: 'rtl' },
+  ];
+
+  currentLang = 'en';
+  isLangMenuOpen = false;
+  @ViewChild('langMenuRoot') langMenuRoot?: ElementRef<HTMLDivElement>;
+
+  changeLanguage(langCode: string) {
+    const lang = this.languages.find(l => l.code === langCode);
+    if (!lang) return;
+    this.translate.use(lang.code);
+    this.currentLang = lang.code;
+    if (isPlatformBrowser(this.platformId)) {
+      document.documentElement.setAttribute('dir', lang.dir);
+      document.documentElement.lang = lang.code;
+    }
+    this.isLangMenuOpen = false;
+  }
+
+  ngOnInit(): void {
+    const lang = this.languages.find(l => l.code === this.currentLang) || this.languages[0];
+    if (isPlatformBrowser(this.platformId)) {
+      document.documentElement.setAttribute('dir', lang.dir);
+      document.documentElement.lang = lang.code;
+    }
+  }
+
+  toggleLangMenu(event: Event) {
+    event.stopPropagation();
+    this.isLangMenuOpen = !this.isLangMenuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(ev: Event) {
+    if (!this.isLangMenuOpen) return;
+    if (this.langMenuRoot && this.langMenuRoot.nativeElement.contains(ev.target as Node)) return;
+    this.isLangMenuOpen = false;
   }
 }

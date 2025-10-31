@@ -203,20 +203,32 @@
 
 .login-options {
   display: flex;
-  // justify-content: space-between;
+  justify-content: space-between;
   align-items: center;
   margin-top: -0.5rem;
 
+
   ::ng-deep {
+    .p-checkbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     label {
       font-size: 14px;
       color: #6b7280;
       font-weight: 500;
-      margin-right: 1rem;
+      margin-left: 0.5rem;
     }
 
-
+    .p-checkbox .p-checkbox-box.p-highlight {
+      background-color: #22c55e;
+      border-color: #22c55e;
+    }
   }
+
+
 
   .forgot-password {
     color: #22c55e;
