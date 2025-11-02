@@ -61,6 +61,7 @@ export interface Education {
   degree?: string;
   schoolName?: string;
   institution?: string;
+  nameOfInstitution?: string;
   major?: string;
   fieldOfStudy?: string;
   startYear?: string | number;
@@ -70,6 +71,7 @@ export interface Education {
   currentlyEnrolled?: boolean;
   city?: string;
   country?: string;
+  summary?: string;
 }
 
 export interface Skill {
@@ -119,6 +121,7 @@ export interface Course {
   name?: string;
   institution?: string;
   completionDate?: string;
+  summary?: string;
 }
 
 export interface Publication {
@@ -126,6 +129,8 @@ export interface Publication {
   publisher?: string;
   publishDate?: string;
   link?: string;
+  summary?: string;
+  description?: string;
 }
 
 export interface ExtraActivity {

@@ -44,7 +44,9 @@ export class PublicationsComponent implements OnInit, OnDestroy {
           title: pub.name || pub.title,
           publisher: pub.proficiency || pub.publisher,
           publishDate: pub.skillDescription || pub.publishDate,
-          link: pub.link || ''
+          link: pub.link || '',
+          summary: pub.summary || '',
+          description: pub.summary || ''
         }));
         
         // Update service (single source of truth)

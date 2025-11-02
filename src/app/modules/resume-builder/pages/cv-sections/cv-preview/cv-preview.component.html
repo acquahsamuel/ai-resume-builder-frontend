@@ -51,10 +51,12 @@
       </div>
       }
 
-      @if (cvData.summary && (cvData.summary.summary || cvData.summary.content)) {
+      @if (cvData.summary) {
       <div class="preview-section">
         <h4>Summary</h4>
-        <p>{{ cvData.summary.summary || cvData.summary.content }}</p>
+        @if (cvData.summary.summary || cvData.summary.content) {
+        <div class="rich-text-content" [innerHTML]="sanitizeHtml(cvData.summary.summary || cvData.summary.content)"></div>
+        }
       </div>
       }
 
@@ -73,7 +75,7 @@
           <p><em>{{ exp.city || '' }}{{ exp.city && exp.country ? ', ' : '' }}{{ exp.country || '' }}</em></p>
           }
           @if (exp.summary || exp.description) {
-          <p>{{ exp.summary || exp.description }}</p>
+          <div class="rich-text-content" [innerHTML]="sanitizeHtml(exp.summary || exp.description || '')"></div>
           }
         </div>
         }
@@ -96,6 +98,9 @@
           }
           @if (edu.city || edu.country) {
           <p><em>{{ edu.city || '' }}{{ edu.city && edu.country ? ', ' : '' }}{{ edu.country || '' }}</em></p>
+          }
+          @if (edu.summary) {
+          <div class="rich-text-content" [innerHTML]="sanitizeHtml(edu.summary)"></div>
           }
         </div>
         }
@@ -140,7 +145,7 @@
         <div class="preview-item">
           <p><strong>{{ project.title }}</strong></p>
           @if (project.description) {
-          <p>{{ project.description }}</p>
+          <div class="rich-text-content" [innerHTML]="sanitizeHtml(project.description)"></div>
           }
           @if (project.technologies && project.technologies.length > 0) {
           <p><em>Technologies: {{ project.technologies.join(', ') }}</em></p>
@@ -169,7 +174,7 @@
           <p>Credential ID: {{ cert.credentialId }}</p>
           }
           @if (cert.summary) {
-          <p>{{ cert.summary }}</p>
+          <div class="rich-text-content" [innerHTML]="sanitizeHtml(cert.summary)"></div>
           }
         </div>
         }
@@ -187,6 +192,9 @@
           }
           @if (course.completionDate) {
           <p>Completed: {{ course.completionDate }}</p>
+          }
+          @if (course.summary) {
+          <div class="rich-text-content" [innerHTML]="sanitizeHtml(course.summary)"></div>
           }
         </div>
         }
@@ -208,6 +216,9 @@
           @if (pub.link) {
           <p><a [href]="pub.link" target="_blank">{{ pub.link }}</a></p>
           }
+          @if (pub.summary || pub.description) {
+          <div class="rich-text-content" [innerHTML]="sanitizeHtml(pub.summary || pub.description)"></div>
+          }
         </div>
         }
       </div>
@@ -226,7 +237,7 @@
           <p>{{ activity.startDate }}{{ activity.endDate ? ' - ' + activity.endDate : ' - Present' }}</p>
           }
           @if (activity.description) {
-          <p>{{ activity.description }}</p>
+          <div class="rich-text-content" [innerHTML]="sanitizeHtml(activity.description)"></div>
           }
         </div>
         }

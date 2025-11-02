@@ -119,6 +119,46 @@
         color: #6b7280;
         font-style: normal;
       }
+      
+      .rich-text-content {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #4b5563;
+        line-height: 1.8;
+        
+        ::ng-deep {
+          p {
+            margin: 8px 0;
+          }
+          
+          ul, ol {
+            margin: 8px 0;
+            padding-left: 24px;
+          }
+          
+          li {
+            margin: 4px 0;
+          }
+          
+          strong, b {
+            font-weight: 600;
+            color: #1a1a1a;
+          }
+          
+          em, i {
+            font-style: italic;
+          }
+          
+          a {
+            color: #22c55e;
+            text-decoration: none;
+            
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
     }
   }
 }

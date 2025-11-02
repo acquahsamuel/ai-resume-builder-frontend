@@ -43,7 +43,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
         const courses = courseRecords.map((course: any) => ({
           name: course.nameofCourse || course.name,
           institution: course.institution,
-          completionDate: course.endYear || course.completionDate
+          completionDate: course.endYear || course.completionDate,
+          summary: course.summary || ''
         }));
         
         // Update service (single source of truth)
