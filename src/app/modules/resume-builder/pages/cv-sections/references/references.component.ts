@@ -1,9 +1,12 @@
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule, NgFor } from "@angular/common";
 import { CustomEditorComponent } from "../../../../../shared/components/custom-editor/custom-editor.component";
 import { PrimeNgModule } from "../../../../../shared/modules/primeNg.module";
+import { CvContentService } from "../../../../../shared/services/cv-content.service";
+import { Subscription } from "rxjs";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 @Component({
     selector: 'app-references',
@@ -13,10 +16,14 @@ import { PrimeNgModule } from "../../../../../shared/modules/primeNg.module";
     imports: [ReactiveFormsModule, CommonModule, PrimeNgModule, CustomEditorComponent]
 })
 
-export class ReferencesComponent implements OnInit {
+export class ReferencesComponent implements OnInit, OnDestroy {
   referenceForm: FormGroup;
+  private formSubscription?: Subscription;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private cvService: CvContentService
+  ) {
 
     this.referenceForm = this.fb.group({
       referenceRecords: this.fb.array([this.createReferenceRecord()])
@@ -24,7 +31,33 @@ export class ReferencesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+    // Subscribe to form changes with debounce for performance
+    this.formSubscription = this.referenceForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe((value: any) => {
+        const referenceRecords = value.referenceRecords || [];
+        
+        // Map to service format
+        const references = referenceRecords.map((ref: any) => ({
+          name: ref.referenceName || ref.name,
+          position: ref.contactPerson || ref.position,
+          company: ref.company || '',
+          email: ref.emailAddress || ref.email,
+          phone: ref.phoneNumber || ref.phone
+        }));
+        
+        // Update service (single source of truth)
+        this.cvService.updateReferences(references);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
   }
 
   // Create a new FormGroup for an education record

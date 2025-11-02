@@ -107,3 +107,100 @@ export interface ITemplate {
   createdAt: string; 
   updatedAt: string;
 }
+
+// Template Layout Configuration
+export interface TemplateLayout {
+  sections?: string[];
+  sectionOrder?: string[];
+  orientation?: 'portrait' | 'landscape';
+  columns?: number;
+  sectionSpacing?: number;
+}
+
+// Template Typography Configuration
+export interface TemplateTypography {
+  fontFamily?: string;
+  headingSize?: number;
+  subheadingSize?: number;
+  bodySize?: number;
+  lineHeight?: number;
+  fontWeight?: 'normal' | 'bold' | 'lighter' | number;
+}
+
+// Template Theme Configuration
+export interface TemplateTheme {
+  primaryColor?: string;
+  secondaryColor?: string;
+  accentColor?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  customCSS?: string;
+}
+
+// Template Page Settings
+export interface TemplatePageSettings {
+  format?: string; // e.g., "A4"
+  margins?: {
+    top?: number;
+    bottom?: number;
+    left?: number;
+    right?: number;
+  };
+  showLineBreaks?: boolean;
+  showPageNumbers?: boolean;
+  pageNumberFormat?: string;
+  isPublic?: boolean;
+  publicUrl?: string;
+}
+
+// Template Export Settings
+export interface TemplateExportSettings {
+  pdf?: {
+    enabled?: boolean;
+    quality?: string;
+    watermark?: string;
+  };
+  json?: {
+    enabled?: boolean;
+    includeMetadata?: boolean;
+  };
+}
+
+// Template Notes
+export interface TemplateNotes {
+  content?: string;
+  lastEditedAt?: string;
+}
+
+// Template Statistics
+export interface TemplateStatistics {
+  views?: number;
+  downloads?: number;
+  lastViewedAt?: string;
+  lastDownloadedAt?: string;
+}
+
+// Template Request DTO (for creating/updating templates)
+export interface ITemplateRequest {
+  name: string;
+  description?: string;
+  category?: string;
+  layout?: TemplateLayout;
+  typography?: TemplateTypography;
+  theme?: TemplateTheme;
+  pageSettings?: TemplatePageSettings;
+  exportSettings?: TemplateExportSettings;
+  notes?: TemplateNotes;
+  isPremium?: boolean;
+  isActive?: boolean;
+  statistics?: TemplateStatistics;
+}
+
+// Template Response DTO (what the API returns)
+export interface ITemplateResponse extends ITemplateRequest {
+  _id?: string;
+  id?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  userId?: string;
+}

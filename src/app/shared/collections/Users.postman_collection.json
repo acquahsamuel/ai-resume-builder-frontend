@@ -1,0 +1,236 @@
+{
+  "info": {
+    "_postman_id": "users-endpoints",
+    "name": "Users API",
+    "description": "User management endpoints for CleanSheet AI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"John\",\n  \"lastname\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePassword123!\",\n  \"phone\": \"+1234567890\",\n  \"city\": \"New York\",\n  \"country\": \"United States\",\n  \"postalCode\": \"10001\",\n  \"address\": \"123 Main St, Apt 4B\",\n  \"title\": \"Senior Software Engineer\",\n  \"dateOfBirth\": \"1990-05-15\",\n  \"socialMedia\": [\n    {\n      \"platform\": \"LinkedIn\",\n      \"link\": \"https://linkedin.com/in/johndoe\"\n    },\n    {\n      \"platform\": \"GitHub\",\n      \"link\": \"https://github.com/johndoe\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create User (Minimal)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"Jane\",\n  \"lastname\": \"Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"password\": \"SecurePassword123!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get User by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/:userId",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users", ":userId"],
+          "variable": [
+            {
+              "key": "userId",
+              "value": "507f1f77bcf86cd799439011",
+              "description": "User ID"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update User (Partial)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"Jane\",\n  \"photo\": \"https://example.com/photos/jane.jpg\",\n  \"city\": \"San Francisco\",\n  \"country\": \"United States\",\n  \"title\": \"Lead Software Engineer\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/:userId",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users", ":userId"],
+          "variable": [
+            {
+              "key": "userId",
+              "value": "507f1f77bcf86cd799439011",
+              "description": "User ID"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update User (Full)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"Jane\",\n  \"lastname\": \"Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"password\": \"NewSecurePassword789!\",\n  \"phone\": \"+1987654321\",\n  \"photo\": \"https://example.com/photos/jane.jpg\",\n  \"city\": \"San Francisco\",\n  \"country\": \"United States\",\n  \"postalCode\": \"94102\",\n  \"address\": \"456 Market St, Suite 100\",\n  \"title\": \"Lead Software Engineer\",\n  \"dateOfBirth\": \"1992-08-20\",\n  \"socialMedia\": [\n    {\n      \"platform\": \"LinkedIn\",\n      \"link\": \"https://linkedin.com/in/janedoe\"\n    },\n    {\n      \"platform\": \"Portfolio\",\n      \"link\": \"https://janesmith.dev\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/:userId",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users", ":userId"],
+          "variable": [
+            {
+              "key": "userId",
+              "value": "507f1f77bcf86cd799439011",
+              "description": "User ID"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update User Photo Only",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"photo\": \"https://example.com/photos/new-photo.jpg\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/:userId",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users", ":userId"],
+          "variable": [
+            {
+              "key": "userId",
+              "value": "507f1f77bcf86cd799439011",
+              "description": "User ID"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update User Social Media",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"socialMedia\": [\n    {\n      \"platform\": \"LinkedIn\",\n      \"link\": \"https://linkedin.com/in/johndoe\"\n    },\n    {\n      \"platform\": \"GitHub\",\n      \"link\": \"https://github.com/johndoe\"\n    },\n    {\n      \"platform\": \"Twitter\",\n      \"link\": \"https://twitter.com/johndoe\"\n    },\n    {\n      \"platform\": \"Portfolio\",\n      \"link\": \"https://johndoe.dev\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/:userId",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users", ":userId"],
+          "variable": [
+            {
+              "key": "userId",
+              "value": "507f1f77bcf86cd799439011",
+              "description": "User ID"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete User",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/:userId",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users", ":userId"],
+          "variable": [
+            {
+              "key": "userId",
+              "value": "507f1f77bcf86cd799439011",
+              "description": "User ID"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "507f1f77bcf86cd799439011",
+      "type": "string",
+      "description": "User ID for testing"
+    }
+  ]
+}

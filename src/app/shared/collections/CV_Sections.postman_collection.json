@@ -1,0 +1,964 @@
+{
+  "info": {
+    "_postman_id": "cv-sections",
+    "name": "CV Sections",
+    "description": "All CV section endpoints (Personal Info, Work Experience, Education, etc.)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Personal Info",
+      "item": [
+        {
+          "name": "Create or Update Personal Info",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"fullName\": \"John Doe\",\n  \"title\": \"Software Engineer\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+1234567890\",\n  \"country\": \"USA\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/personal-info",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "personal-info"]
+            }
+          }
+        },
+        {
+          "name": "Get Personal Info",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/personal-info",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "personal-info"]
+            }
+          }
+        },
+        {
+          "name": "Update Personal Info",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Senior Software Engineer\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/personal-info",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "personal-info"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Professional Summary",
+      "item": [
+        {
+          "name": "Create or Update Summary",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"summary\": \"Experienced software engineer with 5+ years of expertise...\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/professional-summary",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "professional-summary"]
+            }
+          }
+        },
+        {
+          "name": "Get Summary",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/professional-summary",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "professional-summary"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Work Experience",
+      "item": [
+        {
+          "name": "Create Work Experience",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobTitle\": \"Senior Software Engineer\",\n  \"company\": \"Tech Corp\",\n  \"location\": \"New York, NY\",\n  \"employmentType\": \"full-time\",\n  \"startDate\": \"2020-01-01\",\n  \"endDate\": \"2024-12-31\",\n  \"isCurrent\": false,\n  \"description\": \"Led a team of developers...\",\n  \"responsibilities\": [\"Developed applications\", \"Mentored junior developers\"],\n  \"technologies\": [\"JavaScript\", \"Node.js\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/work-experience",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "work-experience"]
+            }
+          }
+        },
+        {
+          "name": "Get All Work Experiences",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/work-experience",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "work-experience"]
+            }
+          }
+        },
+        {
+          "name": "Get Work Experience by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/work-experience/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "work-experience", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Update Work Experience",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobTitle\": \"Updated Job Title\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/work-experience/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "work-experience", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Delete Work Experience",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/work-experience/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "work-experience", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Reorder Work Experiences",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"experienceIds\": [\"id1\", \"id2\", \"id3\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/work-experience/reorder",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "work-experience", "reorder"]
+            }
+          }
+        },
+        {
+          "name": "Generate Job Description (AI)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobTitle\": \"Software Developer\",\n  \"company\": \"Tech Corp\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/work-experience/generate-description",
+              "host": ["{{baseUrl}}"],
+              "path": [
+                "api",
+                "v1",
+                "cv",
+                "work-experience",
+                "generate-description"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Education",
+      "item": [
+        {
+          "name": "Create Education",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"institution\": \"MIT\",\n  \"degree\": \"Bachelor of Science\",\n  \"fieldOfStudy\": \"Computer Science\",\n  \"startDate\": \"2016-09-01\",\n  \"endDate\": \"2020-05-01\",\n  \"isOngoing\": false,\n  \"gpa\": 3.8,\n  \"gpaScale\": \"4.0\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/education",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "education"]
+            }
+          }
+        },
+        {
+          "name": "Get All Education",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/education",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "education"]
+            }
+          }
+        },
+        {
+          "name": "Get Education by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/education/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "education", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Update Education",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"degree\": \"Master of Science\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/education/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "education", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Delete Education",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/education/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "education", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Reorder Education",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"educationIds\": [\"id1\", \"id2\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/education/reorder",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "education", "reorder"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Skills",
+      "item": [
+        {
+          "name": "Create Skill",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"JavaScript\",\n  \"category\": \"technical\",\n  \"proficiencyLevel\": 9,\n  \"proficiencyLabel\": \"advanced\",\n  \"yearsOfExperience\": 5,\n  \"isHighlighted\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/skills",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "skills"]
+            }
+          }
+        },
+        {
+          "name": "Get All Skills",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/skills",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "skills"]
+            }
+          }
+        },
+        {
+          "name": "Get Skill by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/skills/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "skills", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Update Skill",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"proficiencyLevel\": 10\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/skills/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "skills", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Delete Skill",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/skills/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "skills", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Reorder Skills",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skillIds\": [\"id1\", \"id2\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/skills/reorder",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "skills", "reorder"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Certifications",
+      "item": [
+        {
+          "name": "Create Certification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"AWS Certified Solutions Architect\",\n  \"issuingOrganization\": \"AWS\",\n  \"issueDate\": \"2023-01-15\",\n  \"expiryDate\": \"2026-01-15\",\n  \"credentialId\": \"AWS-123456789\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/certifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "certifications"]
+            }
+          }
+        },
+        {
+          "name": "Get All Certifications",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl即在}}/api/v1/cv/certifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "certifications"]
+            }
+          }
+        },
+        {
+          "name": "Update Certification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"expiryDate\": \"2027-01-15\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/certifications/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "certifications", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Delete Certification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/certifications/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "certifications", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Create Project",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"E-Commerce Platform\",\n  \"role\": \"Lead Developer\",\n  \"description\": \"Built a full-stack platform...\",\n  \"startDate\": \"2023-01-01\",\n  \"endDate\": \"2023-12-31\",\n  \"technologies\": [\"React\", \"Node.js\", \"MongoDB\"],\n  \"teamSize\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/projects",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "projects"]
+            }
+          }
+        },
+        {
+          "name": "Get All Projects",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/projects",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "projects"]
+            }
+          }
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/projects/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "projects", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/projects/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "projects", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Languages",
+      "item": [
+        {
+          "name": "Create Language",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"language\": \"Spanish\",\n  \"proficiency\": \"intermediate\",\n  \"proficiencyLevel\": \"B1\",\n  \"canRead\": true,\n  \"canWrite\": true,\n  \"canSpeak\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/languages",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "languages"]
+            }
+          }
+        },
+        {
+          "name": "Get All Languages",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/languages",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "languages"]
+            }
+          }
+        },
+        {
+          "name": "Update Language",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"proficiency\": \"advanced\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/languages/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "languages", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        },
+        {
+          "name": "Delete Language",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/languages/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "languages", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hobbies",
+      "item": [
+        {
+          "name": "Create Hobby",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Photography\",\n  \"description\": \"Landscape photography\",\n  \"relevance\": \"Enhances creativity\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/hobbies",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "hobbies"]
+            }
+          }
+        },
+        {
+          "name": "Get All Hobbies",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/hobbies",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "hobbies"]
+            }
+          }
+        },
+        {
+          "name": "Delete Hobby",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/hobbies/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "hobbies", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "References",
+      "item": [
+        {
+          "name": "Create Reference",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Smith\",\n  \"title\": \"Senior Manager\",\n  \"company\": \"Tech Corp\",\n  \"email\": \"jane@techcorp.com\",\n  \"phone\": \"+1234567890\",\n  \"relationship\": \"Former Manager\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/references",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "references"]
+            }
+          }
+        },
+        {
+          "name": "Get All References",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/references",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "references"]
+            }
+          }
+        },
+        {
+          "name": "Delete Reference",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/references/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "references", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courses",
+      "item": [
+        {
+          "name": "Create Course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Advanced React Patterns\",\n  \"provider\": \"Udemy\",\n  \"completionDate\": \"2023-06-01\",\n  \"certificateUrl\": \"https://udemy.com/cert/123\",\n  \"hours\": 20\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/courses",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "courses"]
+            }
+          }
+        },
+        {
+          "name": "Get All Courses",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/courses",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "courses"]
+            }
+          }
+        },
+        {
+          "name": "Delete Course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/courses/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "courses", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Awards",
+      "item": [
+        {
+          "name": "Create Award",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Employee of the Year\",\n  \"issuer\": \"Company Inc\",\n  \"date\": \"2023-12-01\",\n  \"description\": \"Outstanding performance\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/awards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "awards"]
+            }
+          }
+        },
+        {
+          "name": "Get All Awards",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/awards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "awards"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Publications",
+      "item": [
+        {
+          "name": "Create Publication",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Advanced ML Techniques\",\n  \"authors\": [\"John Doe\", \"Jane Smith\"],\n  \"publication\": \"Journal of AI\",\n  \"publicationDate\": \"2023-06-01\",\n  \"doi\": \"10.1000/example\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/publications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "publications"]
+            }
+          }
+        },
+        {
+          "name": "Get All Publications",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{authToken}}" }]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cv/publications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cv", "publications"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "authToken",
+      "value": ""
+    }
+  ]
+}

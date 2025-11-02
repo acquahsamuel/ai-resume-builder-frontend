@@ -1,247 +1,561 @@
-<section class="main-wrapper px-2">
-  <div class="grid xl:grid-cols-1 grid-cols-1 container mx-auto">
-    <div class="py-5">
-      <div class="py-3 px-3 rounded-xl border w-full bg-green-900">
-        <div class="flex">
-          <div class="flex gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6 text-white"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
-              />
+<div class="min-h-screen bg-white">
+  <!-- Header -->
+  <header class="bg-white border-b border-gray-100 sticky top-0 z-50 backdrop-blur-md bg-white/80">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            <p class="font-semibold text-white">Cleansheet Resume</p>
-          </div>
+          <span class="text-xl font-bold text-gray-900">Cleansheet</span>
         </div>
-      </div>
-    </div>
-  </div>
+        <div class="flex items-center gap-3" #langMenuRoot>
+          <button type="button" (click)="toggleLangMenu($event)" aria-label="Select language"
+            class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-200 bg-white/80 backdrop-blur text-gray-700 text-sm hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+            <svg class="h-4 w-4 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3a9 9 0 100 18 9 9 0 000-18zm0 0c2.5 2.5 2.5 15.5 0 18m0-18C9.5 5.5 8 10 8 12s1.5 6.5 4 9m0-18c2.5 2.5 4 7 4 9s-1.5 6.5-4 9M3 12h18"/>
+            </svg>
+            <span class="hidden sm:inline">{{ currentLang | uppercase }}</span>
+          </button>
 
-  <section class="relatve container mx-auto">
-    <div class="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-24 lg:py-32">
-      <div class="mx-auto w-full max-w-3xl text-center md:mb-16 lg:mb-20">
-        <h1 class="mb-4 text-4xl font-semibold md:text-6xl">
-          Cleansheet
-          <span class="inline-block bg-green-700 text-white px-2 transform skew-x-3 ml-1">
-            AI</span
-          >.
-        </h1>
-        <p class="mx-auto mb-5 max-w-[628px] text-xl text-[#636262] leading-normal lg:mb-8">
-          A one-of-a-kind resume builder that keeps your privacy in mind.
-          Completely secure, customizable, portable, open-source and free
-          forever. Try it out today!
-        </p>
-
-        <div class="flex justify-center items-center">
-          <a
-            class="group relative inline-block text-sm rounded-md font-medium  text-white !important focus:outline-none focus:ring"
-            (click)="login()"
-          >
-            <span
-              class="absolute inset-0 border rounded-md border-green-600 group-active:border-green-700"
-            ></span>
-            <span 
-             
-              class="block border rounded-md border-green-600 bg-green-700 px-12 py-3 transition-transform active:border-green-500 active:bg-green-500 group-hover:-translate-x-1 group-hover:-translate-y-1"
-            >
-              Create Account
-            </span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <img
-      src="/icons/svgs/pattern-1.svg"
-      alt=""
-      class="absolute bottom-0 bg-cover bg-center px-4 left-0 right-auto top-auto -z-10 inline-block md:bottom-1/2 md:left-0 md:right-auto md:top-auto"
-    />
-
-    <img
-      src="/icons/svgs/pattern-1.svg"
-      alt=""
-      class="absolute bottom-auto bg-cover bg-center px-4 left-auto right-0 top-0 -z-10 hidden sm:inline-block"
-    />
-  </section>
-
-  <section class="container mx-auto">
-    <div
-      class="flex pt-12 px-6 md:px-20 items-center justify-center bg-hero overflow-hidden"
-    >
-      <div class="flex flex-col gap-6 md:flex-row items-center max-w-8xl">
-        <div class="w-full md:w-1/2 lg:pr-32">
-          <h2
-            class="text-4xl lg:text-5xl text-center md:text-left text-green-900 leading-tight font-medium"
-          >
-            Achieve a 100% match between your resume and the job description.
-          </h2>
-          <h3
-            class="mt-6 md:mt-10 text-md lg:text-xl text-center md:text-left text-gray-700 font-light"
-          >
-            Create the prefect resume for your next job
-          </h3>
-          <div
-            class="mt-10 flex flex-col sm:flex-row justify-center md:justify-start"
-          >
-            <button
-            (click)="login()"
-              class="w-full sm:w-40 px-4 py-3 rounded font-semibold text-md bg-green-500 text-white border-2 border-green-500"
-            >
-              Get started
-            </button>
-            <a
-              href="https://github.com/acquahsamuel/cleansheet-ai-resume-builder"
-              class="w-full mt-4 sm:mt-0 sm:ml-4 sm:w-48 px-4 py-3 rounded font-semibold text-md bg-white text-black !important border-2 border-gray-500"
-            >
-               Contribute on Github
-           </a>
-          </div>
-        </div>
-        <div class="w-full md:w-1/2 flex justify-center md:justify-end">
-          <img src="/images/sample.jpg" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="rounded-xl py-2 my-2 sm:py-32 bg-green-500">
-      <div class="px-6 lg:px-8 mx-auto container">
-        <div
-          class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3"
-        >
-          <div>
-            <h2
-              class="text-lg font-semibold leading-8 tracking-tight text-green-600"
-            >
-              Everything you need
-            </h2>
-            <p
-              class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
-            >
-              All-in-one platform
-            </p>
-            <p class="mt-6 text-base leading-7 text-white">
-              Open-Source, Secure, and ATS-Optimized This project is a unique,
-              privacy-focused resume builder designed to help you create
-              professional CVs with ease. It offers complete security,
-              customization options, and portability, ensuring your personal
-              data remains protected
-            </p>
-          </div>
-          <dl
-            class="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:gap-y-16"
-          >
-            <div *ngFor="let feature of EXTRA_FEATURES">
-              <div class="relative h-full ml-0 mr-0 sm:mr-2">
-                <span
-                  class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-green-900 rounded-lg"
-                ></span>
-                <div
-                  class="relative h-full p-5 bg-white border-2 border-green-900 rounded-lg"
-                >
-                  <div class="flex items-center -mt-1">
-                    <h3 class="my-2 text-lg font-bold text-gray-800 underline">
-                      {{ feature.title }}
-                    </h3>
-                  </div>
-                  <p
-                    class="mt-1 mb-1 text-xs font-medium text-green-500 uppercase"
-                  ></p>
-                  <p class="mb-2 text-gray-600">
-                    {{ feature.description }}
-                  </p>
-                </div>
-              </div>
+          <div *ngIf="isLangMenuOpen" class="absolute right-20 sm:right-36 mt-40 sm:mt-44 z-50">
+            <div class="w-44 sm:w-56 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+              <ul class="max-h-64 overflow-auto py-1">
+                <li *ngFor="let l of languages">
+                  <button type="button" (click)="changeLanguage(l.code)"
+                    class="w-full text-left px-3 py-2 text-sm hover:bg-emerald-50">
+                    <span class="font-medium text-gray-900">{{ l.native }}</span>
+                    <span class="text-gray-500 ml-1">— {{ l.label }}</span>
+                  </button>
+                </li>
+              </ul>
             </div>
-          </dl>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="faq-section container mx-auto max-w-5xl py-10">
-    <div class="flex justify-center items-center">
-      <h3 class="text-3xl text-green-800 py-2 font-semibold">
-        Frequently Asked Question
-      </h3>
-    </div>
-
-    <div class="space-y-4">
-      <details
-        class="group [&_summary::-webkit-details-marker]:hidden"
-        *ngFor="let item of FAQS"
-      >
-        <summary
-          id="summary"
-          class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-100 p-4 text-gray-900"
-        >
-          <h2 class="font-medium">{{ item.question }}</h2>
-
-          <svg
-            class="size-5 shrink-0 transition duration-300 group-open:-rotate-180"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </summary>
-
-        <p class="mt-4 px-4 leading-relaxed text-gray-700">
-          {{ item.answer }}
-        </p>
-      </details>
-    </div>
-  </section>
-
-  <section class="container mx-auto py-10">
-    <div class="p-12 rounded-xl bg-gradient-to-r from-green-500">
-      <h2 class="px-4 font-medium mb-2 font-roboto text-white">
-        Take your resume one step further.
-      </h2>
-      <p class="px-4 text-2xl text-white font-roboto">
-        Utilize AI-Enhanced resumes to tailor your skills and secure your dream
-        job with confidence.
-      </p>
-
-      <div>
-        <div
-          class="w-52 max-w-sm rounded-xl bg-gradient-to-tr from-green-300 to-green-800 p-0.5 shadow-lg"
-        >
-          <button
-            class="w-52 font-bold text-xl bg-green-700 text-white px-6 py-3 rounded-xl"
-          >
-            Try now
+          </div>
+          <button (click)="login()"
+            class="px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors">
+            Get Started
           </button>
         </div>
       </div>
     </div>
-  </section>
+  </header>
 
-  <div class="grid xl:grid-cols-1 grid-cols-1 container mx-auto">
-    <div class="py-5">
-      <div class="py-3 px-3 rounded-xl border w-full bg-green-900">
-        <div class="flex justify-between items-center">
-          <div class="flex justify-items-center items-center gap-2">
-            <p class="font-semibold text-white">Guglex Technologies</p>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-green-50 via-white to-blue-50">
+    <div class="container mx-auto px-4 py-20 lg:py-32">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div
+              class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium mb-6">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd" />
+              </svg>
+              AI-Powered & Free Forever
+  </div>
+
+            <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+              Create Professional Resumes with
+              <span class="text-green-600">AI Precision</span>
+        </h1>
+
+            <p class="text-xl text-gray-600 leading-relaxed mb-8">
+              The ultimate privacy-focused resume builder. Generate ATS-optimized resumes,
+              customize templates, and land your dream job—all for free.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 mb-8">
+              <button (click)="login()"
+                class="px-8 py-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transform hover:-translate-y-0.5 transition-all duration-200 shadow-lg hover:shadow-xl">
+                Start Building Your Resume
+              </button>
+              <a href="https://github.com/acquahsamuel/cleansheet-ai-resume-builder" target="_blank"
+                class="px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg border-2 border-gray-200 hover:border-gray-300 transition-all duration-200 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd"
+                    d="M10 0C4.477 0 0 4.484 0 10. consumingc0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369- Hernandez.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.宣传C20 4.484 15.522 0 10 0z"
+                    clip-rule="evenodd" />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+
+            <div class="flex flex-wrap gap-6 text-sm text-gray-600">
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                No Credit Card Required
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                100% Private & Secure
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                Lightning Fast
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-500 rounded-2xl transform rotate-6 opacity-20 blur-2xl">
+            </div>
+            <div class="relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+              <img src="/images/sample.jpg" alt="Resume Preview" class="w-full h-auto object-cover" />
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-20 lg:py-32 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          Everything You Need to Create the Perfect Resume
+          </h2>
+        <p class="text-xl text-gray-600">
+          A powerful, privacy-focused platform designed for modern job seekers
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div *ngFor="let feature of EXTRA_FEATURES" class="group">
+          <div
+            class="relative bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl border border-gray-100 hover:border-green-200 transition-all duration-300 hover:shadow-xl h-full">
+            <div
+              class="absolute top-0 right-0 w-24 h-24 bg-green-100 rounded-bl-full opacity-50 group-hover:opacity-100 transition-opacity">
+            </div>
+            <div class="shooting-icon mb-4 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+              <!-- Github Icon -->
+              <svg *ngIf="feature.icon === 'github'" class="w-6 h-6 text-green-600" fill="currentColor"
+                viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.33 1.266-.891.946-1.627-.128-.243-.364-.888-.641-1.094-.498-.259-1.303-.9-1.421-1.32-.125-.415-.199-.385-.178-.218-.125.385-.611 1.235-.955 1.526-.344.291-.178.431.178.523.689.169 1.446.169 2.126 0 .356-.092.522-.232.178-.523-.344-.291-.83-1.141-.955-1.526.021-.167.053-.197-.178.218-.118.42-.923 1.061-1.421 1.32-.277.206-.513.851-.641 1.094-.32.736 1.027 1.957.946 1.627 4.769-1.587 8.207-6.085 8.207-11.387 0-6.627-5.373-12-12-12z" />
+              </svg>
+              <!-- Lock Icon -->
+              <svg *ngIf="feature.icon === 'lock'" class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <!-- Settings Icon -->
+              <svg *ngIf="feature.icon === 'settings'" class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <!-- Document Icon -->
+              <svg *ngIf="feature.icon === 'document'" class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <!-- Brain Icon -->
+              <svg *ngIf="feature.icon === 'brain'" class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              <!-- Check Circle Icon -->
+              <svg *ngIf="feature.icon === 'check-circle'" class="w-6 h-6 text-green-600" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">{{ feature.title }}</h3>
+            <p class="text-gray-600 leading-relaxed">{{ feature.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Template Gallery Section -->
+  <section class="py-20 lg:py-32 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          Choose Your Perfect Template
+            </h2>
+        <p class="text-xl text-gray-600">
+          Browse our collection of professionally designed CV templates
+            </p>
+          </div>
+
+      <!-- Horizontal Scrolling Gallery -->
+      <div class="relative">
+        <!-- Scroll Container -->
+        <div class="overflow-x-auto scrollbar-hide pb-8 scroll-smooth"
+          style="scrollbar-width: none; -ms-overflow-style: none;">
+          <div class="flex gap-6 px-2" style="min-width: fit-content;">
+            <!-- Template Cards -->
+            <div *ngFor="let template of TEMPLATES" class="group flex-shrink-0 w-80">
+              <div
+                class="relative bg-white rounded-lg overflow-hidden border border-gray-200 hover:border-emerald-400 transition-all duration-300">
+                <!-- Template Image Placeholder -->
+                <div class="relative h-64 bg-gray-50 overflow-hidden">
+                  <div class="absolute inset-0 flex items-center justify-center p-4">
+                    <div class="text-center">
+                      <!-- Sample CV Preview -->
+                      <div
+                        class="bg-white rounded p-3 border border-gray-200 transform rotate-2 group-hover:rotate-0 transition-transform duration-300">
+                        <div class="h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-t mb-2"></div>
+                        <div class="space-y-1.5">
+                          <div class="h-2.5 bg-gray-700 rounded w-3/4"></div>
+                          <div class="h-2 bg-gray-200 rounded w-full"></div>
+                          <div class="h-2 bg-gray-200 rounded w-5/6"></div>
+                          <div class="  bg-gray-100 rounded mt-3"></div>
+                          <div class="h-2 bg-gray-200 rounded w-full"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overlay on hover -->
+                  <div
+                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  </div>
+                  <!-- View button on hover -->
+                  <div
+                    class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button (click)="login()"
+                      class="px-6 py-2.5 bg-white text-emerald-600 font-medium rounded-md hover:bg-emerald-50 transition-colors">
+                      View Template
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Template Info -->
+                <div class="p-4 border-t border-gray-200">
+                  <div class="mb-2">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1.5">{{ template.name }}</h3>
+                    <span class="inline-block px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded">
+                      {{ template.category }}
+                    </span>
+                  </div>
+                  <p class="text-sm text-gray-600 mb-3">{{ template.description }}</p>
+
+                  <!-- Action Button -->
+                  <button (click)="login()"
+                    class="w-full py-2.5 bg-white text-emerald-600 font-medium rounded-md hover:bg-emerald-50 border border-gray-200 hover:border-emerald-400 transition-all duration-200 flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 15l-2-5M9.396 2.649a9 9 0 0112.802 0l-1.149-.827a4.5 4.5 0 00-6.79.681L10 8l-2.447 2.446a4.5 4.5 0 00-.681 6.79l.827 1.148a9 9 0 01-1.699 1.7z" />
+                    </svg>
+                    Start with this Template
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Arrows for Desktop -->
+        <button
+          class="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-white rounded-full border border-gray-200 shadow-md flex items-center justify-center hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300 z-10"
+          onclick="document.querySelector('.scrollbar-hide').scrollBy({ left: -400, behavior: 'smooth' })">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          class="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-white rounded-full border border-gray-200 shadow-md flex items-center justify-center hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300 z-10"
+          onclick="document.querySelector('.scrollbar-hide').scrollBy({ left: 400, behavior: 'smooth' })">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- View All Button -->
+      <div class="text-center mt-12">
+        <button (click)="login()"
+          class="inline-flex items-center gap-2 px-8 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transform hover:-translate-y-0.5 transition-all duration-200 shadow-lg hover:shadow-xl">
+          Explore All Templates
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="py-20 lg:py-32 bg-gradient-to-br from-green-600 to-green-700">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center text-white">
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6">
+          Why Choose Cleansheet Resume?
+        </h2>
+        <p class="text-xl text-green-100 mb-12">
+          More than just a resume builder—it's your career companion
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl">
+            <div class="text-5xl font-bold text-white mb-2">100%</div>
+            <div class="text-green-100">Free Forever</div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl">
+            <div class="text-5xl font-bold text-white mb-2">95%</div>
+            <div class="text-green-100">Success Rate</div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl">
+            <div class="text-5xl font-bold text-white mb-2">0%</div>
+            <div class="text-green-100">Data Sharing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-20 lg:py-32 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-xl text-gray-600">
+          Everything you need to know about our platform
+        </p>
+    </div>
+
+    <div class="space-y-4">
+      <details
+          class="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-green-300 transition-colors"
+          *ngFor="let item of FAQS">
+          <summary id="summary" class="flex cursor-pointer items-center justify-between gap-4 p-6 text-gray-900">
+            <h3 class="text-lg font-semibold pr-8">{{ item.question }}</h3>
+            <svg class="flex-shrink-0 w-5 h-5 transition-transform duration-300 group-open:rotate-180 text-green-600"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+          <div class="px-6 pb-6 pt-0">
+            <p class="text-gray-600 leading-relaxed">
+          {{ item.answer }}
+        </p>
+          </div>
+      </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="relative py-24 lg:py-32 overflow-hidden">
+    <!-- Animated Background -->
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-500 via-green-600 to-teal-600">
+      <div class="absolute inset-0 opacity-20"
+        style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;">
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative container mx-auto px-4 max-w-5xl">
+      <div class="bg-white/95 backdrop-blur-sm rounded-3xl  p-8 md:p-12 lg:p-16">
+        <div class="text-center">
+          <!-- Badge -->
+          <div class="inline-block mb-6 px-6 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold">
+            ⚡ Get Started in 60 Seconds
+          </div>
+
+          <!-- Heading -->
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
+            Ready to Land Your
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">
+              Dream Job?
+            </span>
+      </h2>
+
+          <!-- Description -->
+          <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Join over 10,000 professionals who've transformed their careers with AI-powered resumes.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+            <button (click)="login()"
+              class="group relative px-10 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-lg rounded-xl overflow-hidden transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
+              <span class="relative z-10 flex items-center gap-2">
+                Create Your Resume Free
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-teal-600 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity">
+              </div>
+          </button>
+
+            <a href="#features"
+              class="px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:border-emerald-500 hover:text-emerald-600 transition-all duration-300 flex items-center gap-2">
+              View Features
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Social Proof -->
+          <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M9.378 2.325a1 1 0 00-.756.756 period1.993c.085.511.256.998.503 1.445l.11.196.061.128c.169.354.169.743 0 1.097l-.061.128-.11.196c-.247.447-.418.934-.503 1.445a1 1 0 00.756 1.193c.511.085.998.256 1.445.503l.196.11.128.061c.354.169.743.169 1.097 0l.128-.061.196-.11c.447-.247.934-.418 1.445-.503a1 1 0 00.756-.756c.085-.511.256-.998.503-1.445l.11-.196.061-.128c.169-.354.169-.743 0-1.097l-.061-.128-.11-.196c-.247-.447-.418-.934-.503-1.445a1 1 0 00-.756-1.193c-.511-.085-.998-.256-1.445-.503l-.196-.11-.128-.061c-.354-.169-.743-.169-1.097 0l-.128.061-.196.11c-.447.247-.934.418-1.445.503zm-.756-.756a1 1 0  arrivals1.193.756 1.993.085.511.256.998.503 1.445l.11.196.061.128c.169.354.169.743 0 1.097l-.061.128-.11.196c-.247.447-.418.934-.503 1.445a1 1 0 00.756 1.193c.511.085.998.256 1.445.503l.196.11.128.061c.354.169.743.169 1.097 0l.128-.061.196-.11c.447-.247.934-.418 1.445-.503a1 1 0 00.756-.756c.085-.511.256-.998.503-1.445l.11-.196.061-.128c.169-.354.169-.743 0-1.097l-.061-.128-.11-.196c-.247-.447-.418-.934-.503-1.445a1 1 0 00-.756-1.193c-.511-.085-.998-.256-1.445-.503l-.196-.11-.128-.061c-.354-.169-.743-.169-1.097 0l-.128.061-.196.11c-.447.247-.934.418-1.445.503z" />
+              </svg>
+              <span>4.9/5 Rating</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+              </svg>
+              <span>10,000+ Users</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd" />
+              </svg>
+              <span>100% Free</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-gray-300">
+    <div class="container mx-auto px-4 py-12">
+      <!-- Main Footer Content -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <!-- Company Info -->
+        <div class="col-span-1 md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <div
+              class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
+              <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <span class="text-2xl font-bold text-white">Cleansheet</span>
+          </div>
+          <p class="text-gray-400 mb-4 max-w-md">
+            The ultimate AI-powered resume builder. Create professional, ATS-optimized resumes in minutes. Free forever,
+            privacy-focused.
+          </p>
+          <div class="flex gap-4">
+            <a href="https://github.com/acquahsamuel/cleansheet-ai-resume-builder" target="_blank"
+              class="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.33 1.266-.891.946-1.627-.128-.243-.364-.888-.641-1.094-.498-.259-1.303-.9-1.421-1.32-.125-.415-.199-.385-.178-.218-.125.385-.611 1.235-.955 1.526-.344.291-.178.431.178.523.689.169 1.446.169 2.126 0 .356-.092.522-.232.178-.523-.344-.291-.83-1.141-.955-1.526.021-.167.053-.197-.178.218-.118.42-.923 1.061-1.421 1.32-.277.206-.513.851-.641 1.094-.32.736 1.027 1.957.946 1.627 4.769-1.587 8.207-6.085 8.207-11.387 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </a>
+            <a href="#"
+              class="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </a>
+            <a href="#"
+              class="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+
+        <div>
+          <h3 class="text-white font-semibold mb-4 text-lg">Quick Links</h3>
+          <ul class="space-y-3">
+            <li><a href="#features" class="text-white hover:text-emerald-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Features</a></li>
+            <li><a href="#faq" class="text-white hover:text-emerald-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              FAQ</a></li>
+            <li><a href="https://github.com/acquahsamuel/cleansheet-ai-resume-builder" target="_blank"
+                class="text-white hover:text-emerald-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Documentation</a></li>
+            <li><a href="#" class="text-white hover:text-emerald-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Blog</a></li>
+          </ul>
+        </div>
+
+        <!-- Support -->
+        <div>
+          <h3 class="text-white font-semibold mb-4 text-lg">Support</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-white hover:text-white-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Contact Us</a></li>
+            <li><a href="#" class="text-white hover:text-white-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Help Center</a></li>
+            <li><a href="#" class="text-white hover:text-white-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Privacy Policy</a></li>
+            <li><a href="#" class="text-white hover:text-white-400 transition-colors inline-flex items-center gap-2 group">
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-8 border-t border-gray-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-6 text-sm">
+          <p class="text-gray-300">
+            Made with <span class="text-red-500 text-lg">♥</span> by
+            <span class="text-emerald-400 font-semibold hover:text-emerald-300 transition-colors">Guglex Technologies</span>
+          </p>
+        </div>
+        <p class="text-gray-400 text-sm">© {{ getCurrentYear() }} Cleansheet. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
   </div>
-</section>

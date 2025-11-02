@@ -5,62 +5,40 @@
       <div class="logo" (click)="toggleSidebar()">
         <i class="pi pi-file-edit"></i>
         @if (!isCollapsed) {
-          <span class="brand-name">Cleansheet</span>
+        <span class="brand-name">Cleansheet</span>
         }
       </div>
       @if (!isCollapsed) {
-        <button class="collapse-btn" (click)="isCollapsed = true">
-          <i class="pi pi-angle-left"></i>
-        </button>
+      <button class="collapse-btn" (click)="isCollapsed = true">
+        <i class="pi pi-angle-left"></i>
+      </button>
       }
     </div>
 
     <nav class="sidebar-nav">
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard" 
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact: true}"
-      >
+      <a class="nav-item" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <i class="pi pi-file-edit"></i>
         <span>Resumes</span>
       </a>
-      
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard/getting-started" 
-        routerLinkActive="active"
-      >
+
+      <a class="nav-item" routerLink="/dashboard/getting-started" routerLinkActive="active">
         <i class="pi pi-briefcase"></i>
         <span>Builder</span>
       </a>
-      
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard/settings" 
-        routerLinkActive="active"
-      >
+
+
+
+      <a class="nav-item" routerLink="/dashboard/ats-analysis" routerLinkActive="active">
+        <i class="pi pi-receipt"></i>
+        <span>ATS Analyzer</span>
+      </a>
+
+
+      <a class="nav-item" routerLink="/dashboard/settings" routerLinkActive="active">
         <i class="pi pi-cog"></i>
         <span>Settings</span>
       </a>
-      
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard/ats-analysis" 
-        routerLinkActive="active"
-      >
-        <i class="pi pi-shield"></i>
-        <span>ATS Analyzer</span>
-      </a>
-      
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard/cv-rewrite" 
-        routerLinkActive="active"
-      >
-        <i class="pi pi-pencil"></i>
-        <span>CV Rewrite</span>
-      </a>
+
     </nav>
 
     <div class="sidebar-footer">
@@ -78,42 +56,23 @@
       <button class="menu-toggle" (click)="toggleMobileSidebar()">
         <i class="pi pi-bars"></i>
       </button>
-      
+
       <div class="header-title">
         <h1>@if (currentPageTitle) { {{ currentPageTitle }} }</h1>
       </div>
 
       <div class="header-actions">
         @if (showHeaderActions) {
-          <button 
-            class="toggle-btn" 
-            (click)="toggleTemplates()"
-            [class.active]="showTemplates"
-            pTooltip="Toggle Templates"
-          >
-            <i [class]="showTemplates ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
-            <span>Template</span>
-          </button>
-          <p-button 
-            icon="pi pi-download" 
-            label="Download PDF" 
-            severity="secondary" 
-            [outlined]="true"
-          ></p-button>
-          <p-button 
-            icon="pi pi-print" 
-            label="Print" 
-            severity="secondary" 
-            [outlined]="true"
-          ></p-button>
+        <button class="toggle-btn" (click)="toggleTemplates()" [class.active]="showTemplates"
+          pTooltip="Toggle Templates">
+          <i [class]="showTemplates ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+          <span>Template</span>
+        </button>
+        <p-button icon="pi pi-download" label="Download PDF" severity="secondary" [outlined]="true"></p-button>
+        <p-button icon="pi pi-print" label="Print" severity="secondary" [outlined]="true"></p-button>
         }
-        
-        <p-button 
-          icon="pi pi-user" 
-          [rounded]="true" 
-          [text]="true"
-          size="small"
-        ></p-button>
+
+        <p-button icon="pi pi-user" [rounded]="true" [text]="true" size="small"></p-button>
       </div>
     </header>
 
@@ -124,11 +83,7 @@
   </div>
 
   <!-- Mobile Sidebar Overlay -->
-  <div 
-    class="mobile-sidebar-overlay" 
-    [class.active]="isMobileSidebarOpen"
-    (click)="closeMobileSidebar()"
-  ></div>
+  <div class="mobile-sidebar-overlay" [class.active]="isMobileSidebarOpen" (click)="closeMobileSidebar()"></div>
 
   <!-- Mobile Sidebar -->
   <aside class="mobile-sidebar" [class.active]="isMobileSidebarOpen">
@@ -143,57 +98,32 @@
     </div>
 
     <nav class="mobile-nav">
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard" 
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact: true}"
-        (click)="closeMobileSidebar()"
-      >
+      <a class="nav-item" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        (click)="closeMobileSidebar()">
         <i class="pi pi-file-edit"></i>
         <span>Resumes</span>
       </a>
-      
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard/getting-started" 
-        routerLinkActive="active"
-        (click)="closeMobileSidebar()"
-      >
+
+      <a class="nav-item" routerLink="/dashboard/getting-started" routerLinkActive="active"
+        (click)="closeMobileSidebar()">
         <i class="pi pi-briefcase"></i>
         <span>Builder</span>
       </a>
-      
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard/settings" 
-        routerLinkActive="active"
-        (click)="closeMobileSidebar()"
-      >
-        <i class="pi pi-cog"></i>
-        <span>Settings</span>
-      </a>
-      
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard/ats-analysis" 
-        routerLinkActive="active"
-        (click)="closeMobileSidebar()"
-      >
+
+
+
+      <a class="nav-item" routerLink="/dashboard/ats-analysis" routerLinkActive="active" (click)="closeMobileSidebar()">
         <i class="pi pi-shield"></i>
         <span>ATS Analyzer</span>
       </a>
-      
-      <a 
-        class="nav-item" 
-        routerLink="/dashboard/cv-rewrite" 
-        routerLinkActive="active"
-        (click)="closeMobileSidebar()"
-      >
-        <i class="pi pi-pencil"></i>
-        <span>CV Rewrite</span>
+
+
+
+      <a class="nav-item" routerLink="/dashboard/settings" routerLinkActive="active" (click)="closeMobileSidebar()">
+        <i class="pi pi-cog"></i>
+        <span>Settings</span>
       </a>
-      
+
       <button class="nav-item logout-btn" (click)="logout()">
         <i class="pi pi-power-off"></i>
         <span>Logout</span>

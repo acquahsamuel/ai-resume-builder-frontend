@@ -1,0 +1,3438 @@
+{
+	"info": {
+		"_postman_id": "f0fe9143-961a-4f3b-a302-377688c6b43a",
+		"name": "Cleansheet-APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11272001",
+		"_collection_link": "https://medeli.postman.co/workspace/My_Core_API_Services~7ef81573-ccb1-4496-8483-c55d7d6c6bd8/collection/11272001-f0fe9143-961a-4f3b-a302-377688c6b43a?action=share&source=collection_link&creator=11272001"
+	},
+	"item": [
+		{
+			"name": "Authentication-API",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201 || pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response._id) {",
+									"        pm.collectionVariables.set('userId', response._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"iamsamuelacquah@gmail.com\",\n  \"password\": \"SecurePassword123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user account. User will receive a verification email."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.token) {",
+									"        pm.collectionVariables.set('authToken', response.token);",
+									"        console.log('Token saved to authToken variable');",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"iamsamuelacquah@gmail.com\",\n  \"password\": \"SecurePassword123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Authenticate user and receive JWT token. Token will be automatically saved to collection variable 'authToken'."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"profile"
+							]
+						},
+						"description": "Get authenticated user's profile information. Requires JWT token."
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.refresh_token) {",
+									"        pm.collectionVariables.set('authToken', response.refresh_token);",
+									"        console.log('Token refreshed and saved');",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"token\": \"{{authToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh-token"
+							]
+						},
+						"description": "Refresh an existing JWT token to get a new token with extended expiration."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logout authenticated user. Note: JWT tokens are stateless, client should remove token from storage."
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john.doe@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/forgot-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"forgot-password"
+							]
+						},
+						"description": "Request password reset link. An email with reset token will be sent to the user."
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"token\": \"{{resetToken}}\",\n  \"newPassword\": \"NewSecurePassword456!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/reset-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"reset-password"
+							]
+						},
+						"description": "Reset password using token from email. Token expires after 1 hour. Replace {{resetToken}} with actual token from email."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"token\": \"{{verificationToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/verify-email",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"verify-email"
+							]
+						},
+						"description": "Verify user email address using token from email. Replace {{verificationToken}} with actual token from email."
+					},
+					"response": []
+				},
+				{
+					"name": "Resend Verification Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john.doe@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/resend-verification",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"resend-verification"
+							]
+						},
+						"description": "Resend email verification link to user's email address."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CV_Sections",
+			"item": [
+				{
+					"name": "Personal Info",
+					"item": [
+						{
+							"name": "Create or Update Personal Info",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Samuel\",\n    \"lastName\": \"Acquah\",\n    \"otherName\": \"\",\n    \"title\": \"Software Engineer\",\n    \"email\": \"john@example.com\",\n    \"phone\": \"+233550982043\",\n    \"dateOfBirth\": \"1996-10-29\",\n    \"nationality\": \"Ghanaian\",\n    \"zipCode\": \"1996-10-29\",\n    \"country\": \"USA\",\n    \"state\": \"Calorado\",\n    \"city\": \"Accra\",\n    \"status\" : \"fulfilled\",\n    \"socialMedia\": [\n        {\n            \"platform\": \"linkedin\",\n            \"link\": \"http://linkedin.com/in/acquahsamuel\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/personal-info",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"personal-info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Personal Info",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/personal-info",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"personal-info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Personal Info",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n \"status\" : \"fulfilled\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/personal-info",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"personal-info"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Professional Summary",
+					"item": [
+						{
+							"name": "Create or Update Summary",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"aiGenerated\": false,\n    \"keywords\": [\n        \"software engineering\",\n        \"full-stack\",\n        \"javascript\"\n    ],\n    \"summary\": \"Experienced software engineer with 5+ years of expertise in full-stack\",\n    \"summaryType\": \"summary\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/professional-summary",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"professional-summary"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Summary",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/professional-summary",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"professional-summary"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Work Experience",
+					"item": [
+						{
+							"name": "Create Work Experience",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"jobTitle\": \"Senior Frontend Engineer\",\n    \"company\": \"EWale Inc\",\n    \"location\": \"Accra Ghana\",\n    \"employmentType\": \"full-time\",\n    \"startDate\": \"2023-01-01\",\n    \"endDate\": \"2024-12-31\",\n    \"isCurrent\": false,\n    \"description\": \"Led a team of developers\",\n    \"responsibilities\": [\n        \"Developed applications\",\n        \"Mentored junior developers\"\n    ],\n    \"technologies\": [\n        \"JavaScript\",\n        \"Node.js\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/work-experience",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"work-experience"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Work Experiences",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/work-experience",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"work-experience"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Work Experience by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/work-experience/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"work-experience",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Work Experience",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"jobTitle\": \"Updated Job Title\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/work-experience/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"work-experience",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Work Experience",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/work-experience/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"work-experience",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reorder Work Experiences",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"experienceIds\": [\"id1\", \"id2\", \"id3\"]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/work-experience/reorder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"work-experience",
+										"reorder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Generate Job Description (AI)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"jobTitle\": \"Software Developer\",\n  \"company\": \"Tech Corp\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/work-experience/generate-description",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"work-experience",
+										"generate-description"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Education",
+					"item": [
+						{
+							"name": "Create Education",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"institution\": \"University of Energy and Natural Resources\",\n  \"degree\": \"Bachelor of Science\",\n  \"fieldOfStudy\": \"Computer Science\",\n  \"startDate\": \"2016-09-01\",\n  \"endDate\": \"2020-05-01\",\n  \"isOngoing\": false,\n  \"gpa\": 3.8,\n  \"gpaScale\": \"4.0\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/education",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"education"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Education",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/education",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"education"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Education by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/education/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"education",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Education",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"degree\": \"Master of Science\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/education/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"education",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Education",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/education/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"education",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reorder Education",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"educationIds\": [\"id1\", \"id2\"]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/education/reorder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"education",
+										"reorder"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Skills",
+					"item": [
+						{
+							"name": "Create Skill",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"JavaScript\",\n    \"category\": \"technical\",\n    \"proficiencyLevel\": 9,\n    \"proficiencyLabel\": \"advanced\",\n    \"yearsOfExperience\": 5,\n    \"isHighlighted\": true\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/skills",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"skills"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Skills",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/skills",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"skills"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Skill by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/skills/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"skills",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Skill",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"proficiencyLevel\": 10\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/skills/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"skills",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Skill",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/skills/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"skills",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reorder Skills",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"skillIds\": [\"id1\", \"id2\"]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/skills/reorder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"skills",
+										"reorder"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Certifications",
+					"item": [
+						{
+							"name": "Create Certification",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"AWS Certified Solutions\",\n  \"issuingOrganization\": \"AWS\",\n  \"issueDate\": \"2023-01-15\",\n  \"expiryDate\": \"2026-01-15\",\n  \"credentialId\": \"AWS-123456789\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/certifications",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"certifications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Certifications",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/certifications",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"certifications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Certification",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"expiryDate\": \"2027-01-15\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/certifications/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"certifications",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Certification",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/certifications/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"certifications",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Projects",
+					"item": [
+						{
+							"name": "Create Project",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"E-Wale payment\",\n  \"role\": \"Lead Developer\",\n  \"description\": \"Built a full-stack platform\",\n  \"startDate\": \"2023-01-01\",\n  \"endDate\": \"2023-12-31\",\n  \"technologies\": [\"React\", \"Node.js\", \"MongoDB\"],\n  \"teamSize\": 5\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"projects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Projects",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"projects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Project",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"description\": \"Updated description\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/projects/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"projects",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Project",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/projects/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"projects",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Languages",
+					"item": [
+						{
+							"name": "Create Language",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"language\": \"English\",\n  \"proficiency\": \"intermediate\",\n  \"proficiencyLevel\": \"B1\",\n  \"canRead\": true,\n  \"canWrite\": true,\n  \"canSpeak\": true\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/languages",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"languages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Languages",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/languages",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"languages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Language",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"proficiency\": \"advanced\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/languages/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"languages",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Language",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/languages/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"languages",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Hobbies",
+					"item": [
+						{
+							"name": "Create Hobby",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Photography\",\n  \"description\": \"Landscape photography\",\n  \"relevance\": \"Enhances creativity\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/hobbies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"hobbies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Hobbies",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/hobbies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"hobbies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Hobby",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/hobbies/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"hobbies",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "References",
+					"item": [
+						{
+							"name": "Create Reference",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Jane Smith\",\n  \"title\": \"Senior Manager\",\n  \"company\": \"Tech Corp\",\n  \"email\": \"jane@techcorp.com\",\n  \"phone\": \"+1234567890\",\n  \"relationship\": \"Former Manager\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/references",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"references"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All References",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/references",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"references"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Reference",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/references/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"references",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Courses",
+					"item": [
+						{
+							"name": "Create Course",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Advanced React Patterns\",\n  \"provider\": \"Udemy\",\n  \"completionDate\": \"2023-06-01\",\n  \"certificateUrl\": \"https://udemy.com/cert/123\",\n  \"hours\": 20\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/courses",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"courses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Courses",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/courses",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"courses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Course",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/courses/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"courses",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Awards",
+					"item": [
+						{
+							"name": "Create Award",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Employee of the Year\",\n  \"issuer\": \"Company Inc Group\",\n  \"date\": \"2023-12-01\",\n  \"description\": \"Outstanding performance\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/awards",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"awards"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Awards",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/awards",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"awards"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Publications",
+					"item": [
+						{
+							"name": "Create Publication",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Advanced ML Techniques\",\n    \"authors\": [\n        \"John Doe\",\n        \"Jane Smith\"\n    ],\n    \"publication\": \"Journal of AI\",\n    \"publicationDate\": \"2023-06-01\",\n    \"doi\": \"10.1000/example\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/publications",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"publications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Publications",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/publications",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"publications"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Volunteer Experience",
+					"item": [
+						{
+							"name": "Get Volunteer Experience",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/volunteer",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"volunteer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create volunteer Experience",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"role\": \"Volunteer Teacher\",\n    \"organization\": \"Code for Good\",\n    \"location\": \"San Francisco, USA\",\n    \"cause\": \"Education, Technology Access\",\n    \"startDate\": \"2021-03-01\",\n    \"endDate\": \"2023-03-01\",\n    \"isOngoing\": false,\n    \"description\": \"Taught programming basics to underprivileged youth...\",\n    \"achievements\": [\n        \"Trained 50+ students\",\n        \"Developed curriculum\"\n    ],\n    \"hoursPerWeek\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/volunteer",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"volunteer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update volunteer Experience",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"role\": \"Volunteer Teacher\",\n  \"organization\": \"Code for Good\",\n  \"location\": \"San Francisco, USA\",\n  \"cause\": \"Education, Technology Access\",\n  \"startDate\": \"2021-03-01\",\n  \"endDate\": \"2023-03-01\",\n  \"isOngoing\": false,\n  \"description\": \"Taught programming basics to underprivileged youth...\",\n  \"achievements\": [\"Trained 50+ students\", \"Developed curriculum\"],\n  \"hoursPerWeek\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/volunteer",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"volunteer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete volunteer Experience",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"role\": \"Volunteer Teacher\",\n  \"organization\": \"Code for Good\",\n  \"location\": \"San Francisco, USA\",\n  \"cause\": \"Education, Technology Access\",\n  \"startDate\": \"2021-03-01\",\n  \"endDate\": \"2023-03-01\",\n  \"isOngoing\": false,\n  \"description\": \"Taught programming basics to underprivileged youth...\",\n  \"achievements\": [\"Trained 50+ students\", \"Developed curriculum\"],\n  \"hoursPerWeek\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/volunteer/6901c2c68673fbc41fe5253d",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"volunteer",
+										"6901c2c68673fbc41fe5253d"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Patents",
+					"item": [
+						{
+							"name": "Create patent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Method for Data Compression\",\n    \"patentNumber\": \"US-1234567-B2\",\n    \"issueDate\": \"2022-08-15\",\n    \"inventors\": [\n        \"John Doe\",\n        \"Jane Smith\"\n    ],\n    \"description\": \"Novel approach to lossless compression\",\n    \"url\": \"https://patents.google.com/patent/123\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/patents",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"patents"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get patent",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Method for Data Compression\",\n  \"patentNumber\": \"US-1234567-B2\",\n  \"issueDate\": \"2022-08-15\",\n  \"inventors\": [\"John Doe\", \"Jane Smith\"],\n  \"description\": \"Novel approach to lossless compression...\",\n  \"url\": \"https://patents.google.com/patent/123\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/cv/patents",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cv",
+										"patents"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Templates API",
+			"item": [
+				{
+					"name": "Create Template",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"TechEdge Template\",\n  \"description\": \"Modern tech-style resume with sidebar layout and vibrant accent.\",\n  \"category\": \"modern\",\n  \"layout\": {\n    \"sections\": [\"header\", \"summary\", \"skills\", \"experience\", \"education\"],\n    \"sectionOrder\": [\"header\", \"summary\", \"skills\", \"experience\", \"education\"],\n    \"orientation\": \"portrait\",\n    \"columns\": 2,\n    \"sectionSpacing\": 18\n  },\n  \"typography\": {\n    \"fontFamily\": \"Helvetica\",\n    \"headingSize\": 20,\n    \"subheadingSize\": 14,\n    \"bodySize\": 11,\n    \"lineHeight\": 1.6,\n    \"fontWeight\": \"normal\"\n  },\n  \"theme\": {\n    \"primaryColor\": \"#0D47A1\",\n    \"secondaryColor\": \"#1976D2\",\n    \"accentColor\": \"#FFC107\",\n    \"backgroundColor\": \"#FAFAFA\",\n    \"textColor\": \"#212121\",\n    \"customCSS\": \".sidebar { background-color: #0D47A1; color: white; padding: 20px; }\"\n  },\n  \"pageSettings\": {\n    \"format\": \"A4\",\n    \"margins\": { \"top\": 20, \"bottom\": 20, \"left\": 20, \"right\": 20 },\n    \"showPageNumbers\": true,\n    \"pageNumberFormat\": \"Page 1 of N\"\n  },\n  \"isPremium\": false,\n  \"isActive\": true\n}\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/template",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"template"
+							]
+						},
+						"description": "Create a new CV template with advanced customization options"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Templates",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/template",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"template"
+							]
+						},
+						"description": "Retrieve all available templates"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Template by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/template/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"template",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6901ab3ba6551bc41fe4d256"
+								}
+							]
+						},
+						"description": "Get a specific template by its ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Template",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Template Name\",\n  \"theme\": {\n    \"primaryColor\": \"#00AA00\",\n    \"accentColor\": \"#FF0033\"\n  },\n  \"pageSettings\": {\n    \"isPublic\": true,\n    \"showPageNumbers\": false\n  },\n  \"notes\": {\n    \"content\": \"Updated notes for this template\",\n    \"lastEditedAt\": \"2025-10-27T12:00:00Z\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/template/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"template",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "template_id_here"
+								}
+							]
+						},
+						"description": "Update a template (partial update supported)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Template",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/template/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"template",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "template_id_here"
+								}
+							]
+						},
+						"description": "Delete a template"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Minimal Template",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Minimalist Template\",\n    \"description\": \"Simple and clean design\",\n    \"category\": \"minimalist\",\n    \"theme\": {\n        \"primaryColor\": \"#000000\",\n        \"backgroundColor\": \"#FFFFFF\"\n    },\n    \"typography\": {\n        \"fontFamily\": \"Helvetica\",\n        \"bodySize\": 10\n    },\n    \"pageSettings\": {\n        \"format\": \"A4\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/template",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"template"
+							]
+						},
+						"description": "Create a minimal template with basic settings"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Template with Custom CSS",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Custom Styled Template\",\n    \"description\": \"Template with custom CSS styling\",\n    \"category\": \"creative\",\n    \"theme\": {\n        \"primaryColor\": \"#FF6B6B\",\n        \"secondaryColor\": \"#4ECDC4\",\n        \"accentColor\": \"#FFE66D\",\n        \"backgroundColor\": \"#F7F7F7\",\n        \"textColor\": \"#2C3E50\",\n        \"customCSS\": \".header { border-bottom: 3px solid #FF6B6B; padding-bottom: 10px; } .section { margin-bottom: 20px; } .highlight { background-color: #FFE66D; padding: 2px 4px; }\"\n    },\n    \"layout\": {\n        \"orientation\": \"portrait\",\n        \"columns\": 2,\n        \"sectionSpacing\": 20\n    },\n    \"pageSettings\": {\n        \"format\": \"A4\",\n        \"margins\": {\n            \"top\": 15,\n            \"bottom\": 15,\n            \"left\": 15,\n            \"right\": 15\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/template",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"template"
+							]
+						},
+						"description": "Create template with custom CSS for advanced styling"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Public Template",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Public Resume Template\",\n  \"description\": \"Shareable public template\",\n  \"category\": \"professional\",\n  \"pageSettings\": {\n    \"format\": \"A4\",\n    \"isPublic\": true,\n    \"publicUrl\": \"https://resume.example.com/john-doe\"\n  },\n  \"statistics\": {\n    \"views\": 0,\n    \"downloads\": 0\n  },\n  \"exportSettings\": {\n    \"pdf\": {\n      \"enabled\": true,\n      \"quality\": \"high\"\n    },\n    \"json\": {\n      \"enabled\": true,\n      \"includeMetadata\": true\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/template",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"template"
+							]
+						},
+						"description": "Create a publicly shareable template with statistics tracking"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Template Statistics",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"statistics\": {\n    \"views\": 150,\n    \"downloads\": 45,\n    \"lastViewedAt\": \"2025-10-27T14:30:00Z\",\n    \"lastDownloadedAt\": \"2025-10-27T13:15:00Z\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/template/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"template",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "template_id_here"
+								}
+							]
+						},
+						"description": "Update statistics for public templates (views/downloads)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CVS",
+			"item": [
+				{
+					"name": "Get All CVs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/cvs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cvs"
+							]
+						},
+						"description": "Get all CVs for the authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Get CV by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/cvs/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cvs",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{cv_id}}",
+									"description": "CV document ID"
+								}
+							]
+						},
+						"description": "Get a specific CV by its ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get CVs by Template",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/cvs/template/:templateId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cvs",
+								"template",
+								":templateId"
+							],
+							"variable": [
+								{
+									"key": "templateId",
+									"value": "{{template_id}}",
+									"description": "Template ID"
+								}
+							]
+						},
+						"description": "Get all CVs that use a specific template"
+					},
+					"response": []
+				},
+				{
+					"name": "Generate CV-default",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/cvs/generate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cvs",
+								"generate"
+							]
+						},
+						"description": "Generate CV using the default CV for the authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Duplicate CV",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Fintech CV\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/cvs/:id/duplicate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cvs",
+								":id",
+								"duplicate"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{cv_id}}",
+									"description": "CV document ID to duplicate"
+								}
+							]
+						},
+						"description": "Duplicate an existing CV with an optional new title"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Section Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sectionOrder\": [\n    \"personal-info\",\n    \"professional-summary\",\n    \"work-experience\",\n    \"education\",\n    \"skills\",\n    \"certifications\",\n    \"projects\",\n    \"languages\",\n    \"volunteer\",\n    \"publications\",\n    \"awards\",\n    \"references\",\n    \"hobbies\",\n    \"patents\",\n    \"courses\"\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/cvs/:id/section-order",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cvs",
+								":id",
+								"section-order"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{cv_id}}",
+									"description": "CV document ID"
+								}
+							]
+						},
+						"description": "Update the order of sections in a CV. Valid section names: personal-info, professional-summary, work-experience, education, skills, certifications, projects, languages, volunteer, publications, awards, references, hobbies, patents, courses"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Enabled Sections",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"enabledSections\": [\n        \"personal-info\",\n        \"professional-summary\",\n        \"work-experience\",\n        \"education\",\n        \"skills\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/cvs/:id/enabled-sections",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cvs",
+								":id",
+								"enabled-sections"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{cv_id}}",
+									"description": "CV document ID"
+								}
+							]
+						},
+						"description": "Update which sections are enabled/visible in a CV. Valid section names: personal-info, professional-summary, work-experience, education, skills, certifications, projects, languages, volunteer, publications, awards, references, hobbies, patents, courses"
+					},
+					"response": []
+				},
+				{
+					"name": "Update CV Template",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"templateId\": \"507f1f77bcf86cd799439011\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/cvs/:id/template",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cvs",
+								":id",
+								"template"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{cv_id}}",
+									"description": "CV document ID"
+								}
+							]
+						},
+						"description": "Update the template used by a CV"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"John\",\n  \"lastname\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePassword123!\",\n  \"phone\": \"+1234567890\",\n  \"city\": \"New York\",\n  \"country\": \"United States\",\n  \"postalCode\": \"10001\",\n  \"address\": \"123 Main St, Apt 4B\",\n  \"title\": \"Senior Software Engineer\",\n  \"dateOfBirth\": \"1990-05-15\",\n  \"socialMedia\": [\n    {\n      \"platform\": \"LinkedIn\",\n      \"link\": \"https://linkedin.com/in/johndoe\"\n    },\n    {\n      \"platform\": \"GitHub\",\n      \"link\": \"https://github.com/johndoe\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User (Minimal)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Jane\",\n  \"lastname\": \"Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"password\": \"SecurePassword123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "6901b5ff7ec99fbf7e3e155d",
+									"description": "User ID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Partial)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Jane\",\n  \"photo\": \"https://example.com/photos/jane.jpg\",\n  \"city\": \"San Francisco\",\n  \"country\": \"United States\",\n  \"title\": \"Lead Software Engineer\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "507f1f77bcf86cd799439011",
+									"description": "User ID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Full)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Jane\",\n  \"lastname\": \"Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"password\": \"NewSecurePassword789!\",\n  \"phone\": \"+1987654321\",\n  \"photo\": \"https://example.com/photos/jane.jpg\",\n  \"city\": \"San Francisco\",\n  \"country\": \"United States\",\n  \"postalCode\": \"94102\",\n  \"address\": \"456 Market St, Suite 100\",\n  \"title\": \"Lead Software Engineer\",\n  \"dateOfBirth\": \"1992-08-20\",\n  \"socialMedia\": [\n    {\n      \"platform\": \"LinkedIn\",\n      \"link\": \"https://linkedin.com/in/janedoe\"\n    },\n    {\n      \"platform\": \"Portfolio\",\n      \"link\": \"https://janesmith.dev\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "507f1f77bcf86cd799439011",
+									"description": "User ID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Photo Only",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"photo\": \"https://example.com/photos/new-photo.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "507f1f77bcf86cd799439011",
+									"description": "User ID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Social Media",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"socialMedia\": [\n    {\n      \"platform\": \"LinkedIn\",\n      \"link\": \"https://linkedin.com/in/johndoe\"\n    },\n    {\n      \"platform\": \"GitHub\",\n      \"link\": \"https://github.com/johndoe\"\n    },\n    {\n      \"platform\": \"Twitter\",\n      \"link\": \"https://twitter.com/johndoe\"\n    },\n    {\n      \"platform\": \"Portfolio\",\n      \"link\": \"https://johndoe.dev\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "507f1f77bcf86cd799439011",
+									"description": "User ID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "507f1f77bcf86cd799439011",
+									"description": "User ID"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": ""
+		},
+		{
+			"key": "authToken",
+			"value": ""
+		},
+		{
+			"key": "baseUrl",
+			"value": "",
+			"disabled": true
+		}
+	]
+}

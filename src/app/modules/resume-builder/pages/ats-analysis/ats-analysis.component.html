@@ -1,1 +1,526 @@
-<p>ats-analysis works!</p>
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- Page Header -->
+    <div class="mb-6 md:mb-8 text-center">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">ATS Resume Analyzer</h1>
+      <p class="text-gray-600 text-base md:text-lg">
+        Optimize your resume for Applicant Tracking Systems
+      </p>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+      <p-tabView [(activeIndex)]="activeTabIndex" [scrollable]="true">
+        <!-- Tab 1: CV Only Analysis -->
+        <p-tabPanel header="CV Analysis">
+          <ng-template pTemplate="header">
+            <div class="flex items-center gap-2">
+              <i class="pi pi-file-pdf text-lg"></i>
+              <span class="hidden sm:inline">CV Analysis</span>
+              <span class="sm:hidden">CV</span>
+            </div>
+          </ng-template>
+
+          <div class="grid lg:grid-cols-2 gap-6 mt-4">
+            <!-- Left: Upload Section -->
+            <div class="space-y-6">
+              <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="pi pi-upload text-green-600 text-xl"></i>
+                  </div>
+                  <h2 class="text-xl font-bold text-gray-900">Upload Your CV</h2>
+                </div>
+
+                <!-- Upload Area -->
+                <div
+                  (dragover)="onDragOver($event)"
+                  (drop)="onDrop($event, 'cvOnly')"
+                  (click)="triggerFileInput('cvOnly')"
+                  class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-green-400 transition-colors bg-gray-50 cursor-pointer"
+                >
+                  <i class="pi pi-cloud-upload text-5xl text-gray-400 mb-4"></i>
+                  <p class="text-gray-700 font-medium mb-1">
+                    Click to upload or drag and drop
+                  </p>
+                  <p class="text-sm text-gray-500">PDF or DOCX (max 10MB)</p>
+                  <input
+                    id="file-input-cvOnly"
+                    type="file"
+                    accept=".pdf,.docx"
+                    class="hidden"
+                    (change)="onFileSelected($event, 'cvOnly')"
+                  />
+                </div>
+
+                <!-- File Info -->
+                <div
+                  *ngIf="cvOnly.uploadedFileName"
+                  class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg"
+                >
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <i class="pi pi-file text-green-600 text-xl"></i>
+                      <div>
+                        <p class="font-medium text-gray-900">
+                          {{ cvOnly.uploadedFileName }}
+                        </p>
+                        <p class="text-sm text-gray-500">{{ cvOnly.uploadedFileSize }}</p>
+                      </div>
+                    </div>
+                    <button
+                      (click)="removeFile('cvOnly')"
+                      class="text-red-600 hover:text-red-700"
+                    >
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  *ngIf="cvOnly.uploadedFileName"
+                  (click)="analyzeCvOnly()"
+                  class="w-full mt-4 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-sm hover:shadow-md"
+                >
+                  Analyze CV
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Analysis Results -->
+            <div class="space-y-6" *ngIf="cvOnly.overallScore > 0">
+              <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">Analysis Results</h2>
+
+                <!-- Overall Score -->
+                <div class="bg-gradient-to-br from-gray-50 to-white rounded-xl p-6 mb-6">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-sm font-medium text-gray-600 mb-1">
+                        Overall ATS Score
+                      </p>
+                      <p class="text-3xl font-bold" [ngClass]="getScoreColor(cvOnly.overallScore)">
+                        {{ cvOnly.overallScore }}%
+                      </p>
+                    </div>
+                    <div class="w-20 h-20 relative flex items-center justify-center">
+                      <svg class="transform -rotate-90 w-20 h-20">
+                        <circle
+                          cx="40"
+                          cy="40"
+                          r="36"
+                          stroke="currentColor"
+                          stroke-width="4"
+                          fill="none"
+                          class="text-gray-200"
+                        />
+                        <circle
+                          cx="40"
+                          cy="40"
+                          r="36"
+                          stroke="currentColor"
+                          stroke-width="4"
+                          fill="none"
+                          stroke-dasharray="226.2"
+                          [attr.stroke-dashoffset]="226.2 - (226.2 * cvOnly.overallScore) / 100"
+                          [ngClass]="getScoreColor(cvOnly.overallScore)"
+                          stroke-linecap="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Metrics -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                  <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                    <p class="text-xs font-medium text-green-600 mb-1">Keywords</p>
+                    <p class="text-2xl font-bold text-green-700">
+                      {{ cvOnly.analysisResults.keywordCount }}
+                    </p>
+                  </div>
+                  <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                    <p class="text-xs font-medium text-green-600 mb-1">Formatting</p>
+                    <p class="text-2xl font-bold text-green-700">
+                      {{ cvOnly.analysisResults.formattingScore }}%
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Skills Identified -->
+                <div class="mb-6">
+                  <h4 class="text-sm font-semibold text-gray-700 mb-3">Skills Identified</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      *ngFor="let skill of cvOnly.analysisResults.skillsIdentified"
+                      class="bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-medium"
+                    >
+                      {{ skill }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="space-y-3">
+                  <h4 class="text-sm font-semibold text-gray-700 mb-3">Recommendations</h4>
+                  <div
+                    *ngFor="let rec of cvOnly.analysisResults.recommendations"
+                    class="bg-gray-50 p-4 rounded-lg border-l-4 border-yellow-500"
+                  >
+                    <div class="flex items-start justify-between mb-2">
+                      <h5 class="font-bold text-gray-900 text-sm">{{ rec.title }}</h5>
+                      <span class="px-2 py-0.5 rounded text-xs font-semibold uppercase bg-yellow-100 text-yellow-700">
+                        {{ rec.priority }}
+                      </span>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-2">{{ rec.description }}</p>
+                    <span class="inline-block px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-xs font-medium">
+                      {{ rec.impact }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-tabPanel>
+
+        <!-- Tab 2: Job Description & CV Compare -->
+        <p-tabPanel header="Job Match">
+          <ng-template pTemplate="header">
+            <div class="flex items-center gap-2">
+              <i class="pi pi-briefcase text-lg"></i>
+              <span class="hidden sm:inline">Job Match</span>
+              <span class="sm:hidden">Match</span>
+            </div>
+          </ng-template>
+
+          <div class="grid lg:grid-cols-2 gap-6 mt-4">
+            <!-- Left Column: Job Description -->
+            <div class="space-y-6">
+              <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="pi pi-file-edit text-green-600 text-xl"></i>
+                  </div>
+                  <h2 class="text-xl font-bold text-gray-900">Job Description</h2>
+                </div>
+
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2"
+                      >Paste Job Description</label
+                    >
+                    <textarea
+                      [(ngModel)]="jobDescription"
+                      placeholder="Paste the complete job description here..."
+                      class="w-full h-64 p-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all resize-none text-gray-700"
+                    ></textarea>
+                    <p class="text-xs text-gray-500 mt-2">
+                      {{ jobDescription.length }} characters
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CV Upload -->
+              <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="pi pi-file-pdf text-green-600 text-xl"></i>
+                  </div>
+                  <h2 class="text-xl font-bold text-gray-900">Upload Resume</h2>
+                </div>
+
+                <div
+                  (dragover)="onDragOver($event)"
+                  (drop)="onDrop($event, 'compare')"
+                  (click)="triggerFileInput('compare')"
+                  class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-green-400 transition-colors bg-gray-50 cursor-pointer"
+                >
+                  <i class="pi pi-cloud-upload text-5xl text-gray-400 mb-4"></i>
+                  <p class="text-gray-700 font-medium mb-1">
+                    Click to upload or drag and drop
+                  </p>
+                  <p class="text-sm text-gray-500">PDF or DOCX (max 10MB)</p>
+                  <input
+                    id="file-input-compare"
+                    type="file"
+                    accept=".pdf,.docx"
+                    class="hidden"
+                    (change)="onFileSelected($event, 'compare')"
+                  />
+                </div>
+
+                <div
+                  *ngIf="uploadedFileName"
+                  class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg"
+                >
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <i class="pi pi-file text-green-600 text-xl"></i>
+                      <div>
+                        <p class="font-medium text-gray-900">{{ uploadedFileName }}</p>
+                        <p class="text-sm text-gray-500">{{ uploadedFileSize }}</p>
+                      </div>
+                    </div>
+                    <button (click)="removeFile('compare')" class="text-red-600 hover:text-red-700">
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  (click)="analyzeResume()"
+                  [disabled]="!jobDescription || !uploadedFileName"
+                  class="w-full mt-4 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl hover:from-green-700 hover:to-green-800 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md"
+                >
+                  Analyze Match
+                </button>
+              </div>
+            </div>
+
+            <!-- Right Column: Analysis Results -->
+            <div class="space-y-6" *ngIf="overallScore > 0">
+              <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">Match Analysis</h2>
+
+                <!-- Overall Score -->
+                <div class="bg-gradient-to-br from-gray-50 to-white rounded-xl p-6 mb-6">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-sm font-medium text-gray-600 mb-1">
+                        Overall Match Score
+                      </p>
+                      <p class="text-3xl font-bold" [ngClass]="getScoreColor()">
+                        {{ overallScore }}%
+                      </p>
+                    </div>
+                    <div class="w-20 h-20 relative flex items-center justify-center">
+                      <svg class="transform -rotate-90 w-20 h-20">
+                        <circle
+                          cx="40"
+                          cy="40"
+                          r="36"
+                          stroke="currentColor"
+                          stroke-width="4"
+                          fill="none"
+                          class="text-gray-200"
+                        />
+                        <circle
+                          cx="40"
+                          cy="40"
+                          r="36"
+                          stroke="currentColor"
+                          stroke-width="4"
+                          fill="none"
+                          stroke-dasharray="226.2"
+                          [attr.stroke-dashoffset]="226.2 - (226.2 * overallScore) / 100"
+                          [ngClass]="getScoreColor()"
+                          stroke-linecap="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                  <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                    <p class="text-xs font-medium text-green-600 mb-1">Keywords</p>
+                    <p class="text-2xl font-bold text-green-700">
+                      {{ getMatchedKeywordsCount() }}/{{ getTotalKeywordsCount() }}
+                    </p>
+                  </div>
+                  <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                    <p class="text-xs font-medium text-green-600 mb-1">Skills Match</p>
+                    <p class="text-2xl font-bold text-green-700">
+                      {{ getMatchedSkills().length }}/{{ requiredSkills.length }}
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Missing Skills -->
+                <div *ngIf="getMissingSkills().length > 0" class="mb-6">
+                  <h4 class="text-sm font-semibold text-gray-700 mb-3">Missing Skills</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      *ngFor="let skill of getMissingSkills()"
+                      class="bg-red-100 text-red-700 px-3 py-1 rounded-lg text-sm font-medium"
+                    >
+                      {{ skill }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="space-y-3">
+                  <h4 class="text-sm font-semibold text-gray-700 mb-3">Top Recommendations</h4>
+                  <div
+                    *ngFor="let rec of recommendations.slice(0, 3)"
+                    [ngClass]="
+                      rec.priority === 'high'
+                        ? 'border-l-4 border-red-500'
+                        : 'border-l-4 border-yellow-500'
+                    "
+                    class="bg-gray-50 p-4 rounded-r-lg"
+                  >
+                    <div class="flex items-start justify-between mb-2">
+                      <h5 class="font-bold text-gray-900 text-sm">{{ rec.title }}</h5>
+                      <span
+                        class="px-2 py-0.5 rounded text-xs font-semibold uppercase"
+                        [ngClass]="
+                          rec.priority === 'high'
+                            ? 'bg-red-100 text-red-700'
+                            : 'bg-yellow-100 text-yellow-700'
+                        "
+                      >
+                        {{ rec.priority }}
+                      </span>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-2">{{ rec.description }}</p>
+                    <span class="inline-block px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-xs font-medium">
+                      {{ rec.impact }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-tabPanel>
+
+        <!-- Tab 3: CV Rewrite -->
+        <p-tabPanel header="CV Rewrite">
+          <ng-template pTemplate="header">
+            <div class="flex items-center gap-2">
+              <i class="pi pi-pencil text-lg"></i>
+              <span class="hidden sm:inline">CV Rewrite</span>
+              <span class="sm:hidden">Rewrite</span>
+            </div>
+          </ng-template>
+
+          <div class="grid lg:grid-cols-2 gap-6 mt-4">
+            <!-- Left: Input Section -->
+            <div class="space-y-6">
+              <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="pi pi-file-edit text-green-600 text-xl"></i>
+                  </div>
+                  <h2 class="text-xl font-bold text-gray-900">Job Description</h2>
+                </div>
+
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2"
+                      >Paste Job Description</label
+                    >
+                    <textarea
+                      [(ngModel)]="cvRewrite.jobDescription"
+                      placeholder="Paste the job description you want to match..."
+                      class="w-full h-48 p-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all resize-none text-gray-700"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CV Upload -->
+              <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="pi pi-file-pdf text-green-600 text-xl"></i>
+                  </div>
+                  <h2 class="text-xl font-bold text-gray-900">Upload Your CV</h2>
+                </div>
+
+                <div
+                  (dragover)="onDragOver($event)"
+                  (drop)="onDrop($event, 'rewrite')"
+                  (click)="triggerFileInput('rewrite')"
+                  class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-green-400 transition-colors bg-gray-50 cursor-pointer"
+                >
+                  <i class="pi pi-cloud-upload text-5xl text-gray-400 mb-4"></i>
+                  <p class="text-gray-700 font-medium mb-1">
+                    Click to upload or drag and drop
+                  </p>
+                  <p class="text-sm text-gray-500">PDF or DOCX (max 10MB)</p>
+                  <input
+                    id="file-input-rewrite"
+                    type="file"
+                    accept=".pdf,.docx"
+                    class="hidden"
+                    (change)="onFileSelected($event, 'rewrite')"
+                  />
+                </div>
+
+                <div
+                  *ngIf="cvRewrite.uploadedFileName"
+                  class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg"
+                >
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <i class="pi pi-file text-green-600 text-xl"></i>
+                      <div>
+                        <p class="font-medium text-gray-900">{{ cvRewrite.uploadedFileName }}</p>
+                        <p class="text-sm text-gray-500">{{ cvRewrite.uploadedFileSize }}</p>
+                      </div>
+                    </div>
+                    <button (click)="removeFile('rewrite')" class="text-red-600 hover:text-red-700">
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  (click)="rewriteCv()"
+                  [disabled]="!cvRewrite.jobDescription || !cvRewrite.uploadedFileName || cvRewrite.isProcessing"
+                  class="w-full mt-4 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl hover:from-green-700 hover:to-green-800 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md"
+                >
+                  <span *ngIf="!cvRewrite.isProcessing">Rewrite CV</span>
+                  <span *ngIf="cvRewrite.isProcessing">
+                    <i class="pi pi-spin pi-spinner mr-2"></i>Processing...
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Rewritten CV & Improvements -->
+            <div class="space-y-6" *ngIf="cvRewrite.rewrittenCv">
+              <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Rewritten CV</h2>
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 min-h-[400px]">
+                  <pre class="text-sm text-gray-700 whitespace-pre-wrap font-sans">{{ cvRewrite.rewrittenCv }}</pre>
+                </div>
+              </div>
+
+              <!-- Improvements Made -->
+              <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Improvements Made</h2>
+                <div class="space-y-3">
+                  <div
+                    *ngFor="let improvement of cvRewrite.improvements"
+                    class="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200"
+                  >
+                    <div class="flex items-start justify-between mb-2">
+                      <h5 class="font-bold text-gray-900 text-sm">{{ improvement.section }}</h5>
+                      <span
+                        class="px-2 py-0.5 rounded text-xs font-semibold uppercase"
+                        [ngClass]="
+                          improvement.impact === 'High'
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-green-100 text-green-700'
+                        "
+                      >
+                        {{ improvement.impact }}
+                      </span>
+                    </div>
+                    <p class="text-sm text-gray-700">{{ improvement.change }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+</div>

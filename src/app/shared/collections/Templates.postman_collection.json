@@ -1,0 +1,213 @@
+{
+  "info": {
+    "_postman_id": "template-collection",
+    "name": "Templates API",
+    "description": "Complete template management endpoints with advanced features",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Template",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Modern Professional Template\",\n  \"description\": \"Clean and professional CV template with advanced customization\",\n  \"category\": \"professional\",\n  \"layout\": {\n    \"sections\": [\"header\", \"summary\", \"experience\", \"education\", \"skills\"],\n    \"sectionOrder\": [\"header\", \"summary\", \"experience\", \"education\", \"skills\"],\n    \"orientation\": \"portrait\",\n    \"columns\": 1,\n    \"sectionSpacing\": 16\n  },\n  \"typography\": {\n    \"fontFamily\": \"Helvetica\",\n    \"headingSize\": 18,\n    \"subheadingSize\": 14,\n    \"bodySize\": 11,\n    \"lineHeight\": 1.5,\n    \"fontWeight\": \"normal\"\n  },\n  \"theme\": {\n    \"primaryColor\": \"#0066CC\",\n    \"secondaryColor\": \"#666666\",\n    \"accentColor\": \"#FF6600\",\n    \"backgroundColor\": \"#FFFFFF\",\n    \"textColor\": \"#000000\",\n    \"customCSS\": \"\"\n  },\n  \"pageSettings\": {\n    \"format\": \"A4\",\n    \"margins\": {\n      \"top\": 20,\n      \"bottom\": 20,\n      \"left\": 20,\n      \"right\": 20\n    },\n    \"showLineBreaks\": false,\n    \"showPageNumbers\": true,\n    \"pageNumberFormat\": \"1\",\n    \"isPublic\": false\n  },\n  \"exportSettings\": {\n    \"pdf\": {\n      \"enabled\": true,\n      \"quality\": \"high\",\n      \"watermark\": \"\"\n    },\n    \"json\": {\n      \"enabled\": true,\n      \"includeMetadata\": false\n    }\n  },\n  \"notes\": {\n    \"content\": \"Target: Senior Software Engineer role. Highlight React and Node.js experience.\",\n    \"lastEditedAt\": \"2025-10-27T10:00:00Z\"\n  },\n  \"isPremium\": false,\n  \"isActive\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/template",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "template"]
+        },
+        "description": "Create a new CV template with advanced customization options"
+      }
+    },
+    {
+      "name": "Get All Templates",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/template",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "template"]
+        },
+        "description": "Retrieve all available templates"
+      }
+    },
+    {
+      "name": "Get Template by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/template/:id",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "template", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "template_id_here"
+            }
+          ]
+        },
+        "description": "Get a specific template by its ID"
+      }
+    },
+    {
+      "name": "Update Template",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Template Name\",\n  \"theme\": {\n    \"primaryColor\": \"#00AA00\",\n    \"accentColor\": \"#FF0033\"\n  },\n  \"pageSettings\": {\n    \"isPublic\": true,\n    \"showPageNumbers\": false\n  },\n  \"notes\": {\n    \"content\": \"Updated notes for this template\",\n    \"lastEditedAt\": \"2025-10-27T12:00:00Z\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/template/:id",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "template", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "template_id_here"
+            }
+          ]
+        },
+        "description": "Update a template (partial update supported)"
+      }
+    },
+    {
+      "name": "Delete Template",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/template/:id",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "template", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "template_id_here"
+            }
+          ]
+        },
+        "description": "Delete a template"
+      }
+    },
+    {
+      "name": "Create Minimal Template",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Minimalist Template\",\n  \"description\": \"Simple and clean design\",\n  \"category\": \"minimalist\",\n  \"theme\": {\n    \"primaryColor\": \"#000000\",\n    \"backgroundColor\": \"#FFFFFF\"\n  },\n  \"typography\": {\n    \"fontFamily\": \"Helvetica\",\n    \"bodySize\": 10\n  },\n  \"pageSettings\": {\n    \"format\": \"A4\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/template",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "template"]
+        },
+        "description": "Create a minimal template with basic settings"
+      }
+    },
+    {
+      "name": "Create Template with Custom CSS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Custom Styled Template\",\n  \"description\": \"Template with custom CSS styling\",\n  \"category\": \"creative\",\n  \"theme\": {\n    \"primaryColor\": \"#FF6B6B\",\n    \"secondaryColor\": \"#4ECDC4\",\n    \"accentColor\": \"#FFE66D\",\n    \"backgroundColor\": \"#F7F7F7\",\n    \"textColor\": \"#2C3E50\",\n    \"customCSS\": \".header { border-bottom: 3px solid #FF6B6B; padding-bottom: 10px; } .section { margin-bottom: 20px; } .highlight { background-color: #FFE66D; padding: 2px 4px; }\"\n  },\n  \"layout\": {\n    \"orientation\": \"portrait\",\n    \"columns\": 2,\n    \"sectionSpacing\": 20\n  },\n  \"pageSettings\": {\n    \"format\": \"A4\",\n    \"margins\": {\n      \"top\": 15,\n      \"bottom\": 15,\n      \"left\": 15,\n      \"right\": 15\n    }\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/template",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "template"]
+        },
+        "description": "Create template with custom CSS for advanced styling"
+      }
+    },
+    {
+      "name": "Create Public Template",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Public Resume Template\",\n  \"description\": \"Shareable public template\",\n  \"category\": \"professional\",\n  \"pageSettings\": {\n    \"format\": \"A4\",\n    \"isPublic\": true,\n    \"publicUrl\": \"https://resume.example.com/john-doe\"\n  },\n  \"statistics\": {\n    \"views\": 0,\n    \"downloads\": 0\n  },\n  \"exportSettings\": {\n    \"pdf\": {\n      \"enabled\": true,\n      \"quality\": \"high\"\n    },\n    \"json\": {\n      \"enabled\": true,\n      \"includeMetadata\": true\n    }\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/template",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "template"]
+        },
+        "description": "Create a publicly shareable template with statistics tracking"
+      }
+    },
+    {
+      "name": "Update Template Statistics",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"statistics\": {\n    \"views\": 150,\n    \"downloads\": 45,\n    \"lastViewedAt\": \"2025-10-27T14:30:00Z\",\n    \"lastDownloadedAt\": \"2025-10-27T13:15:00Z\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/template/:id",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "template", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "template_id_here"
+            }
+          ]
+        },
+        "description": "Update statistics for public templates (views/downloads)"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
+

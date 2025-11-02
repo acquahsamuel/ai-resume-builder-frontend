@@ -110,7 +110,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: .5rem;
 }
 
 .form-field {
@@ -122,6 +122,55 @@
     font-size: 14px;
     font-weight: 600;
     color: #374151;
+  }
+
+  .password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    ::ng-deep {
+      input {
+        width: 100%;
+        padding: 0.875rem 3rem 0.875rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #22c55e;
+          box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        &.error {
+          border-color: #ef4444;
+        }
+      }
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: #6b7280;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #374151;
+      }
+
+      i {
+        font-size: 18px;
+      }
+    }
   }
 
   ::ng-deep {
@@ -154,20 +203,32 @@
 
 .login-options {
   display: flex;
-  // justify-content: space-between;
+  justify-content: space-between;
   align-items: center;
   margin-top: -0.5rem;
 
+
   ::ng-deep {
+    .p-checkbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     label {
       font-size: 14px;
       color: #6b7280;
       font-weight: 500;
-      margin-right: 1rem;
+      margin-left: 0.5rem;
     }
 
-
+    .p-checkbox .p-checkbox-box.p-highlight {
+      background-color: #22c55e;
+      border-color: #22c55e;
+    }
   }
+
+
 
   .forgot-password {
     color: #22c55e;
@@ -229,7 +290,7 @@
 
 .google-login-btn {
   width: 100%;
-  padding: 0.875rem 1rem;
+  padding: 0.5rem 1rem;
   background: white;
   color: #374151;
   border: 2px solid #e5e7eb;
@@ -248,10 +309,7 @@
     color: #4285f4;
   }
 
-  &:hover {
-    background: #f9fafb;
-    border-color: #22c55e;
-  }
+
 
   &:active {
     background: #f3f4f6;

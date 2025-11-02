@@ -30,17 +30,16 @@ export class StartedComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   createNewResume() {
     console.log('Create new resume');
-    this.router.navigate(['/dashboard/resume-builder/cv-sections']);
+    this.router.navigate(['/dashboard/getting-started']);
   }
 
   importResume() {
     console.log('Import resume');
-    // TODO: Implement import functionality
   }
 }

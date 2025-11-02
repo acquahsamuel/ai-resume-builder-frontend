@@ -13,7 +13,7 @@ import { filter } from 'rxjs/operators';
 })
 export class ResumeBuilderComponent implements OnInit {
   isLoading = false;
-  isCollapsed = false;
+  isCollapsed = true;
   isMobileSidebarOpen = false;
   isMobile = false;
   currentPageTitle = 'Resumes';

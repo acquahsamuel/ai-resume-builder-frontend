@@ -1,16 +1,12 @@
- # AI CV/Resume Builder
+ # AI CV/Resume Builder 
 
- 
 <img src="src/assets/images/readme.png">
  
 
 Professional CV Builder: Open-Source, Secure, and ATS-Optimized
 This project is a unique, privacy-focused resume builder designed to help you create professional CVs with ease. It offers complete security, customization options, and portability, ensuring your personal data remains protected. As an open-source project, it is entirely free to use and will remain so forever. Users can generate downloadable PDF versions of their resumes in various pre-designed templates.
 
-
-
 ## Features
-
 - **Privacy-Centric**: Your data stays with you—no external storage or third-party access.
 - **Fully Customizable**: Tailor your CV to any profession or industry with flexible design and format options.
 - **ATS-Optimized**: Generate CVs that comply with Applicant Tracking Systems (ATS), ensuring your resume passes automated screening algorithms.
@@ -49,3 +45,4 @@ Before running the project, ensure you have the following installed:
    Run `npm install -g @angular/cli` command
    Open package.json
    Run `ng serve` command
+

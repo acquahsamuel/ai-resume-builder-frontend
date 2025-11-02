@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 import { CommonModule, NgFor } from '@angular/common';
 import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
+import { CvContentService } from '../../../../../shared/services/cv-content.service';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-skills',
@@ -16,22 +19,48 @@ import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, PrimeNgModule],
 })
-export class SkillsComponent implements OnInit {
+export class SkillsComponent implements OnInit, OnDestroy {
   skillsForm: FormGroup;
   editorContent: string = '';
   @Input() Skills : any;
+  private formSubscription?: Subscription;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private cvService: CvContentService
+  ) {
     this.skillsForm = this.fb.group({
       skillsRecords: this.fb.array([this.createSkillsRecord()]),
     });
   }
 
   ngOnInit(): void {
-    this.skillsForm.valueChanges.subscribe((value: any) => {
-      console.log(value, 'SKILLS INFO');
-      // this.onPersonalInfoUpdateEvt.emit(value);
-    });
+    // Subscribe to form changes with debounce for performance
+    this.formSubscription = this.skillsForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe((value: any) => {
+        const skillsRecords = value.skillsRecords || [];
+        
+        // Map to service format
+        const skills = skillsRecords.map((skill: any) => ({
+          skillName: skill.name || skill.skillName,
+          skill: skill.name || skill.skillName,
+          proficiency: skill.proficiency,
+          level: skill.skillLevel
+        }));
+        
+        // Update service (single source of truth)
+        this.cvService.updateSkills(skills);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
   }
 
   // Create a new FormGroup for an education record

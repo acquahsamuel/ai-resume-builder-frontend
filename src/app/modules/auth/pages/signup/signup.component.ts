@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { AuthService } from 'src/app/shared/services/auth.service';
 import { AuthService } from '../../../../shared/services/auth.service';
 import {
   UntypedFormGroup,
@@ -14,14 +13,16 @@ import {
   FormControl,
   FormGroup,
   ValidatorFn,
+  FormBuilder,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
- 
+import { NotificationService } from '../../../../shared/services/notification.service';
+
 
 /** Error when invalid control is dirty, touched, or submitted. */
- 
+
 
 @Component({
   selector: 'app-signup',
@@ -38,42 +39,56 @@ import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
 })
 export class SignupComponent implements OnInit {
   signUpForm: FormGroup<{
-    userName: FormControl<string>;
+    email: FormControl<string>;
     password: FormControl<string>;
     confirmPassword: FormControl<string>;
     remember: FormControl<boolean>;
   }>;
 
- 
- 
+  showPassword = false;
+  showConfirmPassword = false;
+  isLoading = false;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    // private jwtService: JwtHelperService,
-    private _fb: UntypedFormBuilder,
-    // private snackBar: MatSnackBar
+    private _fb: FormBuilder,
+    private notificationService: NotificationService
   ) {
-
-     /**
+    /**
      * Signup form control
      */
-     this.signUpForm = this._fb.group({
-      userName: this._fb.control('', [
+    this.signUpForm = this._fb.group({
+      email: this._fb.control('', [
         Validators.required,
+        Validators.email,
       ]) as FormControl<string>,
       password: this._fb.control('', [
         Validators.required,
+        Validators.minLength(6),
       ]) as FormControl<string>,
       confirmPassword: this._fb.control('', [
         Validators.required,
+        this.confirmationValidator,
       ]) as FormControl<string>,
       remember: this._fb.control(true) as FormControl<boolean>,
     });
   }
 
-  ngOnInit(): void {
-   
+  ngOnInit(): void {}
+
+  /**
+   * Toggle password visibility
+   */
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  /**
+   * Toggle confirm password visibility
+   */
+  toggleConfirmPasswordVisibility(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   get formField() {
@@ -85,12 +100,45 @@ export class SignupComponent implements OnInit {
    * @description handles signup
    * @returns
    */
-  register() {
- 
+  register(): void {
+    if (this.signUpForm.valid) {
+      this.isLoading = true;
+      const { email, password } = this.signUpForm.value;
+
+      this.authService.register({ email: email!, password: password! }).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          // Show success message
+          this.notificationService.notify(
+            response.message || 'Registration successful! Please check your email for verification.',
+            'success-toast'
+          );
+
+          // Navigate to login page after a short delay
+          setTimeout(() => {
+            this.router.navigateByUrl('/auth/login');
+          }, 2000);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          const errorMessage = error?.error?.message || error?.message || 'Registration failed. Please try again.';
+          this.notificationService.notify(errorMessage, 'error-toast');
+          console.error('Registration error:', error);
+        },
+      });
+    } else {
+      // Handle form errors
+      Object.values(this.signUpForm.controls).forEach((control) => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
   }
 
 
-    updateConfirmValidator(): void {
+  updateConfirmValidator(): void {
     /** wait for refresh value */
     Promise.resolve().then(() =>
       this.signUpForm.controls.confirmPassword.updateValueAndValidity()
@@ -110,13 +158,16 @@ export class SignupComponent implements OnInit {
 
 
 
-  signIn( ) {
-    
+  signIn(): void {
+    this.register();
   }
 
-  loginWithGoogle(){}
+  loginWithGoogle(): void {
+    // Google login implementation
+    console.log('Google login');
+  }
 
-  
+
 
   onReset() {
     this.signUpForm.reset();

@@ -8,7 +8,7 @@ export const environment = {
   enableDebug : true,
   assetPreLoader : '',
   APP : 'Cleansheet cv',
-  BASE_URL: 'https://api.trenda.live/api/v1/ai-generatives',
+  BASE_URL: 'https://cleansheet-ai.onrender.com/api/v1',
 };
 
 /*

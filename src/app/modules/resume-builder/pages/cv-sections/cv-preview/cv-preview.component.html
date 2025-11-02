@@ -1,123 +1,273 @@
-<div class="cv-preview">
-  <!-- Personal Details Section -->
-  @if (cvData.personalDetails) {
-  <div class="preview-section personal-details">
-    <div class="section-header">
-      <h1 class="full-name">
-        {{ cvData.personalDetails.firstname }}
-        {{ cvData.personalDetails.surname }}
-      </h1>
-      <div class="contact-info">
-        @if (cvData.personalDetails.email) {
-        <span>
-          <i class="pi pi-envelope"></i>
-          {{ cvData.personalDetails.email }}
-        </span>
+<div class="cv-preview-wrapper">
+  <!-- Dynamic Template Container -->
+  <div class="template-container" #templateContainer></div>
+
+  <!-- Fallback: Show simple preview if no template component is loaded -->
+  @if (!currentComponentRef && cvData) {
+  <div class="cv-preview-fallback">
+    <div class="preview-content">
+      <h3>CV Preview ({{ selectedTemplate }})</h3>
+
+      @if (cvData.personalDetails) {
+      <div class="preview-section">
+        <h4>Personal Details</h4>
+        @if (cvData.personalDetails.firstName || cvData.personalDetails.lastName) {
+        <p><strong>Name:</strong> {{ cvData.personalDetails.firstName || '' }} {{ cvData.personalDetails.lastName || ''
+          }}</p>
         }
-        @if (cvData.personalDetails.phoneNumber) {
-        <span>
-          <i class="pi pi-phone"></i>
-          {{ cvData.personalDetails.phoneNumber }}
-        </span>
+        @if (cvData.personalDetails.title) {
+        <p><strong>Title:</strong> {{ cvData.personalDetails.title }}</p>
+        }
+        @if (cvData.personalDetails.email) {
+        <p><strong>Email:</strong> <a [href]="'mailto:' + cvData.personalDetails.email">{{ cvData.personalDetails.email
+            }}</a></p>
+        }
+        @if (cvData.personalDetails.phone) {
+        <p><strong>Phone:</strong> <a [href]="'tel:' + cvData.personalDetails.phone">{{ cvData.personalDetails.phone
+            }}</a></p>
         }
         @if (cvData.personalDetails.city || cvData.personalDetails.country) {
-        <span>
-          <i class="pi pi-map-marker"></i>
-          {{ cvData.personalDetails.city }}{{ cvData.personalDetails.city &&
-          cvData.personalDetails.country ? ', ' : '' }}{{ cvData.personalDetails.country }}
-        </span>
+        <p><strong>Location:</strong> {{ cvData.personalDetails.city || '' }}{{ cvData.personalDetails.city &&
+          cvData.personalDetails.country ? ', ' : '' }}{{ cvData.personalDetails.country || '' }}</p>
         }
-      </div>
-    </div>
-  </div>
-  }
-
-  <!-- Professional Summary -->
-  @if (cvData.summary?.summary) {
-  <div class="preview-section">
-    <h2 class="section-title">Professional Summary</h2>
-    <div class="content" [innerHTML]="cvData.summary.summary"></div>
-  </div>
-  }
-
-  <!-- Experience -->
-  @if (cvData.experience && cvData.experience.length > 0) {
-  <div class="preview-section">
-    <h2 class="section-title">Experience</h2>
-      @for (exp of cvData.experience; track $index) {
-    <div class="experience-item">
-      <div class="item-header">
-        <h3 class="job-title">{{ exp.jobTitle }}</h3>
-        <span class="date-range">
-          {{ exp.startYear }} - {{ exp.currentlyHere ? 'Present' : exp.endYear }}
-        </span>
-      </div>
-      <div class="item-subtitle">{{ exp.employerName }}</div>
-      <div class="item-location">
-        <i class="pi pi-map-marker"></i>
-        {{ exp.city }}{{ exp.city && exp.country ? ', ' : '' }}{{ exp.country }}
-      </div>
-      @if (exp.summary) {
-      <div class="item-content" [innerHTML]="exp.summary"></div>
-      }
-    </div>
-    }
-  </div>
-  }
-
-  <!-- Education -->
-  @if (cvData.education && cvData.education.length > 0) {
-  <div class="preview-section">
-    <h2 class="section-title">Education</h2>
-    @for (edu of cvData.education; track $index) {
-    <div class="education-item">
-      <div class="item-header">
-        <h3 class="degree">{{ edu.degreeName }}</h3>
-        <span class="date-range">
-          {{ edu.startYear }} - {{ edu.currentlyEnrolled ? 'Present' : edu.endYear }}
-        </span>
-      </div>
-      <div class="item-subtitle">{{ edu.schoolName }}</div>
-      <div class="item-location">
-        <i class="pi pi-map-marker"></i>
-        {{ edu.city }}{{ edu.city && edu.country ? ', ' : '' }}{{ edu.country }}
-      </div>
-      @if (edu.major) {
-      <div class="item-content">Major: {{ edu.major }}</div>
-      }
-    </div>
-    }
-  </div>
-  }
-
-  <!-- Skills -->
-  @if (cvData.skills && cvData.skills.length > 0) {
-  <div class="preview-section">
-    <h2 class="section-title">Skills</h2>
-    <div class="skills-container">
-      @for (skill of cvData.skills; track $index) {
-      <span class="skill-tag">{{ skill.skillName }} @if (skill.proficiency) { ({{ skill.proficiency
-        }}) }</span>
-      }
-    </div>
-  </div>
-  }
-
-  <!-- Languages -->
-  @if (cvData.languages && cvData.languages.length > 0) {
-  <div class="preview-section">
-    <h2 class="section-title">Languages</h2>
-    <div class="languages-container">
-      @for (lang of cvData.languages; track $index) {
-      <div class="language-item">
-        <span class="language-name">{{ lang.language }}</span>
-        @if (lang.proficiency) {
-        <span class="proficiency">{{ lang.proficiency }}</span>
+        @if (cvData.personalDetails.nationality) {
+        <p><strong>Nationality:</strong> {{ cvData.personalDetails.nationality }}</p>
+        }
+        @if (cvData.personalDetails.dateOfBirth) {
+        <p><strong>Date of Birth:</strong> {{ cvData.personalDetails.dateOfBirth }}</p>
+        }
+        @if (cvData.personalDetails.socialMedia && cvData.personalDetails.socialMedia.length > 0) {
+        <div class="social-media">
+          <p><strong>Social Media:</strong></p>
+          <div class="social-links">
+            @for (social of cvData.personalDetails.socialMedia; track $index) {
+            @if (social.platform && social.link) {
+            <p><a [href]="social.link" target="_blank">{{ social.platform }}</a></p>
+            }
+            }
+          </div>
+        </div>
         }
       </div>
       }
+
+      @if (cvData.summary && (cvData.summary.summary || cvData.summary.content)) {
+      <div class="preview-section">
+        <h4>Summary</h4>
+        <p>{{ cvData.summary.summary || cvData.summary.content }}</p>
+      </div>
+      }
+
+      @if (cvData.experience && cvData.experience.length > 0) {
+      <div class="preview-section">
+        <h4>Experience</h4>
+        @for (exp of cvData.experience; track $index) {
+        <div class="preview-item">
+          <p><strong>{{ exp.jobTitle || exp.position }}</strong>@if (exp.employerName || exp.company) { at {{
+            exp.employerName || exp.company }} }</p>
+          @if (exp.startYear || exp.startDate) {
+          <p>{{ exp.startYear || exp.startDate }} - {{ exp.currentlyHere ? 'Present' : (exp.endYear || exp.endDate ||
+            'Present') }}</p>
+          }
+          @if (exp.city || exp.country) {
+          <p><em>{{ exp.city || '' }}{{ exp.city && exp.country ? ', ' : '' }}{{ exp.country || '' }}</em></p>
+          }
+          @if (exp.summary || exp.description) {
+          <p>{{ exp.summary || exp.description }}</p>
+          }
+        </div>
+        }
+      </div>
+      }
+
+      @if (cvData.education && cvData.education.length > 0) {
+      <div class="preview-section">
+        <h4>Education</h4>
+        @for (edu of cvData.education; track $index) {
+        <div class="preview-item">
+          <p><strong>{{ edu.degree || edu.degreeName }}</strong>@if (edu.institution || edu.schoolName) { - {{
+            edu.institution || edu.schoolName }} }</p>
+          @if (edu.major || edu.fieldOfStudy) {
+          <p><em>{{ edu.major || edu.fieldOfStudy }}</em></p>
+          }
+          @if (edu.startYear || edu.startDate) {
+          <p>{{ edu.startYear || edu.startDate }} - {{ edu.currentlyEnrolled ? 'Present' : (edu.endYear || edu.endDate
+            || 'Present') }}</p>
+          }
+          @if (edu.city || edu.country) {
+          <p><em>{{ edu.city || '' }}{{ edu.city && edu.country ? ', ' : '' }}{{ edu.country || '' }}</em></p>
+          }
+        </div>
+        }
+      </div>
+      }
+
+      @if (cvData.skills && cvData.skills.length > 0) {
+      <div class="preview-section">
+        <h4>Skills</h4>
+        <div class="skills-list">
+          @for (skill of cvData.skills; track $index) {
+          <div class="skill-item">
+            <p>
+              <strong>{{ skill.skillName || skill.skill }}</strong>
+              @if (skill.proficiency) {
+              - {{ skill.proficiency }}
+              }
+            </p>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      @if (cvData.languages && cvData.languages.length > 0) {
+      <div class="preview-section">
+        <h4>Languages</h4>
+        <div class="languages-list">
+          @for (lang of cvData.languages; track $index) {
+          <div class="preview-item">
+            <p><strong>{{ lang.language }}</strong> - {{ lang.proficiency }}</p>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      @if (cvData.projects && cvData.projects.length > 0) {
+      <div class="preview-section">
+        <h4>Projects</h4>
+        @for (project of cvData.projects; track $index) {
+        <div class="preview-item">
+          <p><strong>{{ project.title }}</strong></p>
+          @if (project.description) {
+          <p>{{ project.description }}</p>
+          }
+          @if (project.technologies && project.technologies.length > 0) {
+          <p><em>Technologies: {{ project.technologies.join(', ') }}</em></p>
+          }
+          @if (project.link || project.url) {
+          <p><a [href]="project.link || project.url" target="_blank">{{ project.link || project.url }}</a></p>
+          }
+        </div>
+        }
+      </div>
+      }
+
+      @if (cvData.certifications && cvData.certifications.length > 0) {
+      <div class="preview-section">
+        <h4>Certifications</h4>
+        @for (cert of cvData.certifications; track $index) {
+        <div class="preview-item">
+          <p><strong>{{ cert.name }}</strong></p>
+          @if (cert.issuingOrganization) {
+          <p>{{ cert.issuingOrganization }}</p>
+          }
+          @if (cert.issueDate) {
+          <p>Issued: {{ cert.issueDate }}{{ cert.expirationDate ? ' - Expires: ' + cert.expirationDate : '' }}</p>
+          }
+          @if (cert.credentialId) {
+          <p>Credential ID: {{ cert.credentialId }}</p>
+          }
+          @if (cert.summary) {
+          <p>{{ cert.summary }}</p>
+          }
+        </div>
+        }
+      </div>
+      }
+
+      @if (cvData.courses && cvData.courses.length > 0) {
+      <div class="preview-section">
+        <h4>Courses</h4>
+        @for (course of cvData.courses; track $index) {
+        <div class="preview-item">
+          <p><strong>{{ course.name }}</strong></p>
+          @if (course.institution) {
+          <p>{{ course.institution }}</p>
+          }
+          @if (course.completionDate) {
+          <p>Completed: {{ course.completionDate }}</p>
+          }
+        </div>
+        }
+      </div>
+      }
+
+      @if (cvData.publications && cvData.publications.length > 0) {
+      <div class="preview-section">
+        <h4>Publications</h4>
+        @for (pub of cvData.publications; track $index) {
+        <div class="preview-item">
+          <p><strong>{{ pub.title }}</strong></p>
+          @if (pub.publisher) {
+          <p>{{ pub.publisher }}</p>
+          }
+          @if (pub.publishDate) {
+          <p>Published: {{ pub.publishDate }}</p>
+          }
+          @if (pub.link) {
+          <p><a [href]="pub.link" target="_blank">{{ pub.link }}</a></p>
+          }
+        </div>
+        }
+      </div>
+      }
+
+      @if (cvData.extraActivities && cvData.extraActivities.length > 0) {
+      <div class="preview-section">
+        <h4>Extra Curricular Activities</h4>
+        @for (activity of cvData.extraActivities; track $index) {
+        <div class="preview-item">
+          <p><strong>{{ activity.name }}</strong></p>
+          @if (activity.organization) {
+          <p>{{ activity.organization }}{{ activity.role ? ' - ' + activity.role : '' }}</p>
+          }
+          @if (activity.startDate) {
+          <p>{{ activity.startDate }}{{ activity.endDate ? ' - ' + activity.endDate : ' - Present' }}</p>
+          }
+          @if (activity.description) {
+          <p>{{ activity.description }}</p>
+          }
+        </div>
+        }
+      </div>
+      }
+
+      @if (cvData.hobbies && cvData.hobbies.length > 0) {
+      <div class="preview-section">
+        <h4>Hobbies</h4>
+        <p>
+          @for (hobby of cvData.hobbies; track $index) {
+          {{ hobby.name || hobby.hobby }}{{ $index < cvData.hobbies.length - 1 ? ', ' : '' }} } </p>
+      </div>
+      }
+
+      @if (cvData.references && cvData.references.length > 0) {
+      <div class="preview-section">
+        <h4>References</h4>
+        @for (ref of cvData.references; track $index) {
+        <div class="preview-item">
+          <p><strong>{{ ref.name }}</strong></p>
+          @if (ref.position) {
+          <p>{{ ref.position }}{{ ref.company ? ' at ' + ref.company : '' }}</p>
+          }
+          @if (ref.email) {
+          <p>Email: {{ ref.email }}</p>
+          }
+          @if (ref.phone) {
+          <p>Phone: {{ ref.phone }}</p>
+          }
+        </div>
+        }
+      </div>
+      }
     </div>
+  </div>
+  }
+
+  @if (hasNoData()) {
+  <div class="cv-preview-fallback">
+    <p class="empty-state">Start typing in the form fields to see your CV preview appear here</p>
   </div>
   }
 </div>
-

@@ -21,11 +21,12 @@ import { CommonModule } from '@angular/common';
 import { SkillsComponent } from '../../pages/cv-sections/skills/skills.component';
 import { EducationComponent } from '../../pages/cv-sections/education/education.component';
 import { SummaryComponent } from '../../pages/cv-sections/summary/summary.component';
-import { CvHeaderComponent } from '../../pages/cv-sections/cv-header/cv-header.component';
+import { CvHeaderComponent } from './cv-header-profile/cv-header.component';
 import { ExperienceComponent } from '../../pages/cv-sections/experience/experience.component';
 import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
 import { CvContentService } from '../../../../shared/services/cv-content.service';
 import { CvPreviewComponent } from './cv-preview/cv-preview.component';
+import { TemplateSettingsComponent, TemplateSettings } from './template-settings/template-settings.component';
 // import { TemplateSunshineComponent } from '../../../templates/template-sunshine/template-sunshine.component';
 
 @Component({
@@ -50,6 +51,7 @@ import { CvPreviewComponent } from './cv-preview/cv-preview.component';
     SkillsComponent,
     ExtraActivitiesComponent,
     CvPreviewComponent,
+    TemplateSettingsComponent,
     // TemplateSunshineComponent,
   ],
 })
@@ -57,7 +59,9 @@ export class CvSectionsComponent implements OnInit {
   step = 0;
   expandIconPosition: 'start' | 'end' = 'start';
   showTemplates = false;
+  showTemplateSettings = false;
   mobileView: 'sections' | 'preview' | 'templates' = 'sections';
+  selectedTemplate: string = 'sunshine';
   injector: Injector = Injector.create({
     providers: [
       {
@@ -209,6 +213,9 @@ export class CvSectionsComponent implements OnInit {
 
   selectTemplate(templateName: string) {
     console.log('Selected template:', templateName);
+    this.selectedTemplate = templateName;
+    // Force reload of preview with new template
+    this.showTemplates = false; // Optional: close template panel after selection
   }
 
   setMobileView(view: 'sections' | 'preview' | 'templates') {
@@ -218,32 +225,42 @@ export class CvSectionsComponent implements OnInit {
   onPersonalInfoUpdateEvt(data: any) {
     console.log('PERSONAL INFO UPDATED', data);
     this.PersonalDetails = data;
-    this.cvService.updatePersonalDetails(data);
+    // this.cvService.updatePersonalDetails(data);
   }
 
   onEducationFormUpdate(data: any) {
     console.log('DATA PASSED', data);
     this.Education = data.educationRecords;
-    this.cvService.updateEducation(data.educationRecords);
+    // this.cvService.updateEducation(data.educationRecords);
   }
 
   onSummaryUpdate(data: any) {
     console.log('SUMMARY UPDATED', data);
-    this.cvService.updateSummary(data);
+    // this.cvService.updateSummary(data);
   }
 
   onExperienceUpdate(data: any) {
     console.log('EXPERIENCE UPDATED', data);
-    this.cvService.updateExperience(data?.experienceRecords || data);
+    // this.cvService.updateExperience(data?.experienceRecords || data);
   }
 
   onSkillsUpdate(data: any) {
     console.log('SKILLS UPDATED', data);
-    this.cvService.updateSkills(data);
+    // this.cvService.updateSkills(data);
   }
 
   onLanguagesUpdate(data: any) {
     console.log('LANGUAGES UPDATED', data);
-    this.cvService.updateLanguages(data);
+    // this.cvService.updateLanguages(data);
+  }
+
+  toggleTemplateSettings() {
+    this.showTemplateSettings = !this.showTemplateSettings;
+  }
+
+  onSettingsChange(settings: TemplateSettings) {
+    console.log('Template settings updated:', settings);
+    // Apply settings to preview
+    // This can be passed to the preview component or used to generate CSS
   }
 }

@@ -1,0 +1,249 @@
+<div class="template-settings-panel" *ngIf="visible">
+    <!-- Header -->
+    <div class="settings-header">
+      <div class="header-title">
+        <i class="pi pi-cog"></i>
+        <h3>Template Settings</h3>
+      </div>
+      <button class="close-btn" (click)="closePanel()" aria-label="Close settings">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="settings-content">
+      <!-- Colors Section -->
+      <div class="settings-section">
+        <div class="section-header">
+          <i class="pi pi-palette"></i>
+          <h4>Colors</h4>
+        </div>
+        <div class="section-body">
+          <div class="color-group">
+            <label>Primary Color</label>
+            <div class="color-input-wrapper">
+              <p-colorPicker
+                [(ngModel)]="settings.theme.primaryColor"
+                (onChange)="onSettingChange()"
+                [inline]="false"
+                format="hex"
+              ></p-colorPicker>
+              <input
+                type="text"
+                [(ngModel)]="settings.theme.primaryColor"
+                (ngModelChange)="onSettingChange()"
+                class="color-hex-input"
+                maxlength="7"
+              />
+            </div>
+          </div>
+
+          <div class="color-group">
+            <label>Secondary Color</label>
+            <div class="color-input-wrapper">
+              <p-colorPicker
+                [(ngModel)]="settings.theme.secondaryColor"
+                (onChange)="onSettingChange()"
+                [inline]="false"
+                format="hex"
+              ></p-colorPicker>
+              <input
+                type="text"
+                [(ngModel)]="settings.theme.secondaryColor"
+                (ngModelChange)="onSettingChange()"
+                class="color-hex-input"
+                maxlength="7"
+              />
+            </div>
+          </div>
+
+          <div class="color-group">
+            <label>Accent Color</label>
+            <div class="color-input-wrapper">
+              <p-colorPicker
+                [(ngModel)]="settings.theme.accentColor"
+                (onChange)="onSettingChange()"
+                [inline]="false"
+                format="hex"
+              ></p-colorPicker>
+              <input
+                type="text"
+                [(ngModel)]="settings.theme.accentColor"
+                (ngModelChange)="onSettingChange()"
+                class="color-hex-input"
+                maxlength="7"
+              />
+            </div>
+          </div>
+
+          <div class="color-group">
+            <label>Background Color</label>
+            <div class="color-input-wrapper">
+              <p-colorPicker
+                [(ngModel)]="settings.theme.backgroundColor"
+                (onChange)="onSettingChange()"
+                [inline]="false"
+                format="hex"
+              ></p-colorPicker>
+              <input
+                type="text"
+                [(ngModel)]="settings.theme.backgroundColor"
+                (ngModelChange)="onSettingChange()"
+                class="color-hex-input"
+                maxlength="7"
+              />
+            </div>
+          </div>
+
+          <div class="color-group">
+            <label>Text Color</label>
+            <div class="color-input-wrapper">
+              <p-colorPicker
+                [(ngModel)]="settings.theme.textColor"
+                (onChange)="onSettingChange()"
+                [inline]="false"
+                format="hex"
+              ></p-colorPicker>
+              <input
+                type="text"
+                [(ngModel)]="settings.theme.textColor"
+                (ngModelChange)="onSettingChange()"
+                class="color-hex-input"
+                maxlength="7"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typography Section -->
+      <div class="settings-section">
+        <div class="section-header">
+          <i class="pi pi-font"></i>
+          <h4>Typography</h4>
+        </div>
+        <div class="section-body">
+          <div class="form-group">
+            <label>Font Family</label>
+            <p-dropdown
+              [options]="fontFamilies"
+              [(ngModel)]="settings.typography.fontFamily"
+              (onChange)="onSettingChange()"
+              [showClear]="false"
+              placeholder="Select Font"
+              class="full-width"
+            ></p-dropdown>
+          </div>
+
+          <div class="form-group">
+            <label>Heading Size: {{ settings.typography.headingSize }}px</label>
+            <p-slider
+              [(ngModel)]="settings.typography.headingSize"
+              (onChange)="onSettingChange()"
+              [min]="12"
+              [max]="36"
+              [step]="1"
+            ></p-slider>
+          </div>
+
+          <div class="form-group">
+            <label>Subheading Size: {{ settings.typography.subheadingSize }}px</label>
+            <p-slider
+              [(ngModel)]="settings.typography.subheadingSize"
+              (onChange)="onSettingChange()"
+              [min]="10"
+              [max]="24"
+              [step]="1"
+            ></p-slider>
+          </div>
+
+          <div class="form-group">
+            <label>Body Size: {{ settings.typography.bodySize }}px</label>
+            <p-slider
+              [(ngModel)]="settings.typography.bodySize"
+              (onChange)="onSettingChange()"
+              [min]="8"
+              [max]="18"
+              [step]="0.5"
+            ></p-slider>
+          </div>
+
+          <div class="form-group">
+            <label>Line Height: {{ settings.typography.lineHeight }}</label>
+            <p-slider
+              [(ngModel)]="settings.typography.lineHeight"
+              (onChange)="onSettingChange()"
+              [min]="1"
+              [max]="3"
+              [step]="0.1"
+            ></p-slider>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layout & Formatting Section -->
+      <div class="settings-section">
+        <div class="section-header">
+          <i class="pi pi-th-large"></i>
+          <h4>Layout & Formatting</h4>
+        </div>
+        <div class="section-body">
+          <div class="form-group">
+            <label>Orientation</label>
+            <div class="orientation-buttons">
+              <button
+                [class.active]="settings.layout.orientation === 'portrait'"
+                (click)="settings.layout.orientation = 'portrait'; onSettingChange()"
+                class="orientation-btn"
+              >
+                <i class="pi pi-desktop"></i>
+                Portrait
+              </button>
+              <button
+                [class.active]="settings.layout.orientation === 'landscape'"
+                (click)="settings.layout.orientation = 'landscape'; onSettingChange()"
+                class="orientation-btn"
+              >
+                <i class="pi pi-desktop"></i>
+                Landscape
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Columns</label>
+            <p-slider
+              [(ngModel)]="settings.layout.columns"
+              (onChange)="onSettingChange()"
+              [min]="1"
+              [max]="3"
+              [step]="1"
+            ></p-slider>
+            <span class="slider-value">{{ settings.layout.columns }}</span>
+          </div>
+
+          <div class="form-group">
+            <label>Section Spacing: {{ settings.layout.sectionSpacing }}px</label>
+            <p-slider
+              [(ngModel)]="settings.layout.sectionSpacing"
+              (onChange)="onSettingChange()"
+              [min]="0"
+              [max]="48"
+              [step]="2"
+            ></p-slider>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="settings-footer">
+      <button class="btn btn-secondary" (click)="resetSettings()">
+        <i class="pi pi-refresh"></i>
+        Reset
+      </button>
+      <button class="btn btn-primary" (click)="closePanel()">
+        Done
+      </button>
+    </div>
+

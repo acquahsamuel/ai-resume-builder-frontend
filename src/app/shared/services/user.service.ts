@@ -11,7 +11,7 @@ import { environment as env } from '../../../environments/environment';
 export class UserService {
   private BASE_URL = `${env.BASE_URL}`;
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   allUsers() {
     const token = localStorage.getItem('currentUser');

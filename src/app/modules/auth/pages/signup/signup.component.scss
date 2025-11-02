@@ -109,7 +109,7 @@
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: .5rem;
 }
 
 .form-field {
@@ -121,6 +121,55 @@
     font-size: 14px;
     font-weight: 600;
     color: #374151;
+  }
+
+  .password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    ::ng-deep {
+      input {
+        width: 100%;
+        padding: 0.875rem 3rem 0.875rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #22c55e;
+          box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        &.error {
+          border-color: #ef4444;
+        }
+      }
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: #6b7280;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #374151;
+      }
+
+      i {
+        font-size: 18px;
+      }
+    }
   }
 
   ::ng-deep {
@@ -152,9 +201,7 @@
 }
 
 .terms-checkbox {
-  margin-top: -0.5rem;
-  margin-bottom: -0.5rem;
-
+ 
   ::ng-deep {
     label {
       font-size: 14px;
@@ -193,7 +240,7 @@
 .divider {
   position: relative;
   text-align: center;
-  margin: 1.5rem 0;
+  margin: .5rem 0;
 
   &::before {
     content: '';
@@ -216,32 +263,50 @@
 
 .google-signup-btn {
   width: 100%;
-  padding: 0.875rem 1rem;
-  background: white;
-  color: #374151;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.05s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
+  outline: none;
 
   i {
-    font-size: 20px;
+    font-size: 18px;
     color: #4285f4;
+    background: #e8f0fe;
+    border-radius: 9999px;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  &:hover {
-    background: #f9fafb;
-    border-color: #22c55e;
-  }
 
   &:active {
     background: #f3f4f6;
+    transform: translateY(0.5px) scale(0.997);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.25), 0 1px 2px rgba(0, 0, 0, 0.06);
+    border-color: #a7c2ff;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
   }
 }
 
