@@ -89,11 +89,7 @@ export interface ATSScoreResponse extends BaseResponse {
 }
 
 export interface CompareResponse extends BaseResponse {
-  comparison: {
-    matches: string[];
-    gaps: string[];
-    recommendations: string[];
-  };
+  comparison: string; // Markdown-formatted comparison text
 }
 
 export interface KeywordsResponse extends BaseResponse {

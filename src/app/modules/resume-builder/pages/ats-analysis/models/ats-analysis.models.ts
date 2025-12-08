@@ -4,11 +4,21 @@ export interface FileUploadInfo {
   file?: File;
 }
 
+// Parsed analysis sections from API response
+export interface ParsedAnalysisSection {
+  title: string;
+  content: string;
+  items?: string[];
+}
+
 export interface CVAnalysisResult {
-  keywordCount: number;
-  skillsIdentified: string[];
-  formattingScore: number;
+  overallScore: number;
+  rawAnalysis: string; // Full markdown text from API
+  sections: ParsedAnalysisSection[]; // Parsed sections
   recommendations: Recommendation[];
+  keywordCount?: number;
+  skillsIdentified: string[];
+  formattingScore?: number;
 }
 
 export interface Recommendation {
@@ -36,6 +46,12 @@ export interface FormattingIssue {
   severity: 'high' | 'medium' | 'low';
 }
 
+export interface ComparisonResult {
+  matches: string[];
+  gaps: string[];
+  recommendations: string[];
+}
+
 export interface CVOnlyData {
   uploadedFile?: FileUploadInfo;
   overallScore: number;
@@ -47,6 +63,8 @@ export interface JobMatchData {
   jobDescription: string;
   uploadedFile?: FileUploadInfo;
   overallScore: number;
+  comparisonResult?: ComparisonResult;
+  rawAnalysis?: string;
   jobKeywords: JobKeyword[];
   requiredSkills: string[];
   resumeSkills: string[];

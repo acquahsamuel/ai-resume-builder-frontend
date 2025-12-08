@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { CvParserService } from '../../../../../../shared/services/cv-parser.service';
-import { JobMatchData, FileUploadInfo } from '../../models/ats-analysis.models';
+import { JobMatchData, FileUploadInfo, ParsedAnalysisSection, Recommendation } from '../../models/ats-analysis.models';
 
 @Component({
   selector: 'app-job-match-tab',
@@ -19,12 +19,16 @@ export class JobMatchTabComponent implements OnInit, OnDestroy {
   matchData: JobMatchData = {
     jobDescription: '',
     overallScore: 0,
+    comparisonResult: undefined,
+    rawAnalysis: '',
     jobKeywords: [],
     requiredSkills: [],
     resumeSkills: [],
     recommendations: [],
     isLoading: false
   };
+
+  parsedSections: ParsedAnalysisSection[] = [];
 
   constructor(
     private cvParserService: CvParserService,
@@ -78,6 +82,8 @@ export class JobMatchTabComponent implements OnInit, OnDestroy {
   removeFile(): void {
     this.matchData.uploadedFile = undefined;
     this.matchData.overallScore = 0;
+    this.matchData.rawAnalysis = '';
+    this.parsedSections = [];
   }
 
   analyzeMatch(): void {
@@ -101,78 +107,170 @@ export class JobMatchTabComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           this.matchData.isLoading = false;
-          this.parseComparisonResponse(response.comparison);
-          this.showSuccess('Job match analysis completed successfully');
+          if (response.success && response.comparison) {
+            this.parseComparisonResponse(response.comparison);
+            this.showSuccess('Job match analysis completed successfully');
+          } else {
+            this.showError('Comparison completed but no data received');
+          }
         },
         error: (error) => {
           this.matchData.isLoading = false;
           console.error('Comparison error:', error);
-          this.useDemoData();
-          this.showError('Using demo data. API connection failed.');
+          this.showError('API connection failed. Please try again.');
         }
       });
   }
 
-  private parseComparisonResponse(comparison: any): void {
+  private parseComparisonResponse(comparisonText: string): void {
     try {
-      const matches = comparison.matches || [];
-      const gaps = comparison.gaps || [];
-      const recommendations = comparison.recommendations || [];
+      // Store raw comparison text
+      this.matchData.rawAnalysis = comparisonText;
 
-      this.matchData.resumeSkills = matches;
-      this.matchData.requiredSkills = [...matches, ...gaps];
+      // Extract overall score from text like "Overall Fit Score: 5/100"
+      const scoreMatch = comparisonText.match(/Overall\s+(?:Fit|Match)\s+Score[:\s]+(\d+)(?:\/100)?/i);
+      if (scoreMatch) {
+        this.matchData.overallScore = parseInt(scoreMatch[1]);
+      }
 
-      const matchPercentage = this.matchData.requiredSkills.length > 0
-        ? Math.round((matches.length / this.matchData.requiredSkills.length) * 100)
-        : 0;
+      // Parse sections from the comparison text
+      this.parsedSections = this.parseSections(comparisonText);
 
-      this.matchData.overallScore = matchPercentage;
+      // Extract keywords mentioned in the text
+      this.extractKeywordsAndSkills(comparisonText);
 
-      this.matchData.jobKeywords = this.matchData.requiredSkills.map((skill: string) => ({
-        word: skill,
-        matched: matches.includes(skill),
-        importance: 'high' as const
-      }));
-
-      this.matchData.recommendations = recommendations.map((rec: any) => ({
-        priority: 'medium' as const,
-        title: typeof rec === 'string' ? rec : rec.title || 'Recommendation',
-        description: typeof rec === 'string' ? rec : rec.description || '',
-        impact: '+5 points'
-      })).slice(0, 3);
+      // Parse recommendations
+      this.matchData.recommendations = this.parseRecommendations(comparisonText);
 
     } catch (error) {
       console.error('Error parsing comparison response:', error);
-      this.useDemoData();
+      this.showError('Error parsing comparison results');
     }
   }
 
-  private useDemoData(): void {
-    this.matchData.overallScore = 78;
-    this.matchData.requiredSkills = ['JavaScript', 'React', 'Node.js', 'TypeScript', 'Git', 'AWS'];
-    this.matchData.resumeSkills = ['JavaScript', 'React', 'Node.js', 'TypeScript', 'Git', 'MongoDB', 'Express.js'];
-    this.matchData.jobKeywords = [
-      { word: 'JavaScript', matched: true, importance: 'high' },
-      { word: 'React', matched: true, importance: 'high' },
-      { word: 'Node.js', matched: true, importance: 'high' },
-      { word: 'TypeScript', matched: true, importance: 'medium' },
-      { word: 'Git', matched: true, importance: 'medium' },
-      { word: 'AWS', matched: false, importance: 'high' },
-    ];
-    this.matchData.recommendations = [
-      {
-        priority: 'high',
-        title: 'Add Missing Keywords',
-        description: 'Include "AWS" to improve keyword matching',
-        impact: '+12 points'
-      },
-      {
-        priority: 'medium',
-        title: 'Improve Keyword Density',
-        description: 'Key skills should appear 2-3 times throughout your resume',
-        impact: '+5 points'
+  private parseSections(text: string): ParsedAnalysisSection[] {
+    const sections: ParsedAnalysisSection[] = [];
+
+    // Split by markdown headers (###, ####, or **)
+    const headerPattern = /(?:#{2,4}\s+(.+?):|^\*\*(.+?:)\*\*)/gm;
+    const matches = [...text.matchAll(headerPattern)];
+
+    for (let i = 0; i < matches.length; i++) {
+      const match = matches[i];
+      const title = (match[1] || match[2] || '').trim().replace(/:$/, '');
+
+      // Get content until next header
+      const startPos = match.index! + match[0].length;
+      const endPos = i < matches.length - 1 ? matches[i + 1].index! : text.length;
+      let content = text.substring(startPos, endPos).trim();
+
+      // Extract bullet points
+      const bulletPoints = content.match(/^\s*[\*\-\•]\s+(.+?)$/gm);
+      const items = bulletPoints ? bulletPoints.map(b => b.replace(/^\s*[\*\-\•]\s+/, '').trim()) : [];
+
+      sections.push({
+        title,
+        content,
+        items: items.length > 0 ? items : undefined
+      });
+    }
+
+    return sections;
+  }
+
+  private extractKeywordsAndSkills(text: string): void {
+    // Extract "Missing Keywords" section
+    const missingKeywordsMatch = text.match(/\*\*Missing Keywords Include:\*\*\s*([^\n]+(?:\n(?!\*\*)[^\n]+)*)/i);
+    if (missingKeywordsMatch) {
+      const keywords = missingKeywordsMatch[1]
+        .split(/[,\n]/)
+        .map(k => k.trim())
+        .filter(k => k.length > 0);
+
+      this.matchData.requiredSkills = keywords;
+      this.matchData.jobKeywords = keywords.map(keyword => ({
+        word: keyword,
+        matched: false,
+        importance: 'high' as const
+      }));
+    }
+
+    // Extract matched skills from "Experience Match" or similar sections
+    const experienceMatch = text.match(/Your CV[:\s]+(.+?)(?=\n\*\*|Job Description|$)/gs);
+    if (experienceMatch) {
+      const cvSkills: string[] = [];
+      experienceMatch.forEach(match => {
+        // Extract quoted phrases from CV examples
+        const quotes = match.match(/"([^"]+)"/g);
+        if (quotes) {
+          quotes.forEach(q => {
+            const skill = q.replace(/"/g, '').trim();
+            if (skill.length > 3) {
+              cvSkills.push(skill);
+            }
+          });
+        }
+      });
+
+      this.matchData.resumeSkills = [...new Set(cvSkills)];
+    }
+  }
+
+  private parseRecommendations(text: string): Recommendation[] {
+    const recommendations: Recommendation[] = [];
+
+    // Look for "Recommendations to Improve Match" section
+    const recSection = text.match(/(?:###\s+)?Recommendations[^:]*:(.*?)(?=###|$)/si);
+    if (!recSection) return recommendations;
+
+    const recContent = recSection[1];
+
+    // Extract numbered recommendations
+    const recPattern = /(\d+)\.\s+\*\*(.+?)\*\*[:\s]*\n\s*\*\s+\*\*Description:\*\*\s*(.+?)(?:\n\s*\*\s+\*\*Specific Action:\*\*\s*(.+?))?(?=\n\d+\.|\n###|$)/gs;
+    const recMatches = [...recContent.matchAll(recPattern)];
+
+    recMatches.forEach(match => {
+      const title = match[2].trim();
+      const description = match[3].trim();
+      const action = match[4] ? match[4].trim() : '';
+
+      // Determine priority based on keywords
+      let priority: 'high' | 'medium' | 'low' = 'medium';
+      const titleLower = title.toLowerCase();
+      if (titleLower.includes('fundamental') || titleLower.includes('critical') || titleLower.includes('do not')) {
+        priority = 'high';
+      } else if (titleLower.includes('career change') || titleLower.includes('hypothetical')) {
+        priority = 'low';
       }
-    ];
+
+      let fullDescription = description;
+      if (action) {
+        fullDescription += '\n\nAction: ' + action;
+      }
+
+      recommendations.push({
+        priority,
+        title,
+        description: fullDescription,
+        impact: this.determineImpact(title, description)
+      });
+    });
+
+    return recommendations.slice(0, 5); // Limit to top 5
+  }
+
+  private determineImpact(title: string, description: string): string {
+    const combined = (title + ' ' + description).toLowerCase();
+
+    if (combined.includes('mismatch') || combined.includes('do not apply')) {
+      return 'Not suitable for this role';
+    } else if (combined.includes('career change') || combined.includes('transition')) {
+      return 'Requires significant effort';
+    } else if (combined.includes('certifications') || combined.includes('training')) {
+      return 'Improves qualifications';
+    }
+
+    return 'Improves match score';
   }
 
   private validateFile(file: File): boolean {
@@ -205,6 +303,12 @@ export class JobMatchTabComponent implements OnInit, OnDestroy {
     if (this.matchData.overallScore >= 80) return 'text-green-600';
     if (this.matchData.overallScore >= 60) return 'text-yellow-600';
     return 'text-red-600';
+  }
+
+  getScoreBadgeColor(): string {
+    if (this.matchData.overallScore >= 80) return 'bg-green-100 text-green-700';
+    if (this.matchData.overallScore >= 60) return 'bg-yellow-100 text-yellow-700';
+    return 'bg-red-100 text-red-700';
   }
 
   getMatchedSkills(): string[] {
