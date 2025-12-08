@@ -208,3 +208,4 @@ export class HomepageComponent implements OnInit {
     this.isLangMenuOpen = false;
   }
 }
+

@@ -9,6 +9,7 @@ export const environment = {
   assetPreLoader : '',
   APP : 'Cleansheet cv',
   BASE_URL: 'https://cleansheet-ai.onrender.com/api/v1',
+  CV_PARSER_API_URL: ' http://44.192.82.79:8000',
 };
 
 /*
