@@ -1,38 +1,29 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { CvParserService } from '../../../../../../shared/services/cv-parser.service';
-import {
-  CVRewriteData,
-  FileUploadInfo,
-} from '../../models/ats-analysis.models';
 
 @Component({
   selector: 'app-cv-rewrite-tab',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './cv-rewrite-tab.component.html',
-  styleUrls: ['./cv-rewrite-tab.component.scss'],
+  styleUrls: ['./cv-rewrite-tab.component.scss']
 })
-export class CvRewriteTabComponent implements OnInit, OnDestroy {
+export class CvRewriteTabComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
 
-  rewriteData: CVRewriteData = {
-    jobDescription: '',
-    originalCv: '',
-    rewrittenCv: '',
-    improvements: [],
-    isProcessing: false,
-  };
+  uploadedFile?: { fileName: string; fileSize: string; file: File };
+  jobDescription = '';
+  rewrittenCv = '';
+  isProcessing = false;
 
   constructor(
     private cvParserService: CvParserService,
     private messageService: MessageService
   ) {}
-
-  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -41,13 +32,11 @@ export class CvRewriteTabComponent implements OnInit, OnDestroy {
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
-    if (file) {
-      if (!this.validateFile(file)) return;
-
-      this.rewriteData.uploadedFile = {
+    if (file && this.validateFile(file)) {
+      this.uploadedFile = {
         fileName: file.name,
         fileSize: this.formatFileSize(file.size),
-        file: file,
+        file: file
       };
     }
   }
@@ -58,138 +47,72 @@ export class CvRewriteTabComponent implements OnInit, OnDestroy {
 
   onDrop(event: DragEvent): void {
     event.preventDefault();
-    const files = event.dataTransfer?.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      if (!this.validateFile(file)) return;
-
-      this.rewriteData.uploadedFile = {
+    const file = event.dataTransfer?.files[0];
+    if (file && this.validateFile(file)) {
+      this.uploadedFile = {
         fileName: file.name,
         fileSize: this.formatFileSize(file.size),
-        file: file,
+        file: file
       };
     }
   }
 
   triggerFileInput(): void {
-    const fileInput = document.getElementById(
-      'file-input-rewrite'
-    ) as HTMLInputElement;
-    fileInput?.click();
+    document.getElementById('file-input-rewrite')?.click();
   }
 
   removeFile(): void {
-    this.rewriteData.uploadedFile = undefined;
-    this.rewriteData.rewrittenCv = '';
-    this.rewriteData.improvements = [];
+    this.uploadedFile = undefined;
+    this.rewrittenCv = '';
   }
 
   rewriteCv(): void {
-    if (!this.rewriteData.uploadedFile?.file) {
-      this.showError('Please upload a CV file');
+    if (!this.uploadedFile?.file) {
+      this.showMessage('error', 'Please upload a CV file');
       return;
     }
 
-    if (!this.rewriteData.jobDescription.trim()) {
-      this.showError('Please provide a job description');
+    if (!this.jobDescription.trim()) {
+      this.showMessage('error', 'Please provide a job description');
       return;
     }
 
-    this.rewriteData.isProcessing = true;
-
+    this.isProcessing = true;
     const focusAreas = 'achievements,keywords,impact,formatting';
 
-    this.cvParserService
-      .rewriteCVFile(
-        this.rewriteData.uploadedFile.file,
-        this.rewriteData.jobDescription,
-        focusAreas
-      )
+    this.cvParserService.rewriteCVFile(
+      this.uploadedFile.file,
+      this.jobDescription,
+      focusAreas
+    )
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
-          this.rewriteData.isProcessing = false;
-          this.rewriteData.rewrittenCv = response.rewritten_cv;
-          this.parseImprovements(response.rewritten_cv);
-          this.showSuccess('CV rewrite completed successfully');
+          this.isProcessing = false;
+          this.rewrittenCv = response.rewritten_cv;
+          this.showMessage('success', 'CV rewrite completed successfully');
         },
         error: (error) => {
-          this.rewriteData.isProcessing = false;
+          this.isProcessing = false;
           console.error('Rewrite error:', error);
-          this.showError('API connection failed. Please try again.');
-        },
+          this.showMessage('error', 'API connection failed. Please try again.');
+        }
       });
   }
 
-  private parseImprovements(rewrittenCv: string): void {
-    try {
-      // Extract improvements from the rewritten CV by comparing sections
-      // Look for improvement indicators in the response
-      const improvements: Array<{
-        section: string;
-        change: string;
-        impact: 'High' | 'Medium' | 'Low';
-      }> = [];
+  copyToClipboard(): void {
+    if (!this.rewrittenCv) return;
 
-      // Parse improvement sections if they exist in the response
-      const improvementPattern =
-        /(?:###\s+)?Improvements?[:\s]+(.*?)(?=###|$)/is;
-      const improvementMatch = rewrittenCv.match(improvementPattern);
-
-      if (improvementMatch) {
-        const improvementText = improvementMatch[1];
-        const itemPattern = /^\s*[\*\-\•]\s+(.+?)$/gm;
-        const items = [...improvementText.matchAll(itemPattern)];
-
-        items.forEach((item) => {
-          const text = item[1].trim();
-          // Determine section and impact based on keywords
-          let section = 'General';
-          let impact: 'High' | 'Medium' | 'Low' = 'Medium';
-
-          if (
-            text.toLowerCase().includes('summary') ||
-            text.toLowerCase().includes('profile')
-          ) {
-            section = 'Summary';
-            impact = 'High';
-          } else if (
-            text.toLowerCase().includes('experience') ||
-            text.toLowerCase().includes('achievement')
-          ) {
-            section = 'Experience';
-            impact = 'High';
-          } else if (text.toLowerCase().includes('skill')) {
-            section = 'Skills';
-          } else if (
-            text.toLowerCase().includes('format') ||
-            text.toLowerCase().includes('structure')
-          ) {
-            section = 'Formatting';
-          }
-
-          improvements.push({
-            section,
-            change: text,
-            impact,
-          });
-        });
-      }
-
-      this.rewriteData.improvements =
-        improvements.length > 0 ? improvements : [];
-    } catch (error) {
-      console.error('Error parsing improvements:', error);
-      this.rewriteData.improvements = [];
-    }
+    navigator.clipboard.writeText(this.rewrittenCv).then(
+      () => this.showMessage('success', 'Rewritten CV copied to clipboard'),
+      () => this.showMessage('error', 'Failed to copy to clipboard')
+    );
   }
 
   downloadRewrittenCv(): void {
-    if (!this.rewriteData.rewrittenCv) return;
+    if (!this.rewrittenCv) return;
 
-    const blob = new Blob([this.rewriteData.rewrittenCv], {
-      type: 'text/plain',
-    });
+    const blob = new Blob([this.rewrittenCv], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -197,24 +120,24 @@ export class CvRewriteTabComponent implements OnInit, OnDestroy {
     link.click();
     window.URL.revokeObjectURL(url);
 
-    this.showSuccess('CV downloaded successfully');
+    this.showMessage('success', 'CV downloaded successfully');
   }
 
   private validateFile(file: File): boolean {
     const validTypes = [
       'application/pdf',
       'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     ];
     const maxSize = 10 * 1024 * 1024;
 
     if (!validTypes.includes(file.type)) {
-      this.showError('Please upload a PDF or Word document');
+      this.showMessage('error', 'Please upload a PDF or Word document');
       return false;
     }
 
     if (file.size > maxSize) {
-      this.showError('File size should not exceed 10MB');
+      this.showMessage('error', 'File size should not exceed 10MB');
       return false;
     }
 
@@ -226,22 +149,14 @@ export class CvRewriteTabComponent implements OnInit, OnDestroy {
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
   }
 
-  private showSuccess(message: string): void {
+  private showMessage(severity: string, detail: string): void {
     this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: message,
-    });
-  }
-
-  private showError(message: string): void {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: message,
+      severity,
+      summary: severity === 'error' ? 'Error' : severity === 'success' ? 'Success' : 'Info',
+      detail
     });
   }
 }
