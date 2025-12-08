@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { CvParserService } from '../../../../../../shared/services/cv-parser.service';
+import { TextFormatterService } from '../../../../../../shared/services/text-formatter.service';
 
 @Component({
   selector: 'app-cv-analysis-tab',
@@ -18,11 +19,13 @@ export class CvAnalysisTabComponent implements OnDestroy {
   uploadedFile?: { fileName: string; fileSize: string; file: File };
   overallScore = 0;
   analysisText = '';
+  formattedAnalysis = '';
   isLoading = false;
 
   constructor(
     private cvParserService: CvParserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private textFormatter: TextFormatterService
   ) {}
 
   ngOnDestroy(): void {
@@ -82,6 +85,7 @@ export class CvAnalysisTabComponent implements OnDestroy {
           if (response.success && response.analysis) {
             this.analysisText = response.analysis;
             this.extractScore(response.analysis);
+            this.formatAnalysisText(response.analysis);
             this.showMessage('success', 'CV analysis completed successfully');
           } else {
             this.showMessage('error', 'Analysis completed but no data received');
@@ -102,10 +106,22 @@ export class CvAnalysisTabComponent implements OnDestroy {
     }
   }
 
-  copyToClipboard(): void {
-    if (!this.analysisText) return;
+  private formatAnalysisText(rawText: string): void {
+    // Add report header
+    const header = this.textFormatter.createReportHeader('analysis', this.overallScore);
 
-    navigator.clipboard.writeText(this.analysisText).then(
+    // Format the analysis content
+    const formattedContent = this.textFormatter.formatAnalysis(rawText);
+
+    // Combine header and content
+    this.formattedAnalysis = header + '\n' + formattedContent;
+  }
+
+  copyToClipboard(): void {
+    const textToCopy = this.formattedAnalysis || this.analysisText;
+    if (!textToCopy) return;
+
+    navigator.clipboard.writeText(textToCopy).then(
       () => this.showMessage('success', 'Analysis copied to clipboard'),
       () => this.showMessage('error', 'Failed to copy to clipboard')
     );

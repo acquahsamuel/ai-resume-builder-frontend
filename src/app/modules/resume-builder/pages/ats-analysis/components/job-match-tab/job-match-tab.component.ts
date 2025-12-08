@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { CvParserService } from '../../../../../../shared/services/cv-parser.service';
+import { TextFormatterService } from '../../../../../../shared/services/text-formatter.service';
 
 @Component({
   selector: 'app-job-match-tab',
@@ -19,11 +20,13 @@ export class JobMatchTabComponent implements OnDestroy {
   jobDescription = '';
   overallScore = 0;
   comparisonText = '';
+  formattedComparison = '';
   isLoading = false;
 
   constructor(
     private cvParserService: CvParserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private textFormatter: TextFormatterService
   ) {}
 
   ngOnDestroy(): void {
@@ -91,6 +94,7 @@ export class JobMatchTabComponent implements OnDestroy {
           if (response.success && response.comparison) {
             this.comparisonText = response.comparison;
             this.extractScore(response.comparison);
+            this.formatComparisonText(response.comparison);
             this.showMessage('success', 'Job match analysis completed successfully');
           } else {
             this.showMessage('error', 'Comparison completed but no data received');
@@ -111,10 +115,22 @@ export class JobMatchTabComponent implements OnDestroy {
     }
   }
 
-  copyToClipboard(): void {
-    if (!this.comparisonText) return;
+  private formatComparisonText(rawText: string): void {
+    // Add report header
+    const header = this.textFormatter.createReportHeader('comparison', this.overallScore);
 
-    navigator.clipboard.writeText(this.comparisonText).then(
+    // Format the comparison content
+    const formattedContent = this.textFormatter.formatComparison(rawText);
+
+    // Combine header and content
+    this.formattedComparison = header + '\n' + formattedContent;
+  }
+
+  copyToClipboard(): void {
+    const textToCopy = this.formattedComparison || this.comparisonText;
+    if (!textToCopy) return;
+
+    navigator.clipboard.writeText(textToCopy).then(
       () => this.showMessage('success', 'Comparison copied to clipboard'),
       () => this.showMessage('error', 'Failed to copy to clipboard')
     );

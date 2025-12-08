@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { CvParserService } from '../../../../../../shared/services/cv-parser.service';
+import { TextFormatterService } from '../../../../../../shared/services/text-formatter.service';
 
 @Component({
   selector: 'app-cv-rewrite-tab',
@@ -18,11 +19,13 @@ export class CvRewriteTabComponent implements OnDestroy {
   uploadedFile?: { fileName: string; fileSize: string; file: File };
   jobDescription = '';
   rewrittenCv = '';
+  formattedCv = '';
   isProcessing = false;
 
   constructor(
     private cvParserService: CvParserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private textFormatter: TextFormatterService
   ) {}
 
   ngOnDestroy(): void {
@@ -90,6 +93,7 @@ export class CvRewriteTabComponent implements OnDestroy {
         next: (response) => {
           this.isProcessing = false;
           this.rewrittenCv = response.rewritten_cv;
+          this.formatRewrittenCv(response.rewritten_cv);
           this.showMessage('success', 'CV rewrite completed successfully');
         },
         error: (error) => {
@@ -100,19 +104,32 @@ export class CvRewriteTabComponent implements OnDestroy {
       });
   }
 
-  copyToClipboard(): void {
-    if (!this.rewrittenCv) return;
+  private formatRewrittenCv(rawText: string): void {
+    // Add report header
+    const header = this.textFormatter.createReportHeader('rewrite');
 
-    navigator.clipboard.writeText(this.rewrittenCv).then(
+    // Format the rewritten CV content
+    const formattedContent = this.textFormatter.formatRewrittenCV(rawText);
+
+    // Combine header and content
+    this.formattedCv = header + '\n' + formattedContent;
+  }
+
+  copyToClipboard(): void {
+    const textToCopy = this.formattedCv || this.rewrittenCv;
+    if (!textToCopy) return;
+
+    navigator.clipboard.writeText(textToCopy).then(
       () => this.showMessage('success', 'Rewritten CV copied to clipboard'),
       () => this.showMessage('error', 'Failed to copy to clipboard')
     );
   }
 
   downloadRewrittenCv(): void {
-    if (!this.rewrittenCv) return;
+    const textToDownload = this.formattedCv || this.rewrittenCv;
+    if (!textToDownload) return;
 
-    const blob = new Blob([this.rewrittenCv], { type: 'text/plain' });
+    const blob = new Blob([textToDownload], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
