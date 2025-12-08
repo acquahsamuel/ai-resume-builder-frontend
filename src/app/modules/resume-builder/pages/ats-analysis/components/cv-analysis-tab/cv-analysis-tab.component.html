@@ -1,0 +1,165 @@
+<div class="grid lg:grid-cols-2 gap-6 mt-4">
+  <!-- Left: Upload Section -->
+  <div class="space-y-6">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+          <i class="pi pi-upload text-green-600 text-xl"></i>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900">Upload Your CV</h2>
+      </div>
+
+      <!-- Upload Area -->
+      <div
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop($event)"
+        (click)="triggerFileInput()"
+        class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-green-400 transition-colors bg-gray-50 cursor-pointer"
+      >
+        <i class="pi pi-cloud-upload text-5xl text-gray-400 mb-4"></i>
+        <p class="text-gray-700 font-medium mb-1">
+          Click to upload or drag and drop
+        </p>
+        <p class="text-sm text-gray-500">PDF or DOCX (max 10MB)</p>
+        <input
+          id="file-input-cvOnly"
+          type="file"
+          accept=".pdf,.docx"
+          class="hidden"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+
+      <!-- File Info -->
+      <div
+        *ngIf="cvData.uploadedFile"
+        class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <i class="pi pi-file text-green-600 text-xl"></i>
+            <div>
+              <p class="font-medium text-gray-900">
+                {{ cvData.uploadedFile.fileName }}
+              </p>
+              <p class="text-sm text-gray-500">{{ cvData.uploadedFile.fileSize }}</p>
+            </div>
+          </div>
+          <button
+            (click)="removeFile()"
+            class="text-red-600 hover:text-red-700"
+          >
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+      </div>
+
+      <button
+        *ngIf="cvData.uploadedFile"
+        (click)="analyzeCv()"
+        [disabled]="cvData.isLoading"
+        class="w-full mt-4 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl hover:from-green-700 hover:to-green-800 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md"
+      >
+        <span *ngIf="!cvData.isLoading">Analyze CV</span>
+        <span *ngIf="cvData.isLoading">
+          <i class="pi pi-spin pi-spinner mr-2"></i>Analyzing...
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Right: Analysis Results -->
+  <div class="space-y-6" *ngIf="cvData.overallScore > 0">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-6">Analysis Results</h2>
+
+      <!-- Overall Score -->
+      <div class="bg-gradient-to-br from-gray-50 to-white rounded-xl p-6 mb-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-600 mb-1">
+              Overall ATS Score
+            </p>
+            <p class="text-3xl font-bold" [ngClass]="getScoreColor(cvData.overallScore)">
+              {{ cvData.overallScore }}%
+            </p>
+          </div>
+          <div class="w-20 h-20 relative flex items-center justify-center">
+            <svg class="transform -rotate-90 w-20 h-20">
+              <circle
+                cx="40"
+                cy="40"
+                r="36"
+                stroke="currentColor"
+                stroke-width="4"
+                fill="none"
+                class="text-gray-200"
+              />
+              <circle
+                cx="40"
+                cy="40"
+                r="36"
+                stroke="currentColor"
+                stroke-width="4"
+                fill="none"
+                stroke-dasharray="226.2"
+                [attr.stroke-dashoffset]="226.2 - (226.2 * cvData.overallScore) / 100"
+                [ngClass]="getScoreColor(cvData.overallScore)"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+          <p class="text-xs font-medium text-green-600 mb-1">Keywords</p>
+          <p class="text-2xl font-bold text-green-700">
+            {{ cvData.analysisResults.keywordCount }}
+          </p>
+        </div>
+        <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+          <p class="text-xs font-medium text-green-600 mb-1">Formatting</p>
+          <p class="text-2xl font-bold text-green-700">
+            {{ cvData.analysisResults.formattingScore }}%
+          </p>
+        </div>
+      </div>
+
+      <!-- Skills Identified -->
+      <div class="mb-6">
+        <h4 class="text-sm font-semibold text-gray-700 mb-3">Skills Identified</h4>
+        <div class="flex flex-wrap gap-2">
+          <span
+            *ngFor="let skill of cvData.analysisResults.skillsIdentified"
+            class="bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-medium"
+          >
+            {{ skill }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="space-y-3">
+        <h4 class="text-sm font-semibold text-gray-700 mb-3">Recommendations</h4>
+        <div
+          *ngFor="let rec of cvData.analysisResults.recommendations"
+          class="bg-gray-50 p-4 rounded-lg border-l-4 border-yellow-500"
+        >
+          <div class="flex items-start justify-between mb-2">
+            <h5 class="font-bold text-gray-900 text-sm">{{ rec.title }}</h5>
+            <span class="px-2 py-0.5 rounded text-xs font-semibold uppercase bg-yellow-100 text-yellow-700">
+              {{ rec.priority }}
+            </span>
+          </div>
+          <p class="text-xs text-gray-600 mb-2">{{ rec.description }}</p>
+          <span class="inline-block px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-xs font-medium">
+            {{ rec.impact }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
