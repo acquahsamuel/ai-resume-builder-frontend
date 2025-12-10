@@ -9,19 +9,11 @@
       </div>
     </div>
     <div class="step-divider"></div>
-    <div class="step-item" [class.active]="currentStep === 'preview'" [class.completed]="currentStep === 'preview' || currentStep === 'settings'">
+    <div class="step-item" [class.active]="currentStep === 'preview'">
       <div class="step-number">2</div>
       <div class="step-label">
         <span class="step-title">Preview</span>
         <span class="step-subtitle">Review your CV</span>
-      </div>
-    </div>
-    <div class="step-divider"></div>
-    <div class="step-item" [class.active]="currentStep === 'settings'" [class.completed]="currentStep === 'settings'">
-      <div class="step-number">3</div>
-      <div class="step-label">
-        <span class="step-title">Settings</span>
-        <span class="step-subtitle">Customize template</span>
       </div>
     </div>
   </div>
@@ -30,11 +22,13 @@
   <div class="builder-content">
     <!-- Step 1: Sections Builder -->
     <div class="step-panel" *ngIf="currentStep === 'sections'">
-      <div class="sections-container">
-        <div class="sections-header">
-          <h2>Resume Sections</h2>
-          <p class="section-subtitle">Complete each section to build your professional resume</p>
-        </div>
+      <div class="sections-layout">
+        <!-- Left Side: Forms -->
+        <div class="sections-container">
+          <div class="sections-header">
+            <h2>Resume Sections</h2>
+            <p class="section-subtitle">Complete each section to build your professional resume</p>
+          </div>
 
         <div class="sections-list">
           <!-- Main Sections (Always Visible) -->
@@ -136,96 +130,124 @@
           </div>
         </div>
 
-        <div class="sections-footer">
-          <button class="btn-primary" (click)="goToPreview()">
-            <span>Continue to Preview</span>
-            <i class="pi pi-arrow-right"></i>
-          </button>
+          <div class="sections-footer">
+            <button class="btn-primary" (click)="goToPreview()">
+              <span>Continue to Preview</span>
+              <i class="pi pi-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Side: Selected Template -->
+        <div class="preview-sidebar">
+          <div class="preview-sidebar-header">
+            <h3>Selected Template</h3>
+            <button class="template-change-btn" (click)="showTemplateModal = true" title="Change Template">
+              <i class="pi pi-palette"></i>
+              <span>Change Template</span>
+            </button>
+          </div>
+          <div class="preview-sidebar-content">
+            <div class="selected-template-display" *ngIf="getSelectedTemplate()">
+              <div class="template-preview-card">
+                <div class="template-preview-thumbnail">
+                  <img [src]="getSelectedTemplate()?.thumbnail" [alt]="getSelectedTemplate()?.name" />
+                  <div class="template-preview-overlay">
+                    <div class="template-preview-badge">
+                      <i class="pi pi-check"></i>
+                      <span>Selected</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="template-preview-info">
+                  <h4>{{ getSelectedTemplate()?.name }}</h4>
+                  <p>{{ getSelectedTemplate()?.style }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Step 2: Preview -->
     <div class="step-panel" *ngIf="currentStep === 'preview'">
-      <div class="preview-container">
-        <div class="preview-header">
-          <div class="preview-header-left">
-            <h2>Live Preview</h2>
-            <p class="preview-subtitle">See how your resume looks</p>
-          </div>
-          <div class="preview-actions">
-            <button class="btn-secondary" (click)="goToSections()">
-              <i class="pi pi-arrow-left"></i>
-              <span>Back to Sections</span>
-            </button>
-            <button class="btn-secondary" (click)="goToSettings()">
-              <i class="pi pi-cog"></i>
-              <span>Customize</span>
-            </button>
-            <button class="btn-primary">
-              <i class="pi pi-download"></i>
-              <span>Download PDF</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="preview-content">
-          <app-cv-preview [selectedTemplate]="selectedTemplate"></app-cv-preview>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 3: Settings -->
-    <div class="step-panel" *ngIf="currentStep === 'settings'">
-      <div class="settings-container">
-        <div class="settings-header">
-          <div class="settings-header-left">
-            <h2>Template Settings</h2>
-            <p class="settings-subtitle">Customize colors, fonts, and layout</p>
-          </div>
-          <div class="settings-actions">
-            <button class="btn-secondary" (click)="goToPreview()">
-              <i class="pi pi-arrow-left"></i>
-              <span>Back to Preview</span>
-            </button>
-            <button class="btn-primary" (click)="goToPreview()">
-              <span>Save & Continue</span>
-              <i class="pi pi-check"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="settings-content">
-          <div class="settings-sidebar">
-            <div class="template-selector">
-              <h3>Choose Template</h3>
-              <div class="template-grid">
-                <div 
-                  *ngFor="let template of templates" 
-                  class="template-option"
-                  [class.active]="selectedTemplate === template.id"
-                  (click)="selectTemplate(template.id)"
-                >
-                  <div class="template-thumbnail">
-                    <img [src]="template.thumbnail" [alt]="template.name" />
-                    <div class="active-badge" *ngIf="selectedTemplate === template.id">
-                      <i class="pi pi-check"></i>
-                    </div>
-                  </div>
-                  <div class="template-info">
-                    <strong>{{ template.name }}</strong>
-                    <span>{{ template.style }}</span>
-                  </div>
-                </div>
-              </div>
+      <div class="preview-layout">
+        <!-- Main Preview Area -->
+        <div class="preview-container" [class.with-settings]="showSettingsPanel">
+          <div class="preview-header">
+            <div class="preview-header-left">
+              <h2>Live Preview</h2>
+              <p class="preview-subtitle">See how your resume looks</p>
+            </div>
+            <div class="preview-actions">
+              <button class="btn-secondary" (click)="goToSections()">
+                <i class="pi pi-arrow-left"></i>
+                <span>Back to Sections</span>
+              </button>
+              <button class="btn-secondary" (click)="showSettingsPanel = !showSettingsPanel" [class.active]="showSettingsPanel">
+                <i class="pi pi-cog"></i>
+                <span>Customize</span>
+              </button>
+              <button class="btn-primary">
+                <i class="pi pi-download"></i>
+                <span>Download PDF</span>
+              </button>
             </div>
           </div>
 
-          <div class="settings-main">
+          <div class="preview-content">
+            <app-cv-preview [selectedTemplate]="selectedTemplate"></app-cv-preview>
+          </div>
+        </div>
+
+        <!-- Settings Panel (Right Side) -->
+        <div class="settings-panel" [class.visible]="showSettingsPanel">
+          <div class="settings-panel-header">
+            <h3>Template Settings</h3>
+            <button class="close-settings-btn" (click)="showSettingsPanel = false" title="Close">
+              <i class="pi pi-times"></i>
+            </button>
+          </div>
+          <div class="settings-panel-content">
             <app-template-settings 
               [visible]="true"
               (settingsChange)="onSettingsChange($event)">
             </app-template-settings>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Template Selection Modal -->
+  <div class="template-modal-overlay" *ngIf="showTemplateModal" (click)="showTemplateModal = false">
+    <div class="template-modal" (click)="$event.stopPropagation()">
+      <div class="template-modal-header">
+        <h2>Select Template</h2>
+        <button class="modal-close-btn" (click)="showTemplateModal = false">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+      <div class="template-modal-content">
+        <div class="template-grid-modal">
+          <div 
+            *ngFor="let template of templates" 
+            class="template-option-modal"
+            [class.active]="selectedTemplate === template.id"
+            (click)="selectTemplate(template.id); showTemplateModal = false"
+          >
+            <div class="template-thumbnail-modal">
+              <img [src]="template.thumbnail" [alt]="template.name" />
+              <div class="active-badge-modal" *ngIf="selectedTemplate === template.id">
+                <i class="pi pi-check"></i>
+              </div>
+            </div>
+            <div class="template-info-modal">
+              <strong>{{ template.name }}</strong>
+              <span>{{ template.style }}</span>
+            </div>
           </div>
         </div>
       </div>

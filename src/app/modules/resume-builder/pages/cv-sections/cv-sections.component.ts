@@ -72,6 +72,8 @@ export class CvSectionsComponent implements OnInit {
   showTemplateSettings = true;
   selectedTemplate: string = 'sunshine';
   showAddSectionMenu = false;
+  showTemplateModal = false;
+  showSettingsPanel = false;
   
   injector: Injector = Injector.create({
     providers: [
@@ -289,11 +291,18 @@ export class CvSectionsComponent implements OnInit {
   }
 
   goToSettings(): void {
-    this.currentStep = 'settings';
+    // Settings panel is now part of preview step
+    if (this.currentStep === 'preview') {
+      this.showSettingsPanel = true;
+    }
   }
 
   selectTemplate(templateId: string): void {
     this.selectedTemplate = templateId;
+  }
+
+  getSelectedTemplate(): Template | undefined {
+    return this.templates.find(t => t.id === this.selectedTemplate);
   }
 
   onSettingsChange(settings: TemplateSettings): void {
