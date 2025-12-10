@@ -1,1 +1,132 @@
-<p>internships works!</p>
+<div class=" ">
+  <form [formGroup]="internshipsForm">
+    <div formArrayName="internshipRecords">
+
+      <p-accordion>
+        <p-accordionTab
+          *ngFor="let internship of internshipRecords.controls; let i = index"
+          [formGroupName]="i"
+          [header]="internship.get('jobTitle')?.value || 'New Internship'"
+          [selected]="true"
+        >
+
+        <div class="form-section">
+          <div class="flex flex-wrap  -mx-2">
+            <div class="form-group w-full px-2 py-2 sm:w-1/2">
+              <label for="jobTitle"> Job Title *</label>
+              <input
+                placeholder="Enter Job Title"
+                formControlName="jobTitle"
+                type="text"
+                pInputText
+                class="w-full"
+              />
+            </div>
+
+            <div class="form-group w-full px-2 py-2 sm:w-1/2">
+              <label for="company">Company Name *</label>
+
+              <input
+                pInputText
+                placeholder="Enter company name"
+                class="w-full"
+                type="text"
+                formControlName="companyName"
+              />
+            </div>
+          </div>
+
+          <div class="form-section flex flex-wrap  -mx-2">
+            <div class="form-group w-full sm:w-1/2 px-2 py-2">
+              <label for="city"> City/Town *</label>
+              <input
+                placeholder="Enter City"
+                formControlName="city"
+                type="text"
+                pInputText
+                class="w-full"
+              />
+            </div>
+
+            <div class="form-group w-full px-2 py-2 sm:w-1/2">
+              <label for="country"> Country *</label>
+              <input
+                placeholder="Enter Country"
+                formControlName="country"
+                type="text"
+                pInputText
+                class="w-full"
+              />
+            </div>
+          </div>
+
+          <div class="form-section flex flex-wrap  -mx-2">
+            <div class="form-group w-full sm:w-1/2 px-2 py-2">
+              <label for="startYear"> Start Date *</label>
+              <p-calendar
+                formControlName="startYear"
+                (ngModelChange)="onDateChange($event)"
+                dateFormat="yy"
+              ></p-calendar>
+            </div>
+
+            <div class="form-group w-full px-2 py-2 sm:w-1/2">
+              <label for="endYear"> End Date *</label>
+              <p-calendar
+                formControlName="endYear"
+                class="w-full"
+                (ngModelChange)="onDateChange($event)"
+                dateFormat="yy"
+              ></p-calendar>
+            </div>
+          </div>
+
+          <div class="form-section flex flex-wrap  -mx-2">
+            <div class="form-group w-full sm:w-1/2 px-2 py-2">
+              <label for="companyWebsite"> Company Website</label>
+              <input
+                placeholder="https://..."
+                formControlName="companyWebsite"
+                type="url"
+                pInputText
+                class="w-full"
+              />
+            </div>
+
+            <div class="form-group w-full px-2 py-2 sm:w-1/2 flex items-center">
+              <p-inputSwitch formControlName="currentlyHere"></p-inputSwitch>
+              <label for=""> Currently working here</label>
+            </div>
+          </div>
+
+          <div class="form-group px-2 py-2 -mx-2">
+            <label for="description"> Description</label>
+            <app-custom-editor formControlName="description"></app-custom-editor>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <p-button
+            (onClick)="removeInternshipRecord(i)"
+            severity="danger"
+            [outlined]="true"
+            icon="pi pi-trash"
+            label="Remove"
+            type="button"
+          ></p-button>
+        </div>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+
+    <p-button
+      (onClick)="addInternshipRecord()"
+      label="+ Add Internship"
+      icon="pi pi-plus"
+      class="btn-add"
+      severity="secondary"
+      [outlined]="true"
+      type="button"
+    ></p-button>
+  </form>
+</div>

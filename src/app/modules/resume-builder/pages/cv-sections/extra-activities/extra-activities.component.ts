@@ -41,10 +41,12 @@ export class ExtraActivitiesComponent implements OnInit, OnDestroy {
         
         // Map to service format
         const extraActivities = activityRecords.map((activity: any) => ({
-          name: activity.name,
-          organization: activity.proficiency || activity.organization,
-          role: activity.skillLevel || activity.role,
-          description: activity.description || ''
+          name: activity.name || '',
+          organization: activity.organization || '',
+          role: activity.role || '',
+          description: activity.description || '',
+          startYear: activity.startYear || '',
+          endYear: activity.endYear || '',
         }));
         
         // Update service (single source of truth)
@@ -61,9 +63,12 @@ export class ExtraActivitiesComponent implements OnInit, OnDestroy {
   // Create a new FormGroup for an extra activity record
   createExtraActivityRecord(): FormGroup {
     return this.fb.group({
-      name: ["", Validators.required],
-      proficiency: ["", Validators.required],
-      skillLevel: ["", Validators.required]
+      name: ['', Validators.required],
+      organization: ['', Validators.required],
+      role: ['', Validators.required],
+      description: [''],
+      startYear: ['', [Validators.pattern('^[0-9]{4}$|^$')]],
+      endYear: ['', [Validators.pattern('^[0-9]{4}$|^$')]],
     });
   }
 
@@ -88,5 +93,9 @@ export class ExtraActivitiesComponent implements OnInit, OnDestroy {
   // Remove an extra activity record
   removeExtraActivityRecord(index: number): void {
     this.extraActivitiesRecords.removeAt(index);
+  }
+
+  onDateChange(date: any) {
+    // Handle date change if needed
   }
 }

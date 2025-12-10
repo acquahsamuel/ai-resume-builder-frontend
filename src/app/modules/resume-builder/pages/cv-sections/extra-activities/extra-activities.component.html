@@ -10,34 +10,65 @@
 
         <div class="form-section flex flex-wrap -mx-2">
           <div class="form-group w-full  px-2 py-2 sm:w-1/2">
-            <label for="name"> Activity </label>
+            <label for="name"> Activity Name </label>
             <input
               id="name"
               type="text"
               pInputText
-              placeholder=" Enter Skill"
+              placeholder="Enter activity name"
               formControlName="name"
               class="w-full"
             />
           </div>
 
           <div class="example-input   sm:w-1/2  px-2 py-2">
-            <label for="name"> Proficiency  </label>
-            <p-dropdown
+            <label for="name"> Organization  </label>
+            <input
+              id="name"
+              type="text"
+              pInputText
+              placeholder="Enter organization name"
+              formControlName="organization"
               class="w-full"
-              formControlName="proficiency"
-              [showClear]="true"
-              placeholder="Select Proficiency"
-              [options]="[
-                {label: 'Beginner', value: 'Beginner'},
-                {label: 'Intermediate', value: 'Intermediate'},
-                {label: 'Advanced', value: 'Advanced'},
-                {label: 'Expert', value: 'Expert'},
-                {label: 'Master', value: 'Master'}
-              ]"
-              optionLabel="label"
-              optionValue="value"
-            ></p-dropdown>
+            />
+          </div>
+
+          <div class="example-input   sm:w-1/2  px-2 py-2">
+            <label for="name"> Role </label>
+            <input
+              id="name"
+              type="text"
+              pInputText
+              placeholder="Enter role/position"
+              formControlName="role"
+              class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="form-section flex flex-wrap -mx-2">
+          <div class="form-group w-full px-2 py-2 sm:w-1/2">
+            <label for="startYear">Start Year</label>
+            <p-calendar
+              formControlName="startYear"
+              (ngModelChange)="onDateChange($event)"
+            ></p-calendar>
+          </div>
+
+          <div class="form-group w-full px-2 py-2 sm:w-1/2">
+            <label for="endYear">End Year</label>
+            <p-calendar
+              formControlName="endYear"
+              class="w-full"
+              (ngModelChange)="onDateChange($event)"
+            ></p-calendar>
+          </div>
+        </div>
+
+        <div class="form-section flex flex-wrap -mx-2">
+          <div class="form-group w-full px-2 py-2 -mx-2">
+            <label for="description">Description</label>
+            <app-custom-editor formControlName="description"></app-custom-editor>
           </div>
         </div>
 

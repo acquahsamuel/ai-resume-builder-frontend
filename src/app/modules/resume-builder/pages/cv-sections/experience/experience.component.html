@@ -6,7 +6,7 @@
         <p-accordionTab
           *ngFor="let experience of experienceRecords.controls; let i = index"
           [formGroupName]="i"
-          [header]="experience.get('employerName')?.value || 'New Employer'"
+          [header]="experience.get('companyName')?.value || 'New Company'"
           [selected]="true"
         >
 
@@ -24,14 +24,14 @@
             </div>
 
             <div class="form-group w-full px-2 py-2 sm:w-1/2">
-              <label for="country">Employer Name </label>
+              <label for="country">Company Name </label>
 
               <input
                 pInputText
-                placeholder="Enter Employer name"
+                placeholder="Enter company name"
                 class="w-full"
                 type="text"
-                formControlName="employerName"
+                formControlName="companyName"
               />
             </div>
           </div>
@@ -110,7 +110,7 @@
           <div>
             <div class="form-group px-2 py-2 -mx-2">
               <label for=""> Role Description </label>
-              <app-custom-editor formControlName="summary"></app-custom-editor>
+              <app-custom-editor formControlName="description"></app-custom-editor>
             </div>
           </div>
 

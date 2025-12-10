@@ -44,9 +44,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
         // Map to service format
         const courses = courseRecords.map((course: any) => ({
-          name: course.nameofCourse || course.name,
-          institution: course.institution,
-          completionDate: course.endYear || course.completionDate,
+          name: course.courseName || '',
+          institution: course.institution || '',
+          description: course.description || '',
+          completionDate: course.endYear || '',
+          certificateLink: course.certificateLink || '',
           summary: course.summary || '',
         }));
 
@@ -64,11 +66,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
   // Create a new FormGroup for a course record
   createCourseRecord(): FormGroup {
     return this.fb.group({
-      nameofCourse: ['', Validators.required],
+      courseName: ['', Validators.required],
       institution: ['', Validators.required],
-      roleDescription: ['', Validators.required],
+      description: [''],
       startYear: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
       endYear: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
+      certificateLink: [''],
       summary: [''],
     });
   }

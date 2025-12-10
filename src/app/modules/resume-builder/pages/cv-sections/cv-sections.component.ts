@@ -188,7 +188,7 @@ export class CvSectionsComponent implements OnInit {
       active: true,
       disabled: false,
       icon: 'pi pi-calendar',
-      name: 'Extra Curricular Activities',
+      name: 'Extracurricular Activities',
       component: ExtraActivitiesComponent,
       visible: true,
     },

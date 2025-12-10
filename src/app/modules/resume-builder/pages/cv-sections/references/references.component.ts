@@ -42,11 +42,12 @@ export class ReferencesComponent implements OnInit, OnDestroy {
         
         // Map to service format
         const references = referenceRecords.map((ref: any) => ({
-          name: ref.referenceName || ref.name,
-          position: ref.contactPerson || ref.position,
+          name: ref.referenceName || '',
+          title: ref.referenceTitle || '',
           company: ref.company || '',
-          email: ref.emailAddress || ref.email,
-          phone: ref.phoneNumber || ref.phone
+          email: ref.emailAddress || '',
+          phone: ref.phoneNumber || '',
+          isHidden: ref.isHidden || false,
         }));
         
         // Update service (single source of truth)
@@ -63,11 +64,12 @@ export class ReferencesComponent implements OnInit, OnDestroy {
   // Create a new FormGroup for a reference record
   createReferenceRecord(): FormGroup {
     return this.fb.group({
-      referenceName: ["", Validators.required],
-      contactPerson: ["", Validators.required],
-      phoneNumber: ["", Validators.required],
-      emailAddress: ["", Validators.required],
-      isHidden : [false]
+      referenceName: ['', Validators.required],
+      referenceTitle: ['', Validators.required],
+      company: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      emailAddress: ['', [Validators.required, Validators.email]],
+      isHidden: [false],
     });
   }
 

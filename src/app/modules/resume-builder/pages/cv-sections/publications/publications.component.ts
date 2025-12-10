@@ -41,12 +41,11 @@ export class PublicationsComponent implements OnInit, OnDestroy {
         
         // Map to service format
         const publications = publicationRecords.map((pub: any) => ({
-          title: pub.name || pub.title,
-          publisher: pub.proficiency || pub.publisher,
-          publishDate: pub.skillDescription || pub.publishDate,
+          title: pub.title || '',
+          publisher: pub.publisher || '',
+          publishDate: pub.publishDate || '',
           link: pub.link || '',
           summary: pub.summary || '',
-          description: pub.summary || ''
         }));
         
         // Update service (single source of truth)
@@ -63,10 +62,11 @@ export class PublicationsComponent implements OnInit, OnDestroy {
   // Create a new FormGroup for a publication record
   createPublicationRecord(): FormGroup {
     return this.fb.group({
-      name: ["", Validators.required],
-      summary : [""],
-      proficiency: ["", Validators.required],
-      skillDescription : ["", Validators.required],
+      title: ['', Validators.required],
+      publisher: ['', Validators.required],
+      publishDate: ['', Validators.required],
+      link: [''],
+      summary: [''],
     });
   }
 
@@ -91,6 +91,10 @@ export class PublicationsComponent implements OnInit, OnDestroy {
   // Remove a publication record
   removePublicationRecord(index: number): void {
     this.publicationsRecords.removeAt(index);
+  }
+
+  onDateChange(date: any) {
+    // Handle date change if needed
   }
 
  

@@ -64,16 +64,15 @@ export class EducationComponent implements OnInit, OnDestroy {
   // Create a new FormGroup for an education record
   createEducationRecord(): FormGroup {
     return this.fb.group({
-      nameOfInstitution: ['', Validators.required],
+      institutionName: ['', Validators.required],
       degree: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
-      website : [''],
-      summary : [''],
+      website: [''],
+      description: [''],
       startYear: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
       endYear: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
       currentlyHere: [false],
-      // programs: this.fb.array([this.createProgram()]),
     });
   }
 
@@ -103,7 +102,6 @@ export class EducationComponent implements OnInit, OnDestroy {
 
   // Remove an education record
   removeEducationRecord(index: number): void {
-    // this.educationRecords.removeAt(index);
     if (this.educationRecords.length > 1) {
       this.educationRecords.removeAt(index);
     }

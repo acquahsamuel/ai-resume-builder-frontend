@@ -64,11 +64,11 @@ export class ExperienceComponent implements OnInit, OnDestroy {
   createExperienceRecord(): FormGroup {
     return this.fb.group({
       jobTitle: ['', Validators.required],
-      employerName: ['', Validators.required],
+      companyName: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
-      summary: [''],
       companyWebsite: [''],
+      description: [''],
       startYear: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
       endYear: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
       currentlyHere: [false],

@@ -25,11 +25,11 @@
             </div>
 
             <div class="form-group w-full px-2 py-2  sm:w-1/2">
-              <label for=""> Contact Person</label>
+              <label for=""> Reference Title</label>
               <input
-                placeholder="Enter Contact Person"
+                placeholder="Enter reference title/position"
                 type="text"
-                formControlName="contactPerson"
+                formControlName="referenceTitle"
                 pInputText
                 class="w-full"
               />
@@ -37,6 +37,17 @@
           </div>
 
           <div class="form-section flex flex-wrap -mx-2">
+            <div class="form-group w-full px-2 py-2  sm:w-1/2">
+              <label for=""> Company</label>
+              <input
+                placeholder="Enter company name"
+                formControlName="company"
+                type="text"
+                pInputText
+                class="w-full"
+              />
+            </div>
+
             <div class="form-group w-full px-2 py-2  sm:w-1/2">
               <label for=""> Phone Number</label>
               <input
@@ -47,7 +58,9 @@
                 class="w-full"
               />
             </div>
+          </div>
 
+          <div class="form-section flex flex-wrap -mx-2">
             <div class="form-group w-full px-2 py-2  sm:w-1/2">
               <label for=""> Email Address</label>
               <input

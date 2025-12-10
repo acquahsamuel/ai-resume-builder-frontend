@@ -7,7 +7,7 @@
       <p-accordionTab
         *ngFor="let education of educationRecords.controls; let i = index"
         [formGroupName]="i"
-        [header]="education.get('nameOfInstitution')?.value || 'New Institution'"
+        [header]="education.get('institutionName')?.value || 'New Institution'"
         [selected]="true"
       >
 
@@ -20,7 +20,7 @@
               <input
                 type="text"
                 id="name"
-                formControlName="nameOfInstitution"
+                formControlName="institutionName"
                 pInputText
                   class="w-full border border-gray-300 rounded px-3 py-2"
                 placeholder="Enter institution name"
@@ -97,11 +97,11 @@
           </div>
 
           <div class="form-group px-2 py-2 -mx-2">
-            <label for> Summary </label>
+            <label for> Description </label>
             <app-custom-editor
-              formControlName="summary"
-              placeholder="Enter summary"
-              name="summary"
+              formControlName="description"
+              placeholder="Enter description"
+              name="description"
             ></app-custom-editor>
           </div>
 

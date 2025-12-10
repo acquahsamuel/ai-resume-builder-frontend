@@ -1,1 +1,118 @@
-<p>projects works!</p>
+<div class="form-section">
+  <form [formGroup]="projectsForm">
+    <div formArrayName="projectRecords">
+      <p-accordion>
+        <p-accordionTab
+          *ngFor="let project of projectRecords.controls; let i = index"
+          [formGroupName]="i"
+          [header]="project.get('projectName')?.value || 'New Project'"
+          [selected]="true"
+        >
+          <div class="content-wrapper">
+            <div class="form-section flex flex-wrap -mx-2">
+              <div class="form-group w-full px-2 py-2 sm:w-1/2">
+                <label for="projectName">Project Name *</label>
+                <input
+                  type="text"
+                  id="projectName"
+                  formControlName="projectName"
+                  pInputText
+                  class="w-full border border-gray-300 rounded px-3 py-2"
+                  placeholder="Enter project name"
+                />
+              </div>
+
+              <div class="form-group w-full px-2 py-2 sm:w-1/2">
+                <label for="technologies">Technologies</label>
+                <input
+                  type="text"
+                  id="technologies"
+                  formControlName="technologies"
+                  placeholder="e.g., Angular, TypeScript, Node.js"
+                  pInputText
+                  class="w-full border border-gray-300 rounded px-3 py-2"
+                />
+              </div>
+            </div>
+
+            <div class="form-section flex flex-wrap -mx-2">
+              <div class="form-group w-full px-2 py-2 sm:w-1/2">
+                <label for="startYear">Start Year</label>
+                <p-calendar
+                  formControlName="startYear"
+                  (ngModelChange)="onDateChange($event)"
+                ></p-calendar>
+              </div>
+
+              <div class="form-group w-full px-2 py-2 sm:w-1/2">
+                <label for="endYear">End Year</label>
+                <p-calendar
+                  formControlName="endYear"
+                  class="w-full"
+                  (ngModelChange)="onDateChange($event)"
+                ></p-calendar>
+              </div>
+            </div>
+
+            <div class="form-section flex flex-wrap -mx-2">
+              <div class="form-group w-full px-2 py-2 sm:w-1/2">
+                <label for="projectLink">Project Link</label>
+                <input
+                  type="url"
+                  id="projectLink"
+                  formControlName="projectLink"
+                  placeholder="https://..."
+                  pInputText
+                  class="w-full border border-gray-300 rounded px-3 py-2"
+                />
+              </div>
+
+              <div class="form-group w-full px-2 py-2 sm:w-1/2">
+                <label for="repositoryUrl">Repository URL</label>
+                <input
+                  type="url"
+                  id="repositoryUrl"
+                  formControlName="repositoryUrl"
+                  placeholder="https://github.com/..."
+                  pInputText
+                  class="w-full border border-gray-300 rounded px-3 py-2"
+                />
+              </div>
+            </div>
+
+            <div class="form-group w-full px-2 py-2 -mx-2">
+              <label for="description">Description *</label>
+              <app-custom-editor formControlName="description"></app-custom-editor>
+            </div>
+
+            <div class="form-group w-full px-2 py-2 -mx-2">
+              <label for="summary">Summary</label>
+              <app-custom-editor formControlName="summary"></app-custom-editor>
+            </div>
+
+            <div class="form-actions">
+              <p-button
+                (onClick)="removeProjectRecord(i)"
+                severity="danger"
+                [outlined]="true"
+                icon="pi pi-trash"
+                label="Remove"
+                type="button"
+              ></p-button>
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+
+    <p-button
+      (onClick)="addProjectRecord()"
+      label="+ Add Project"
+      icon="pi pi-plus"
+      class="btn-add"
+      severity="secondary"
+      [outlined]="true"
+      type="button"
+    ></p-button>
+  </form>
+</div>

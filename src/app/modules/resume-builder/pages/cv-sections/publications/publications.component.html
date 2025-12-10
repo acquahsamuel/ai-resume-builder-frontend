@@ -10,13 +10,13 @@
   
           <div class="form-section flex flex-wrap  -mx-2">
             <div class="form-group w-full px-2 py-2 sm:w-1/2">
-              <label for="name"> Skill </label>
+              <label for="name"> Publication Title </label>
               <input
                 id="name"
                 type="text"
                 pInputText
-                formControlName="name"
-                placeholder="Skill"
+                formControlName="title"
+                placeholder="Enter publication title"
                 class="w-full"
               />
             </div>
@@ -25,31 +25,46 @@
   
             <div class="form-group w-full  sm:w-1/2">
               <div class="example-input px-2 py-2 ">
-                <label for="name"> Proficiency  </label>
-                <p-dropdown
+                <label for="name"> Publisher  </label>
+                <input
+                  id="name"
+                  type="text"
+                  pInputText
+                  formControlName="publisher"
+                  placeholder="Enter publisher name"
                   class="w-full"
-                  formControlName="proficiency"
-                  [showClear]="true"
-                  placeholder="Select Proficiency"
-                  [options]="[
-                    {label: 'Beginner', value: 'Beginner'},
-                    {label: 'Intermediate', value: 'Intermediate'},
-                    {label: 'Advanced', value: 'Advanced'},
-                    {label: 'Expert', value: 'Expert'},
-                    {label: 'Master', value: 'Master'}
-                  ]"
-                  optionLabel="label"
-                  optionValue="value"
-                ></p-dropdown>
+                />
               </div>
             </div>
   
             
           </div>
+
+          <div class="form-section flex flex-wrap  -mx-2">
+            <div class="form-group w-full px-2 py-2 sm:w-1/2">
+              <label for="publishDate"> Publish Date </label>
+              <p-calendar
+                formControlName="publishDate"
+                (ngModelChange)="onDateChange($event)"
+              ></p-calendar>
+            </div>
+
+            <div class="form-group w-full px-2 py-2 sm:w-1/2">
+              <label for="link"> Link (Optional) </label>
+              <input
+                id="link"
+                type="url"
+                pInputText
+                formControlName="link"
+                placeholder="https://..."
+                class="w-full"
+              />
+            </div>
+          </div>
   
           <div>
             <div class="form-group px-2 py-2 -mx-2">
-              <label for> Description</label>
+              <label for="summary"> Summary</label>
               <app-custom-editor formControlName="summary"></app-custom-editor>
             </div>
           </div>
