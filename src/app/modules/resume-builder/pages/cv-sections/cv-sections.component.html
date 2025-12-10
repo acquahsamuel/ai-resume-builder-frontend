@@ -52,8 +52,10 @@
                   </span>
                 </div>
                 <div class="section-details">
-                  <h3>{{ panel?.name }}</h3>
-                  <span class="section-badge main-badge">Required</span>
+                  <h3>
+                    {{ panel?.name }}
+                    <span class="section-badge main-badge">Required</span>
+                  </h3>
                   <span class="section-hint" *ngIf="!isSectionCompleted(panel?.name)">Click to add information</span>
                   <span class="section-status" *ngIf="isSectionCompleted(panel?.name)">Completed</span>
                 </div>
@@ -85,8 +87,10 @@
                   </span>
                 </div>
                 <div class="section-details">
-                  <h3>{{ panel?.name }}</h3>
-                  <span class="section-badge optional-badge">Optional</span>
+                  <h3>
+                    {{ panel?.name }}
+                    <span class="section-badge optional-badge">Optional</span>
+                  </h3>
                   <span class="section-hint" *ngIf="!isSectionCompleted(panel?.name)">Click to add information</span>
                   <span class="section-status" *ngIf="isSectionCompleted(panel?.name)">Completed</span>
                 </div>

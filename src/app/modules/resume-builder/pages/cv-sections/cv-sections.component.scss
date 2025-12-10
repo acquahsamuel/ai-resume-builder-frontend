@@ -229,12 +229,13 @@
 
   .section-details {
     flex: 1;
+    min-width: 0;
 
     h3 {
       font-size: 16px;
       font-weight: 600;
       color: #111827;
-      margin: 0 0 0.375rem 0;
+      margin: 0 0 0.25rem 0;
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -242,15 +243,15 @@
     }
 
     .section-badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       padding: 0.125rem 0.5rem;
       border-radius: 4px;
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-left: 0.5rem;
-      flex-shrink: 0;
+      white-space: nowrap;
 
       &.main-badge {
         background: #dbeafe;
@@ -267,7 +268,8 @@
     .section-status {
       display: block;
       font-size: 13px;
-      margin-top: 0.25rem;
+      margin-top: 0.125rem;
+      line-height: 1.4;
     }
 
     .section-hint {
