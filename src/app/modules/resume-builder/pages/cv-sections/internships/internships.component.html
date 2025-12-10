@@ -18,19 +18,16 @@
                 placeholder="Enter Job Title"
                 formControlName="jobTitle"
                 type="text"
-                pInputText
-                class="w-full"
+                class="tw-input w-full"
               />
             </div>
 
             <div class="form-group w-full px-2 py-2 sm:w-1/2">
               <label for="company">Company Name *</label>
-
               <input
-                pInputText
-                placeholder="Enter company name"
-                class="w-full"
                 type="text"
+                placeholder="Enter company name"
+                class="tw-input w-full"
                 formControlName="companyName"
               />
             </div>
@@ -43,8 +40,7 @@
                 placeholder="Enter City"
                 formControlName="city"
                 type="text"
-                pInputText
-                class="w-full"
+                class="tw-input w-full"
               />
             </div>
 
@@ -54,8 +50,7 @@
                 placeholder="Enter Country"
                 formControlName="country"
                 type="text"
-                pInputText
-                class="w-full"
+                class="tw-input w-full"
               />
             </div>
           </div>
@@ -63,21 +58,25 @@
           <div class="form-section flex flex-wrap  -mx-2">
             <div class="form-group w-full sm:w-1/2 px-2 py-2">
               <label for="startYear"> Start Date *</label>
-              <p-calendar
+              <input
+                type="date"
+                id="startYear"
                 formControlName="startYear"
-                (ngModelChange)="onDateChange($event)"
-                dateFormat="yy"
-              ></p-calendar>
+                class="tw-input w-full"
+                (change)="onDateChange($event)"
+              />
             </div>
 
             <div class="form-group w-full px-2 py-2 sm:w-1/2">
               <label for="endYear"> End Date *</label>
-              <p-calendar
+              <input
+                type="date"
+                id="endYear"
                 formControlName="endYear"
-                class="w-full"
-                (ngModelChange)="onDateChange($event)"
-                dateFormat="yy"
-              ></p-calendar>
+                class="tw-input w-full"
+                (change)="onDateChange($event)"
+                [disabled]="internship.get('currentlyHere')?.value"
+              />
             </div>
           </div>
 
@@ -88,14 +87,20 @@
                 placeholder="https://..."
                 formControlName="companyWebsite"
                 type="url"
-                pInputText
-                class="w-full"
+                class="tw-input w-full"
               />
             </div>
 
             <div class="form-group w-full px-2 py-2 sm:w-1/2 flex items-center">
-              <p-inputSwitch formControlName="currentlyHere"></p-inputSwitch>
-              <label for=""> Currently working here</label>
+              <label class="tw-switch-label">
+                <input
+                  type="checkbox"
+                  formControlName="currentlyHere"
+                  class="tw-switch"
+                />
+                <span class="tw-switch-slider"></span>
+                <span>Currently working here</span>
+              </label>
             </div>
           </div>
 
@@ -106,27 +111,26 @@
         </div>
 
         <div class="form-actions">
-          <p-button
-            (onClick)="removeInternshipRecord(i)"
-            severity="danger"
-            [outlined]="true"
-            icon="pi pi-trash"
-            label="Remove"
+          <button
             type="button"
-          ></p-button>
+            (click)="removeInternshipRecord(i)"
+            class="tw-btn-danger"
+          >
+            <i class="pi pi-trash"></i>
+            <span>Remove</span>
+          </button>
         </div>
         </p-accordionTab>
       </p-accordion>
     </div>
 
-    <p-button
-      (onClick)="addInternshipRecord()"
-      label="+ Add Internship"
-      icon="pi pi-plus"
-      class="btn-add"
-      severity="secondary"
-      [outlined]="true"
+    <button
       type="button"
-    ></p-button>
+      (click)="addInternshipRecord()"
+      class="tw-btn-add"
+    >
+      <i class="pi pi-plus"></i>
+      <span>+ Add Internship</span>
+    </button>
   </form>
 </div>

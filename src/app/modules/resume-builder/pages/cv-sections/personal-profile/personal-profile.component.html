@@ -36,63 +36,133 @@
     <div class="form-grid">
       <div class="form-field">
         <label for="firstName">First Name *</label>
-        <input pInputText id="firstName" formControlName="firstName" placeholder="Enter first name" />
+        <input 
+          type="text"
+          id="firstName" 
+          formControlName="firstName" 
+          placeholder="Enter first name"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="lastName">Last Name *</label>
-        <input pInputText id="lastName" formControlName="lastName" placeholder="Enter last name" />
+        <input 
+          type="text"
+          id="lastName" 
+          formControlName="lastName" 
+          placeholder="Enter last name"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="nationality">Nationality</label>
-        <input pInputText id="nationality" formControlName="nationality" placeholder="e.g., Ghanaian" />
+        <input 
+          type="text"
+          id="nationality" 
+          formControlName="nationality" 
+          placeholder="e.g., Ghanaian"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="city">City</label>
-        <input pInputText id="city" formControlName="city" placeholder="Enter city" />
+        <input 
+          type="text"
+          id="city" 
+          formControlName="city" 
+          placeholder="Enter city"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="state">State / Province</label>
-        <input pInputText id="state" formControlName="state" placeholder="Enter state or province" />
+        <input 
+          type="text"
+          id="state" 
+          formControlName="state" 
+          placeholder="Enter state or province"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="country">Country</label>
-        <input pInputText id="country" formControlName="country" placeholder="Enter country" />
+        <input 
+          type="text"
+          id="country" 
+          formControlName="country" 
+          placeholder="Enter country"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="zipCode">Zip Code / Postal Code</label>
-        <input pInputText id="zipCode" formControlName="zipCode" placeholder="Enter zip code" />
+        <input 
+          type="text"
+          id="zipCode" 
+          formControlName="zipCode" 
+          placeholder="Enter zip code"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="phone">Phone Number</label>
-        <input pInputText id="phone" formControlName="phone" placeholder="+1234567890" />
+        <input 
+          type="tel"
+          id="phone" 
+          formControlName="phone" 
+          placeholder="+1234567890"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="email">Email Address *</label>
-        <input pInputText id="email" type="email" formControlName="email" placeholder="your.email@example.com" />
+        <input 
+          type="email"
+          id="email" 
+          formControlName="email" 
+          placeholder="your.email@example.com"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="otherName">Other Name / Middle Name</label>
-        <input pInputText id="otherName" formControlName="otherName" placeholder="Enter middle name (optional)" />
+        <input 
+          type="text"
+          id="otherName" 
+          formControlName="otherName" 
+          placeholder="Enter middle name (optional)"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="title">Professional Title</label>
-        <input pInputText id="title" formControlName="title" placeholder="e.g., Software Engineer" />
+        <input 
+          type="text"
+          id="title" 
+          formControlName="title" 
+          placeholder="e.g., Software Engineer"
+          class="tw-input"
+        />
       </div>
 
       <div class="form-field">
         <label for="dateOfBirth">Date of Birth</label>
-        <p-calendar formControlName="dateOfBirth" id="dateOfBirth" styleClass="w-full" 
-          dateFormat="yy-mm-dd" [showIcon]="true" placeholder="Select date"></p-calendar>
+        <input 
+          type="date"
+          id="dateOfBirth" 
+          formControlName="dateOfBirth"
+          class="tw-input"
+        />
       </div>
     </div>
 
@@ -116,21 +186,19 @@
           <div class="social-inputs">
             <input
               type="text"
-              pInputText
               formControlName="platform"
               [id]="'platform-' + i"
               placeholder="Platform (e.g., LinkedIn, GitHub)"
               (input)="onSocialChange(i)"
-              class="social-input"
+              class="tw-input social-input"
             />
             
             <input
               type="url"
-              pInputText
               formControlName="link"
               [id]="'link-' + i"
               placeholder="https://..."
-              class="social-input"
+              class="tw-input social-input"
             />
           </div>
 
@@ -158,18 +226,20 @@
 
     <!-- Form Actions -->
     <div class="form-actions-footer">
-      <p-button
-        label="Cancel"
-        severity="secondary"
-        [outlined]="true"
-        icon="pi pi-times"
+      <button
         type="button"
-      ></p-button>
-      <p-button
-        label="Save"
+        class="tw-btn-secondary"
+      >
+        <i class="pi pi-times"></i>
+        <span>Cancel</span>
+      </button>
+      <button
         type="submit"
-        icon="pi pi-check"
-      ></p-button>
+        class="tw-btn-primary"
+      >
+        <i class="pi pi-check"></i>
+        <span>Save</span>
+      </button>
     </div>
   </div>
 </form>

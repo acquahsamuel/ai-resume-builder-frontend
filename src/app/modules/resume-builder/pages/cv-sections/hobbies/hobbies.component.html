@@ -6,17 +6,18 @@
 
         <div class="form-group w-full">
           <div class="flex flex-col">
-            <label for> Hobbies </label>
-            
-
-            <p-multiSelect
-              [options]="listOfOption"
-              optionLabel="label"
-              optionValue="value"
-              placeholder="Please add or select"
-              class="w-full"
-            ></p-multiSelect>
-
+            <label for="hobbies"> Hobbies </label>
+            <select
+              id="hobbies"
+              multiple
+              class="tw-select tw-select-multiple w-full"
+              size="5"
+            >
+              <option *ngFor="let option of listOfOption" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+            <p class="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple</p>
           </div>
         </div>
       </div>

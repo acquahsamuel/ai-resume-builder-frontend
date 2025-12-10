@@ -21,8 +21,7 @@
                 type="text"
                 id="name"
                 formControlName="institutionName"
-                pInputText
-                  class="w-full border border-gray-300 rounded px-3 py-2"
+                class="tw-input w-full"
                 placeholder="Enter institution name"
               />
             </div>
@@ -34,8 +33,7 @@
                 id="degree"
                 formControlName="degree"
                 placeholder="Enter degree"
-                pInputText
-                  class="w-full border border-gray-300 rounded px-3 py-2"
+                class="tw-input w-full"
               />
             </div>
           </div>
@@ -47,8 +45,7 @@
                 placeholder="Enter City"
                 formControlName="city"
                 type="text"
-                pInputText
-                  class="w-full border border-gray-300 rounded px-3 py-2"
+                class="tw-input w-full"
               />
             </div>
 
@@ -58,8 +55,7 @@
                 placeholder="Country"
                 type="text"
                 formControlName="country"
-                pInputText
-                  class="w-full border border-gray-300 rounded px-3 py-2"
+                class="tw-input w-full"
               />
             </div>
           </div>
@@ -67,19 +63,24 @@
           <div class="form-column flex flex-wrap -mx-2">
             <div class="form-group flex flex-col px-2 py-2 w-full sm:w-1/2">
               <label for="startYear">Start Date</label>
-
-              <p-calendar
+              <input
+                type="date"
+                id="startYear"
                 formControlName="startYear"
-                (ngModelChange)="onDateChange($event)"
-              ></p-calendar>
+                class="tw-input w-full"
+                (change)="onDateChange($event)"
+              />
             </div>
 
             <div class="form-group flex px-2 py-2 flex-col w-full sm:w-1/2">
               <label for="endYear">End Date</label>
-              <p-calendar
+              <input
+                type="date"
+                id="endYear"
                 formControlName="endYear"
-                (ngModelChange)="onDateChange($event)"
-              ></p-calendar>
+                class="tw-input w-full"
+                (change)="onDateChange($event)"
+              />
             </div>
           </div>
 
@@ -89,9 +90,12 @@
                 <label for="s1-14" class="font-normal">
                   Institution Website
                 </label>
-                <input type="text"
-                class="border border-gray-300 rounded px-3 py-2"
-                pInputText formControlName="website" />
+                <input 
+                  type="text"
+                  formControlName="website"
+                  class="tw-input w-full"
+                  placeholder="https://..."
+                />
               </div>
             </div>
           </div>
@@ -106,14 +110,14 @@
           </div>
 
           <div class="form-actions">
-            <p-button
-              (onClick)="removeEducationRecord(i)"
-              severity="danger"
-              [outlined]="true"
-              icon="pi pi-trash"
-              label="Remove"
+            <button
               type="button"
-            ></p-button>
+              (click)="removeEducationRecord(i)"
+              class="tw-btn-danger"
+            >
+              <i class="pi pi-trash"></i>
+              <span>Remove</span>
+            </button>
           </div>
         </section>
       </p-accordionTab>
@@ -122,12 +126,11 @@
 </form>
 
 
-<p-button
-  class="btn-add"
-  (onClick)="addEducationRecord()"
+<button
+  class="tw-btn-add"
+  (click)="addEducationRecord()"
   type="button"
-  label="+ Add Education"
-  icon="pi pi-plus"
-  severity="secondary"
-  [outlined]="true"
-></p-button>
+>
+  <i class="pi pi-plus"></i>
+  <span>+ Add Education</span>
+</button>

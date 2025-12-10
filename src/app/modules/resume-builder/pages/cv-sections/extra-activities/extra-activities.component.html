@@ -14,34 +14,31 @@
             <input
               id="name"
               type="text"
-              pInputText
               placeholder="Enter activity name"
               formControlName="name"
-              class="w-full"
+              class="tw-input w-full"
             />
           </div>
 
           <div class="example-input   sm:w-1/2  px-2 py-2">
-            <label for="name"> Organization  </label>
+            <label for="organization"> Organization  </label>
             <input
-              id="name"
+              id="organization"
               type="text"
-              pInputText
               placeholder="Enter organization name"
               formControlName="organization"
-              class="w-full"
+              class="tw-input w-full"
             />
           </div>
 
           <div class="example-input   sm:w-1/2  px-2 py-2">
-            <label for="name"> Role </label>
+            <label for="role"> Role </label>
             <input
-              id="name"
+              id="role"
               type="text"
-              pInputText
               placeholder="Enter role/position"
               formControlName="role"
-              class="w-full"
+              class="tw-input w-full"
             />
           </div>
         </div>
@@ -49,19 +46,24 @@
         <div class="form-section flex flex-wrap -mx-2">
           <div class="form-group w-full px-2 py-2 sm:w-1/2">
             <label for="startYear">Start Year</label>
-            <p-calendar
+            <input
+              type="date"
+              id="startYear"
               formControlName="startYear"
-              (ngModelChange)="onDateChange($event)"
-            ></p-calendar>
+              class="tw-input w-full"
+              (change)="onDateChange($event)"
+            />
           </div>
 
           <div class="form-group w-full px-2 py-2 sm:w-1/2">
             <label for="endYear">End Year</label>
-            <p-calendar
+            <input
+              type="date"
+              id="endYear"
               formControlName="endYear"
-              class="w-full"
-              (ngModelChange)="onDateChange($event)"
-            ></p-calendar>
+              class="tw-input w-full"
+              (change)="onDateChange($event)"
+            />
           </div>
         </div>
 
@@ -73,26 +75,25 @@
         </div>
 
         <div class="form-actions">
-          <p-button
-            (onClick)="removeExtraActivityRecord(i)"
-            severity="danger"
-            [outlined]="true"
-            icon="pi pi-trash"
-            label="Remove"
+          <button
             type="button"
-          ></p-button>
+            (click)="removeExtraActivityRecord(i)"
+            class="tw-btn-danger"
+          >
+            <i class="pi pi-trash"></i>
+            <span>Remove</span>
+          </button>
         </div>
       </div>
     </div>
 
-    <p-button
-      (onClick)="addExtraActivityRecord()"
-      label="+ Add Activity"
-      icon="pi pi-plus"
-      class="btn-add"
-      severity="secondary"
-      [outlined]="true"
+    <button
       type="button"
-    ></p-button>
+      (click)="addExtraActivityRecord()"
+      class="tw-btn-add"
+    >
+      <i class="pi pi-plus"></i>
+      <span>+ Add Activity</span>
+    </button>
   </form>
 </div>

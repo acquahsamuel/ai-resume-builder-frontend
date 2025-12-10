@@ -16,47 +16,52 @@
             <input
               id="name"
               type="text"
-              pInputText
               placeholder=" Enter Skill"
               formControlName="name"
-              class="w-full"
+              class="tw-input w-full"
             />
           </div>
 
           <div class="example-input px-2 py-2 sm:w-1/2">
-            <label for="name"> Proficiency </label>
-            <p-dropdown
-              class="w-full"
+            <label for="proficiency"> Proficiency </label>
+            <select
+              id="proficiency"
               formControlName="proficiency"
-              [showClear]="true"
-              placeholder="Select Proficiency"
-              [options]="[
-                {label: 'Beginner', value: 'Beginner'},
-                {label: 'Intermediate', value: 'Intermediate'},
-                {label: 'Advanced', value: 'Advanced'},
-                {label: 'Expert', value: 'Expert'},
-                {label: 'Master', value: 'Master'}
-              ]"
-              optionLabel="label"
-              optionValue="value"
-            ></p-dropdown>
+              class="tw-select w-full"
+            >
+              <option value="">Select Proficiency</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+              <option value="Expert">Expert</option>
+              <option value="Master">Master</option>
+            </select>
           </div>
         </div>
 
         <div class="form-section w-full flex flex-wrap py-2 sm:w-1/2">
-          <label for="name"> Level </label>
-          <p-slider class="w-full"></p-slider>
+          <label for="skillLevel"> Level </label>
+          <input
+            type="range"
+            id="skillLevel"
+            formControlName="skillLevel"
+            min="0"
+            max="100"
+            step="1"
+            class="tw-range w-full"
+          />
+          <span class="tw-range-value">{{ skills.get('skillLevel')?.value || 0 }}%</span>
         </div>
 
         <div class="form-actions">
-          <p-button
-            (onClick)="removeSkillRecord(i)"
-            severity="danger"
-            [outlined]="true"
-            icon="pi pi-trash"
-            label="Remove"
+          <button
             type="button"
-          ></p-button>
+            (click)="removeSkillRecord(i)"
+            class="tw-btn-danger"
+          >
+            <i class="pi pi-trash"></i>
+            <span>Remove</span>
+          </button>
         </div>
 
       </p-accordionTab>
@@ -66,14 +71,13 @@
     <!-- </div> -->
 
 
-    <p-button
-      (onClick)="addSkillRecord()"
-      label="+ Add Skill"
-      icon="pi pi-plus"
-      class="btn-add"
-      severity="secondary"
-      [outlined]="true"
+    <button
       type="button"
-    ></p-button>
+      (click)="addSkillRecord()"
+      class="tw-btn-add"
+    >
+      <i class="pi pi-plus"></i>
+      <span>+ Add Skill</span>
+    </button>
   </form>
 </div>

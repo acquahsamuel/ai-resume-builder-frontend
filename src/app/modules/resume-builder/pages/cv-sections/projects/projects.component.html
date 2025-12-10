@@ -16,8 +16,7 @@
                   type="text"
                   id="projectName"
                   formControlName="projectName"
-                  pInputText
-                  class="w-full border border-gray-300 rounded px-3 py-2"
+                  class="tw-input w-full"
                   placeholder="Enter project name"
                 />
               </div>
@@ -29,8 +28,7 @@
                   id="technologies"
                   formControlName="technologies"
                   placeholder="e.g., Angular, TypeScript, Node.js"
-                  pInputText
-                  class="w-full border border-gray-300 rounded px-3 py-2"
+                  class="tw-input w-full"
                 />
               </div>
             </div>
@@ -38,19 +36,24 @@
             <div class="form-section flex flex-wrap -mx-2">
               <div class="form-group w-full px-2 py-2 sm:w-1/2">
                 <label for="startYear">Start Year</label>
-                <p-calendar
+                <input
+                  type="date"
+                  id="startYear"
                   formControlName="startYear"
-                  (ngModelChange)="onDateChange($event)"
-                ></p-calendar>
+                  class="tw-input w-full"
+                  (change)="onDateChange($event)"
+                />
               </div>
 
               <div class="form-group w-full px-2 py-2 sm:w-1/2">
                 <label for="endYear">End Year</label>
-                <p-calendar
+                <input
+                  type="date"
+                  id="endYear"
                   formControlName="endYear"
-                  class="w-full"
-                  (ngModelChange)="onDateChange($event)"
-                ></p-calendar>
+                  class="tw-input w-full"
+                  (change)="onDateChange($event)"
+                />
               </div>
             </div>
 
@@ -62,8 +65,7 @@
                   id="projectLink"
                   formControlName="projectLink"
                   placeholder="https://..."
-                  pInputText
-                  class="w-full border border-gray-300 rounded px-3 py-2"
+                  class="tw-input w-full"
                 />
               </div>
 
@@ -74,8 +76,7 @@
                   id="repositoryUrl"
                   formControlName="repositoryUrl"
                   placeholder="https://github.com/..."
-                  pInputText
-                  class="w-full border border-gray-300 rounded px-3 py-2"
+                  class="tw-input w-full"
                 />
               </div>
             </div>
@@ -91,28 +92,27 @@
             </div>
 
             <div class="form-actions">
-              <p-button
-                (onClick)="removeProjectRecord(i)"
-                severity="danger"
-                [outlined]="true"
-                icon="pi pi-trash"
-                label="Remove"
+              <button
                 type="button"
-              ></p-button>
+                (click)="removeProjectRecord(i)"
+                class="tw-btn-danger"
+              >
+                <i class="pi pi-trash"></i>
+                <span>Remove</span>
+              </button>
             </div>
           </div>
         </p-accordionTab>
       </p-accordion>
     </div>
 
-    <p-button
-      (onClick)="addProjectRecord()"
-      label="+ Add Project"
-      icon="pi pi-plus"
-      class="btn-add"
-      severity="secondary"
-      [outlined]="true"
+    <button
       type="button"
-    ></p-button>
+      (click)="addProjectRecord()"
+      class="tw-btn-add"
+    >
+      <i class="pi pi-plus"></i>
+      <span>+ Add Project</span>
+    </button>
   </form>
 </div>

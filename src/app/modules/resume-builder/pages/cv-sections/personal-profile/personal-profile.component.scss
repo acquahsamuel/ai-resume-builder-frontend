@@ -1,3 +1,4 @@
+@import '../shared-tailwind-forms.scss';
 // File Upload Styles
 .file-upload-container {
   margin-bottom: 2rem;
@@ -60,16 +61,99 @@
     font-size: 0.875rem;
   }
 
-  ::ng-deep {
+  // Standardized Tailwind Input
+  .tw-input {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: #111827;
+    background: #ffffff;
+    transition: all 0.2s ease;
 
-
-    .p-calendar {
-      width: 100%;
-
-      .p-inputtext {
-        width: 100%;
-      }
+    &::placeholder {
+      color: #9ca3af;
     }
+
+    &:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: #ffffff;
+    }
+
+    &:disabled {
+      background: #f9fafb;
+      color: #6b7280;
+      cursor: not-allowed;
+    }
+
+    &.error {
+      border-color: #ef4444;
+    }
+  }
+}
+
+// Standardized Tailwind Buttons
+.tw-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: #3b82f6;
+  color: #ffffff;
+  border: 1px solid #3b82f6;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background: #9ca3af;
+    border-color: #9ca3af;
+    cursor: not-allowed;
+  }
+
+  i {
+    font-size: 0.875rem;
+  }
+}
+
+.tw-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  i {
+    font-size: 0.875rem;
   }
 }
 
@@ -124,7 +208,6 @@
 
     &:focus-within {
       border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
   }
 
@@ -265,14 +348,8 @@
   .form-actions-footer {
     flex-direction: column-reverse;
 
-    p-button {
+    button {
       width: 100%;
-    }
-  }
-
-  ::ng-deep {
-    .p-inputtext {
-      font-size: 0.875rem;
     }
   }
 }

@@ -19,77 +19,81 @@
                 placeholder="Name/Company"
                 formControlName="referenceName"
                 type="text"
-                pInputText
-                class="w-full"
+                id="referenceName"
+                class="tw-input w-full"
               />
             </div>
 
             <div class="form-group w-full px-2 py-2  sm:w-1/2">
-              <label for=""> Reference Title</label>
+              <label for="referenceTitle"> Reference Title</label>
               <input
                 placeholder="Enter reference title/position"
                 type="text"
                 formControlName="referenceTitle"
-                pInputText
-                class="w-full"
+                id="referenceTitle"
+                class="tw-input w-full"
               />
             </div>
           </div>
 
           <div class="form-section flex flex-wrap -mx-2">
             <div class="form-group w-full px-2 py-2  sm:w-1/2">
-              <label for=""> Company</label>
+              <label for="company"> Company</label>
               <input
                 placeholder="Enter company name"
                 formControlName="company"
                 type="text"
-                pInputText
-                class="w-full"
+                id="company"
+                class="tw-input w-full"
               />
             </div>
 
             <div class="form-group w-full px-2 py-2  sm:w-1/2">
-              <label for=""> Phone Number</label>
+              <label for="phoneNumber"> Phone Number</label>
               <input
                 placeholder="Phone Number"
                 formControlName="phoneNumber"
-                type="text"
-                pInputText
-                class="w-full"
+                type="tel"
+                id="phoneNumber"
+                class="tw-input w-full"
               />
             </div>
           </div>
 
           <div class="form-section flex flex-wrap -mx-2">
             <div class="form-group w-full px-2 py-2  sm:w-1/2">
-              <label for=""> Email Address</label>
+              <label for="emailAddress"> Email Address</label>
               <input
                 placeholder="Enter Person Email"
                 type="email"
                 formControlName="emailAddress"
-                pInputText
-                class="w-full"
+                id="emailAddress"
+                class="tw-input w-full"
               />
             </div>
           </div>
 
           <div class="form-group w-full px-3 py-2 -mx-2">
-            <p-inputSwitch formControlName="isHidden"></p-inputSwitch>
-            <label for="">
-              I'd like to hide reference and make them available only upon
-              request</label
-            >
+            <label class="tw-switch-label">
+              <input
+                type="checkbox"
+                formControlName="isHidden"
+                class="tw-switch"
+              />
+              <span class="tw-switch-slider"></span>
+              <span>I'd like to hide reference and make them available only upon request</span>
+            </label>
           </div>
 
           <div class="form-actions">
-            <p-button
-              (onClick)="removeReferenceRecord(i)"
-              severity="danger"
-              [outlined]="true"
-              icon="pi pi-trash"
-              label="Remove"
+            <button
               type="button"
-            ></p-button>
+              (click)="removeReferenceRecord(i)"
+              class="tw-btn-danger"
+            >
+              <i class="pi pi-trash"></i>
+              <span>Remove</span>
+            </button>
           </div>
         </div>
     
@@ -98,14 +102,13 @@
     </div>
 
 
-    <p-button
-      class="btn-add"
-      (onClick)="addReferenceRecord()"
+    <button
       type="button"
-      label="+ Add Reference"
-      icon="pi pi-plus"
-      severity="secondary"
-      [outlined]="true"
-    ></p-button>
+      (click)="addReferenceRecord()"
+      class="tw-btn-add"
+    >
+      <i class="pi pi-plus"></i>
+      <span>+ Add Reference</span>
+    </button>
   </form>
 </div>

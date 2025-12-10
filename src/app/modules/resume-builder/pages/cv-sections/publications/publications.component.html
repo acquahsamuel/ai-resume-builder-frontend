@@ -14,39 +14,36 @@
               <input
                 id="name"
                 type="text"
-                pInputText
                 formControlName="title"
                 placeholder="Enter publication title"
-                class="w-full"
+                class="tw-input w-full"
               />
             </div>
   
-        
-  
             <div class="form-group w-full  sm:w-1/2">
               <div class="example-input px-2 py-2 ">
-                <label for="name"> Publisher  </label>
+                <label for="publisher"> Publisher  </label>
                 <input
-                  id="name"
+                  id="publisher"
                   type="text"
-                  pInputText
                   formControlName="publisher"
                   placeholder="Enter publisher name"
-                  class="w-full"
+                  class="tw-input w-full"
                 />
               </div>
             </div>
-  
-            
           </div>
 
           <div class="form-section flex flex-wrap  -mx-2">
             <div class="form-group w-full px-2 py-2 sm:w-1/2">
               <label for="publishDate"> Publish Date </label>
-              <p-calendar
+              <input
+                type="date"
+                id="publishDate"
                 formControlName="publishDate"
-                (ngModelChange)="onDateChange($event)"
-              ></p-calendar>
+                class="tw-input w-full"
+                (change)="onDateChange($event)"
+              />
             </div>
 
             <div class="form-group w-full px-2 py-2 sm:w-1/2">
@@ -54,10 +51,9 @@
               <input
                 id="link"
                 type="url"
-                pInputText
                 formControlName="link"
                 placeholder="https://..."
-                class="w-full"
+                class="tw-input w-full"
               />
             </div>
           </div>
@@ -70,27 +66,26 @@
           </div>
   
           <div class="form-actions">
-            <p-button
-              (onClick)="removePublicationRecord(i)"
-              severity="danger"
-              [outlined]="true"
-              icon="pi pi-trash"
-              label="Remove"
+            <button
               type="button"
-            ></p-button>
+              (click)="removePublicationRecord(i)"
+              class="tw-btn-danger"
+            >
+              <i class="pi pi-trash"></i>
+              <span>Remove</span>
+            </button>
           </div>
         </div>
       </div>
   
-    <p-button
-      class="btn-add"
-      (onClick)="addPublicationRecord()"
+    <button
       type="button"
-      label="+ Add Publication"
-      icon="pi pi-plus"
-      severity="secondary"
-      [outlined]="true"
-    ></p-button>
+      (click)="addPublicationRecord()"
+      class="tw-btn-add"
+    >
+      <i class="pi pi-plus"></i>
+      <span>+ Add Publication</span>
+    </button>
     </form>
   </div>
   

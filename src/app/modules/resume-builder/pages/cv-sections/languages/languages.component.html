@@ -14,52 +14,49 @@
             <input
               id="language-{{i}}"
               type="text"
-              pInputText
               formControlName="name"
               placeholder="e.g., English, Spanish"
+              class="tw-input"
             />
           </div>
 
           <div class="example-input">
             <label for="proficiency-{{i}}">Proficiency</label>
-            <p-dropdown
+            <select
               id="proficiency-{{i}}"
               formControlName="proficiency"
-              [showClear]="true"
-              placeholder="Select proficiency level"
-              [options]="[
-                { label: 'Beginner', value: 'Beginner' },
-                { label: 'Intermediate', value: 'Intermediate' },
-                { label: 'Advanced', value: 'Advanced' },
-                { label: 'Expert', value: 'Expert' },
-                { label: 'Master', value: 'Master' }
-              ]"
-              optionLabel="label"
-              optionValue="value"
-            ></p-dropdown>
+              class="tw-select"
+            >
+              <option value="">Select proficiency level</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+              <option value="Expert">Expert</option>
+              <option value="Master">Master</option>
+            </select>
           </div>
         </div>
 
         <div class="form-actions">
-          <p-button
-            (onClick)="removeLanguageRecord(i)"
-            severity="danger"
-            [outlined]="true"
-            icon="pi pi-trash"
-            label="Remove"
-          ></p-button>
+          <button
+            type="button"
+            (click)="removeLanguageRecord(i)"
+            class="tw-btn-danger"
+          >
+            <i class="pi pi-trash"></i>
+            <span>Remove</span>
+          </button>
         </div>
       </div>
     </div>
 
-    <p-button
-      (onClick)="addLanguageRecord()"
-      label="+ Add Language"
-      icon="pi pi-plus"
-      class="btn-create"
+    <button
       type="button"
-      severity="secondary"
-      [outlined]="true"
-    ></p-button>
+      (click)="addLanguageRecord()"
+      class="tw-btn-add"
+    >
+      <i class="pi pi-plus"></i>
+      <span>+ Add Language</span>
+    </button>
   </form>
 </div>

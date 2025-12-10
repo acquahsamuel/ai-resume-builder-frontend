@@ -18,19 +18,16 @@
                 placeholder="Enter Job Title"
                 formControlName="jobTitle"
                 type="text"
-                pInputText
-                class="w-full"
+                class="tw-input w-full"
               />
             </div>
 
             <div class="form-group w-full px-2 py-2 sm:w-1/2">
               <label for="country">Company Name </label>
-
               <input
-                pInputText
-                placeholder="Enter company name"
-                class="w-full"
                 type="text"
+                placeholder="Enter company name"
+                class="tw-input w-full"
                 formControlName="companyName"
               />
             </div>
@@ -43,8 +40,7 @@
                 placeholder="Enter City"
                 formControlName="city"
                 type="text"
-                pInputText
-                class="w-full"
+                class="tw-input w-full"
               />
             </div>
 
@@ -54,8 +50,7 @@
                 placeholder="Country"
                 type="text"
                 formControlName="country"
-                class="w-full"
-                pInputText
+                class="tw-input w-full"
               />
             </div>
           </div>
@@ -64,29 +59,37 @@
             <div class="form-column flex flex-wrap  -mx-2">
               <div class="form-group flex flex-col w-full sm:w-1/2 px-2 py-2">
                 <label for="startYear">Start Date</label>
-                <p-calendar
+                <input
+                  type="date"
+                  id="startYear"
                   formControlName="startYear"
-                  (ngModelChange)="onDateChange($event)"
-                ></p-calendar>
+                  class="tw-input w-full"
+                  (change)="onDateChange($event)"
+                />
               </div>
 
               <div class="form-group flex flex-col w-full sm:w-1/2 px-2 py-2">
                 <label for="endYear">End Date</label>
-                <p-calendar
+                <input
+                  type="date"
+                  id="endYear"
                   formControlName="endYear"
-                  (ngModelChange)="onDateChange($event)"
-                ></p-calendar>
+                  class="tw-input w-full"
+                  (change)="onDateChange($event)"
+                  [disabled]="experience.get('currentlyHere')?.value"
+                />
               </div>
 
               <div class="form-group w-full sm:w-1/2 px-2 py-2">
-                <div class="checkbox-wrapper-14">
-                  <p-checkbox
-                    inputId="currentlyHere"
+                <label class="tw-checkbox-label">
+                  <input
+                    type="checkbox"
+                    id="currentlyHere"
                     formControlName="currentlyHere"
-                    label="I Currently work here"
-                    [binary]="true"
-                  ></p-checkbox>
-                </div>
+                    class="tw-checkbox"
+                  />
+                  <span>I Currently work here</span>
+                </label>
               </div>
             </div>
           </div>
@@ -100,9 +103,12 @@
                 >
                   Company Website
                 </label>
-                <input type="text"
-                class="border border-gray-300 rounded px-3 py-2"
-                pInputText formControlName="companyWebsite" />
+                <input 
+                  type="text"
+                  formControlName="companyWebsite"
+                  class="tw-input w-full"
+                  placeholder="https://..."
+                />
               </div>
             </div>
           
@@ -115,15 +121,14 @@
           </div>
 
           <div class="flex justify-end">
-          
-            <p-button
-              (onClick)="removeExperienceRecord(i)"
-              severity="danger"
-              [outlined]="true"
-              icon="pi pi-trash"
-              label="Remove"
+            <button
               type="button"
-            ></p-button>
+              (click)="removeExperienceRecord(i)"
+              class="tw-btn-danger"
+            >
+              <i class="pi pi-trash"></i>
+              <span>Remove</span>
+            </button>
           </div>
         </div>
 
@@ -134,14 +139,13 @@
     </div>
      
 
-    <p-button
-      class="btn-add"
-      (onClick)="addExperienceRecord()"
+    <button
+      class="tw-btn-add"
+      (click)="addExperienceRecord()"
       type="button"
-      label="+ Add Experience"
-      icon="pi pi-plus"
-      severity="secondary"
-      [outlined]="true"
-    ></p-button>
+    >
+      <i class="pi pi-plus"></i>
+      <span>+ Add Experience</span>
+    </button>
   </form>
 </div>
