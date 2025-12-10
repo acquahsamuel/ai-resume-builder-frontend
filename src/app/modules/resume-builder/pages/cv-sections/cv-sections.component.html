@@ -1,165 +1,230 @@
-<div class="builder-page">
-  <!-- Mobile Navigation Tabs -->
-  <div class="mobile-nav-tabs">
-    <button class="nav-tab" [class.active]="mobileView === 'sections'" (click)="setMobileView('sections')">
-      <i class="pi pi-wrench"></i>
-      <span> Builder </span>
-    </button>
-    <button class="nav-tab" [class.active]="mobileView === 'preview'" (click)="setMobileView('preview')">
-      <i class="pi pi-eye"></i>
-      <span>Preview</span>
-    </button>
-    <button class="nav-tab" [class.active]="mobileView === 'templates'" (click)="setMobileView('templates')">
-      <i class="pi pi-palette"></i>
-      <span>Templates</span>
-    </button>
+<div class="resume-builder">
+  <!-- Step Indicator -->
+  <div class="step-indicator">
+    <div class="step-item" [class.active]="currentStep === 'sections'" [class.completed]="currentStep !== 'sections'">
+      <div class="step-number">1</div>
+      <div class="step-label">
+        <span class="step-title">Fill Sections</span>
+        <span class="step-subtitle">Add your information</span>
+      </div>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-item" [class.active]="currentStep === 'preview'" [class.completed]="currentStep === 'preview' || currentStep === 'settings'">
+      <div class="step-number">2</div>
+      <div class="step-label">
+        <span class="step-title">Preview</span>
+        <span class="step-subtitle">Review your CV</span>
+      </div>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-item" [class.active]="currentStep === 'settings'" [class.completed]="currentStep === 'settings'">
+      <div class="step-number">3</div>
+      <div class="step-label">
+        <span class="step-title">Settings</span>
+        <span class="step-subtitle">Customize template</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Main Content Grid -->
-  <div class="content-grid" [class.with-templates]="showTemplates">
-
-    <!-- Left: Resume Builder Form -->
-    <aside class="form-sidebar" [class.mobile-visible]="mobileView === 'sections'">
-      <div class="sidebar-content">
-        <div class="sidebar-header">
-          <h2 class="sidebar-title">
-            <i class="pi pi-wrench"></i>
-            Builder
-          </h2>
+  <!-- Main Content Area -->
+  <div class="builder-content">
+    <!-- Step 1: Sections Builder -->
+    <div class="step-panel" *ngIf="currentStep === 'sections'">
+      <div class="sections-container">
+        <div class="sections-header">
+          <h2>Resume Sections</h2>
+          <p class="section-subtitle">Complete each section to build your professional resume</p>
         </div>
 
-        <div class="sections-accordion">
-          <p-accordion>
-            @for (panel of panels; track panel) {
-            <p-accordionTab>
-              <ng-template pTemplate="header">
-                <div class="accordion-header">
-                  <i [class]="panel.icon" class="icon"></i>
-                  <span class="title">{{ panel.name }}</span>
+        <div class="sections-list">
+          <!-- Main Sections (Always Visible) -->
+          <div 
+            *ngFor="let panel of mainSections; trackBy: trackByPanelName" 
+            class="section-card main-section"
+            [class.completed]="isSectionCompleted(panel?.name)"
+          >
+            <div class="section-card-header" (click)="toggleSection(panel)">
+              <div class="section-info">
+                <div class="section-icon-wrapper">
+                  <i [class]="panel?.icon"></i>
+                  <span class="completion-badge" *ngIf="isSectionCompleted(panel?.name)">
+                    <i class="pi pi-check"></i>
+                  </span>
                 </div>
-              </ng-template>
-              <div class="accordion-body">
-                <ng-container *ngIf="panel.visible">
-                  <ng-container *ngComponentOutlet="panel.component"></ng-container>
-                </ng-container>
+                <div class="section-details">
+                  <h3>{{ panel?.name }}</h3>
+                  <span class="section-badge main-badge">Required</span>
+                  <span class="section-hint" *ngIf="!isSectionCompleted(panel?.name)">Click to add information</span>
+                  <span class="section-status" *ngIf="isSectionCompleted(panel?.name)">Completed</span>
+                </div>
               </div>
-            </p-accordionTab>
-            }
-          </p-accordion>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Center: Live Preview -->
-    <main class="preview-main" [class.mobile-visible]="mobileView === 'preview'">
-      <div class="preview-container" [class.with-settings]="showTemplateSettings">
-        <div class="preview-header-row">
-          <div class="preview-header">
-            <div class="preview-title-group">
-              <i class="pi pi-desktop"></i>
-              <h3>Live Preview</h3>
-            </div>
-            <div class="preview-controls">
-              <button class="settings-btn" [class.active]="showTemplateSettings" (click)="toggleTemplateSettings()"
-                aria-label="Template Settings" title="Template Settings">
-                <i class="pi pi-cog"></i>
+              <button class="toggle-btn" [class.expanded]="panel?.active">
+                <i class="pi" [class.pi-chevron-down]="!panel?.active" [class.pi-chevron-up]="panel?.active"></i>
               </button>
-              <span class="preview-size-label">100%</span>
+            </div>
+
+            <div class="section-card-body" *ngIf="panel?.active">
+              <ng-container *ngIf="panel?.visible">
+                <ng-container *ngComponentOutlet="panel?.component"></ng-container>
+              </ng-container>
             </div>
           </div>
 
-          <app-template-settings [(visible)]="showTemplateSettings"
-            (settingsChange)="onSettingsChange($event)"></app-template-settings>
-        </div>
-        <div class="preview-body">
-          <div class="preview-content">
-            <app-cv-preview [selectedTemplate]="selectedTemplate"></app-cv-preview>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <!-- Right: Templates (Toggleable) -->
-    <aside class="templates-sidebar" [class.hidden]="!showTemplates"
-      [class.mobile-visible]="mobileView === 'templates'">
-      <div class="sidebar-content">
-        <div class="sidebar-header">
-          <h2 class="sidebar-title">
-            <i class="pi pi-palette"></i>
-            Choose Template
-          </h2>
-        </div>
-
-        <div class="templates-container">
-          <div class="template-grid">
-            <div class="template-card" [class.active]="selectedTemplate === 'sunshine'" (click)="selectTemplate('sunshine')">
-              <div class="template-image">
-                <img src="/images/cvs/azurill.jpg" alt="SK" />
-                @if (selectedTemplate === 'sunshine') {
-                <div class="active-overlay">
-                  <i class="pi pi-check-circle"></i>
-                  <span>Active</span>
+          <!-- Optional Sections (Can be added/removed) -->
+          <div 
+            *ngFor="let panel of activeOptionalSections; trackBy: trackByPanelName" 
+            class="section-card optional-section"
+            [class.completed]="isSectionCompleted(panel?.name)"
+          >
+            <div class="section-card-header" (click)="toggleSection(panel)">
+              <div class="section-info">
+                <div class="section-icon-wrapper">
+                  <i [class]="panel?.icon"></i>
+                  <span class="completion-badge" *ngIf="isSectionCompleted(panel?.name)">
+                    <i class="pi pi-check"></i>
+                  </span>
                 </div>
-                }
+                <div class="section-details">
+                  <h3>{{ panel?.name }}</h3>
+                  <span class="section-badge optional-badge">Optional</span>
+                  <span class="section-hint" *ngIf="!isSectionCompleted(panel?.name)">Click to add information</span>
+                  <span class="section-status" *ngIf="isSectionCompleted(panel?.name)">Completed</span>
+                </div>
               </div>
-              <div class="template-label">
-                <strong>Sunshine</strong>
-                <span>Modern & Clean</span>
-              </div>
-            </div>
-
-            <div class="template-card" [class.active]="selectedTemplate === 'bright'" (click)="selectTemplate('bright')">
-              <div class="template-image">
-                <img src="/assets/images/cvs/ditto.jpg" alt="SK" />
-              </div>
-              <div class="template-label">
-                <strong>Bright</strong>
-                <span>Professional</span>
-              </div>
-            </div>
-
-            <div class="template-card" [class.active]="selectedTemplate === 'kingdom'" (click)="selectTemplate('kingdom')">
-              <div class="template-image">
-                <img src="/assets/images/cvs/ditto.jpg" alt="SK" />
-              </div>
-              <div class="template-label">
-                <strong>Kingdom</strong>
-                <span>Classic</span>
+              <div class="section-actions">
+                <button 
+                  class="remove-btn" 
+                  (click)="removeOptionalSection(panel?.name || ''); $event.stopPropagation()"
+                  title="Remove section"
+                >
+                  <i class="pi pi-times"></i>
+                </button>
+                <button class="toggle-btn" [class.expanded]="panel?.active">
+                  <i class="pi" [class.pi-chevron-down]="!panel?.active" [class.pi-chevron-up]="panel?.active"></i>
+                </button>
               </div>
             </div>
 
-            <div class="template-card" [class.active]="selectedTemplate === 'objection'" (click)="selectTemplate('objection')">
-              <div class="template-image">
-                <img src="/images/sample.jpg" alt="Objection" />
-              </div>
-              <div class="template-label">
-                <strong>Objection</strong>
-                <span>Bold</span>
-              </div>
+            <div class="section-card-body" *ngIf="panel?.active">
+              <ng-container *ngIf="panel?.visible">
+                <ng-container *ngComponentOutlet="panel?.component"></ng-container>
+              </ng-container>
             </div>
-           
-            <div class="template-card" [class.active]="selectedTemplate === 'sk'" (click)="selectTemplate('sk')">
-              <div class="template-image">
-                <img src="/assets/images/cvs/ditto.jpg" alt="SK" />
-              </div>
-              <div class="template-label">
-                <strong>SK</strong>
-                <span>Minimal</span>
-              </div>
-            </div>
+          </div>
 
-            <div class="template-card" [class.active]="selectedTemplate === 'scaller'" (click)="selectTemplate('scaller')">
-              <div class="template-image">
-                <img src="/images/sample.jpg" alt="Scaller" />
-              </div>
-              <div class="template-label">
-                <strong>Scaller</strong>
-                <span>Creative</span>
+          <!-- Add Optional Section Button -->
+          <div class="add-section-card" *ngIf="getAvailableOptionalSections().length > 0">
+            <button class="add-section-btn" (click)="showAddSectionMenu = !showAddSectionMenu">
+              <i class="pi pi-plus-circle"></i>
+              <span>Add Section</span>
+            </button>
+            
+            <div class="add-section-menu" *ngIf="showAddSectionMenu">
+              <div 
+                *ngFor="let section of getAvailableOptionalSections()"
+                class="add-section-option"
+                (click)="addOptionalSection(section); showAddSectionMenu = false"
+              >
+                <i [class]="section.icon"></i>
+                <span>{{ section.name }}</span>
               </div>
             </div>
           </div>
         </div>
+
+        <div class="sections-footer">
+          <button class="btn-primary" (click)="goToPreview()">
+            <span>Continue to Preview</span>
+            <i class="pi pi-arrow-right"></i>
+          </button>
+        </div>
       </div>
-    </aside>
+    </div>
+
+    <!-- Step 2: Preview -->
+    <div class="step-panel" *ngIf="currentStep === 'preview'">
+      <div class="preview-container">
+        <div class="preview-header">
+          <div class="preview-header-left">
+            <h2>Live Preview</h2>
+            <p class="preview-subtitle">See how your resume looks</p>
+          </div>
+          <div class="preview-actions">
+            <button class="btn-secondary" (click)="goToSections()">
+              <i class="pi pi-arrow-left"></i>
+              <span>Back to Sections</span>
+            </button>
+            <button class="btn-secondary" (click)="goToSettings()">
+              <i class="pi pi-cog"></i>
+              <span>Customize</span>
+            </button>
+            <button class="btn-primary">
+              <i class="pi pi-download"></i>
+              <span>Download PDF</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="preview-content">
+          <app-cv-preview [selectedTemplate]="selectedTemplate"></app-cv-preview>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Settings -->
+    <div class="step-panel" *ngIf="currentStep === 'settings'">
+      <div class="settings-container">
+        <div class="settings-header">
+          <div class="settings-header-left">
+            <h2>Template Settings</h2>
+            <p class="settings-subtitle">Customize colors, fonts, and layout</p>
+          </div>
+          <div class="settings-actions">
+            <button class="btn-secondary" (click)="goToPreview()">
+              <i class="pi pi-arrow-left"></i>
+              <span>Back to Preview</span>
+            </button>
+            <button class="btn-primary" (click)="goToPreview()">
+              <span>Save & Continue</span>
+              <i class="pi pi-check"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="settings-content">
+          <div class="settings-sidebar">
+            <div class="template-selector">
+              <h3>Choose Template</h3>
+              <div class="template-grid">
+                <div 
+                  *ngFor="let template of templates" 
+                  class="template-option"
+                  [class.active]="selectedTemplate === template.id"
+                  (click)="selectTemplate(template.id)"
+                >
+                  <div class="template-thumbnail">
+                    <img [src]="template.thumbnail" [alt]="template.name" />
+                    <div class="active-badge" *ngIf="selectedTemplate === template.id">
+                      <i class="pi pi-check"></i>
+                    </div>
+                  </div>
+                  <div class="template-info">
+                    <strong>{{ template.name }}</strong>
+                    <span>{{ template.style }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-main">
+            <app-template-settings 
+              [visible]="true"
+              (settingsChange)="onSettingsChange($event)">
+            </app-template-settings>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

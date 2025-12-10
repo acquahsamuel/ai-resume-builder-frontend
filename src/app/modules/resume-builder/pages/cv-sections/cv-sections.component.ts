@@ -1,5 +1,3 @@
-
-
 import {
   Component,
   Input,
@@ -27,7 +25,22 @@ import { PrimeNgModule } from '../../../../shared/modules/primeNg.module';
 import { CvContentService } from '../../../../shared/services/cv-content.service';
 import { CvPreviewComponent } from './cv-preview/cv-preview.component';
 import { TemplateSettingsComponent, TemplateSettings } from './template-settings/template-settings.component';
-// import { TemplateSunshineComponent } from '../../../templates/template-sunshine/template-sunshine.component';
+
+interface SectionPanel {
+  active: boolean;
+  disabled: boolean;
+  icon: string;
+  name: string;
+  component: any;
+  visible: boolean;
+}
+
+interface Template {
+  id: string;
+  name: string;
+  style: string;
+  thumbnail: string;
+}
 
 @Component({
   selector: 'app-builder-ui',
@@ -52,16 +65,14 @@ import { TemplateSettingsComponent, TemplateSettings } from './template-settings
     ExtraActivitiesComponent,
     CvPreviewComponent,
     TemplateSettingsComponent,
-    // TemplateSunshineComponent,
   ],
 })
 export class CvSectionsComponent implements OnInit {
-  step = 0;
-  expandIconPosition: 'start' | 'end' = 'start';
-  showTemplates = false;
-  showTemplateSettings = false;
-  mobileView: 'sections' | 'preview' | 'templates' = 'sections';
+  currentStep: 'sections' | 'preview' | 'settings' = 'sections';
+  showTemplateSettings = true;
   selectedTemplate: string = 'sunshine';
+  showAddSectionMenu = false;
+  
   injector: Injector = Injector.create({
     providers: [
       {
@@ -103,17 +114,18 @@ export class CvSectionsComponent implements OnInit {
 
   constructor(private cvService: CvContentService) { }
 
-  panels = [
+  // Main sections (always visible, cannot be removed)
+  mainSections: SectionPanel[] = [
     {
-      active: true,
+      active: false,
       disabled: false,
       icon: 'pi pi-user',
-      name: 'Personal Details',
+      name: 'Personal Profile',
       component: CvHeaderComponent,
       visible: true,
     },
     {
-      active: true,
+      active: false,
       disabled: false,
       icon: 'pi pi-file-edit',
       name: 'Professional Summary',
@@ -121,15 +133,15 @@ export class CvSectionsComponent implements OnInit {
       visible: true,
     },
     {
-      active: true,
+      active: false,
       disabled: false,
       icon: 'pi pi-briefcase',
-      name: 'Experience',
+      name: 'Work Experience',
       component: ExperienceComponent,
       visible: true,
     },
     {
-      active: true,
+      active: false,
       disabled: false,
       icon: 'pi pi-graduation-cap',
       name: 'Education',
@@ -137,31 +149,19 @@ export class CvSectionsComponent implements OnInit {
       visible: true,
     },
     {
-      active: true,
+      active: false,
       disabled: false,
       icon: 'pi pi-th-large',
       name: 'Skills',
       component: SkillsComponent,
       visible: true,
     },
+  ];
+
+  // Optional sections (can be added/removed)
+  availableOptionalSections: SectionPanel[] = [
     {
-      active: true,
-      disabled: false,
-      icon: 'pi pi-heart',
-      name: 'Hobbies',
-      component: HobbiesComponent,
-      visible: true,
-    },
-    {
-      active: true,
-      disabled: false,
-      icon: 'pi pi-users',
-      name: 'References',
-      component: ReferencesComponent,
-      visible: true,
-    },
-    {
-      active: true,
+      active: false,
       disabled: false,
       icon: 'pi pi-globe',
       name: 'Languages',
@@ -169,7 +169,7 @@ export class CvSectionsComponent implements OnInit {
       visible: true,
     },
     {
-      active: true,
+      active: false,
       disabled: false,
       icon: 'pi pi-book',
       name: 'Courses',
@@ -177,7 +177,7 @@ export class CvSectionsComponent implements OnInit {
       visible: true,
     },
     {
-      active: true,
+      active: false,
       disabled: false,
       icon: 'pi pi-file-pdf',
       name: 'Publications',
@@ -185,13 +185,46 @@ export class CvSectionsComponent implements OnInit {
       visible: true,
     },
     {
-      active: true,
+      active: false,
       disabled: false,
       icon: 'pi pi-calendar',
       name: 'Extracurricular Activities',
       component: ExtraActivitiesComponent,
       visible: true,
     },
+    {
+      active: false,
+      disabled: false,
+      icon: 'pi pi-heart',
+      name: 'Hobbies',
+      component: HobbiesComponent,
+      visible: true,
+    },
+    {
+      active: false,
+      disabled: false,
+      icon: 'pi pi-users',
+      name: 'References',
+      component: ReferencesComponent,
+      visible: true,
+    },
+  ];
+
+  // Currently active optional sections
+  activeOptionalSections: SectionPanel[] = [];
+
+  // Get all panels (main + active optional)
+  get panels(): SectionPanel[] {
+    return [...this.mainSections, ...this.activeOptionalSections];
+  }
+
+  templates: Template[] = [
+    { id: 'sunshine', name: 'Sunshine', style: 'Modern & Clean', thumbnail: '/images/cvs/azurill.jpg' },
+    { id: 'bright', name: 'Bright', style: 'Professional', thumbnail: '/assets/images/cvs/ditto.jpg' },
+    { id: 'kingdom', name: 'Kingdom', style: 'Classic', thumbnail: '/assets/images/cvs/ditto.jpg' },
+    { id: 'objection', name: 'Objection', style: 'Bold', thumbnail: '/images/sample.jpg' },
+    { id: 'sk', name: 'SK', style: 'Minimal', thumbnail: '/assets/images/cvs/ditto.jpg' },
+    { id: 'scaller', name: 'Scaller', style: 'Creative', thumbnail: '/images/sample.jpg' },
   ];
 
   createInjector(inputs: any): Injector {
@@ -201,66 +234,92 @@ export class CvSectionsComponent implements OnInit {
     return Injector.create({ providers, parent: this.injector });
   }
 
-  saveToLocalStorage() { }
-
-  ngOnInit(): void { }
-
-  updateCv() { }
-
-  toggleTemplates() {
-    this.showTemplates = !this.showTemplates;
+  ngOnInit(): void {
+    // Ensure panels array is initialized
+    if (!this.panels || this.panels.length === 0) {
+      // Panels should already be initialized, but this is a safety check
+      console.warn('Panels array is empty or undefined');
+    }
   }
 
-  selectTemplate(templateName: string) {
-    console.log('Selected template:', templateName);
-    this.selectedTemplate = templateName;
-    // Force reload of preview with new template
-    this.showTemplates = false; // Optional: close template panel after selection
+  trackByPanelName(index: number, panel: SectionPanel): string {
+    return panel?.name || `panel-${index}`;
   }
 
-  setMobileView(view: 'sections' | 'preview' | 'templates') {
-    this.mobileView = view;
+  toggleSection(panel: SectionPanel): void {
+    if (panel) {
+      panel.active = !panel.active;
+    }
   }
 
-  onPersonalInfoUpdateEvt(data: any) {
-    console.log('PERSONAL INFO UPDATED', data);
-    this.PersonalDetails = data;
-    // this.cvService.updatePersonalDetails(data);
+  isSectionCompleted(sectionName: string | undefined): boolean {
+    if (!sectionName) return false;
+    // Check if section has data based on section name
+    const sectionMap: { [key: string]: any[] } = {
+      'Personal Profile': this.PersonalDetails,
+      'Personal Details': this.PersonalDetails,
+      'Professional Summary': this.Summary,
+      'Work Experience': this.Experience,
+      'Experience': this.Experience,
+      'Education': this.Education,
+      'Skills': this.Skills,
+      'Languages': this.Languages,
+      'Courses': this.Courses,
+      'Publications': this.Publication,
+      'Extracurricular Activities': this.ExtraCurricularActivities,
+      'Hobbies': this.Hobbies,
+      'References': this.References,
+    };
+
+    const data = sectionMap[sectionName];
+    if (!data) return false;
+    
+    if (Array.isArray(data)) {
+      return data.length > 0;
+    }
+    return !!data;
   }
 
-  onEducationFormUpdate(data: any) {
-    console.log('DATA PASSED', data);
-    this.Education = data.educationRecords;
-    // this.cvService.updateEducation(data.educationRecords);
+  goToSections(): void {
+    this.currentStep = 'sections';
   }
 
-  onSummaryUpdate(data: any) {
-    console.log('SUMMARY UPDATED', data);
-    // this.cvService.updateSummary(data);
+  goToPreview(): void {
+    this.currentStep = 'preview';
   }
 
-  onExperienceUpdate(data: any) {
-    console.log('EXPERIENCE UPDATED', data);
-    // this.cvService.updateExperience(data?.experienceRecords || data);
+  goToSettings(): void {
+    this.currentStep = 'settings';
   }
 
-  onSkillsUpdate(data: any) {
-    console.log('SKILLS UPDATED', data);
-    // this.cvService.updateSkills(data);
+  selectTemplate(templateId: string): void {
+    this.selectedTemplate = templateId;
   }
 
-  onLanguagesUpdate(data: any) {
-    console.log('LANGUAGES UPDATED', data);
-    // this.cvService.updateLanguages(data);
-  }
-
-  toggleTemplateSettings() {
-    this.showTemplateSettings = !this.showTemplateSettings;
-  }
-
-  onSettingsChange(settings: TemplateSettings) {
+  onSettingsChange(settings: TemplateSettings): void {
     console.log('Template settings updated:', settings);
-    // Apply settings to preview
-    // This can be passed to the preview component or used to generate CSS
+  }
+
+  // Get available optional sections that are not yet added
+  getAvailableOptionalSections(): SectionPanel[] {
+    const activeNames = this.activeOptionalSections.map(s => s.name);
+    return this.availableOptionalSections.filter(s => !activeNames.includes(s.name));
+  }
+
+  // Add an optional section
+  addOptionalSection(section: SectionPanel): void {
+    if (!this.activeOptionalSections.find(s => s.name === section.name)) {
+      this.activeOptionalSections.push({ ...section });
+    }
+  }
+
+  // Remove an optional section
+  removeOptionalSection(sectionName: string): void {
+    this.activeOptionalSections = this.activeOptionalSections.filter(s => s.name !== sectionName);
+  }
+
+  // Check if section is optional
+  isOptionalSection(sectionName: string): boolean {
+    return this.availableOptionalSections.some(s => s.name === sectionName);
   }
 }

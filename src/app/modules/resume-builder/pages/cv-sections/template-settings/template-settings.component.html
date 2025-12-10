@@ -1,14 +1,5 @@
-<div class="template-settings-panel" *ngIf="visible">
-    <!-- Header -->
-    <div class="settings-header">
-      <div class="header-title">
-        <i class="pi pi-cog"></i>
-        <h3>Template Settings</h3>
-      </div>
-      <button class="close-btn" (click)="closePanel()" aria-label="Close settings">
-        <i class="pi pi-times"></i>
-      </button>
-    </div>
+<div class="template-settings-panel">
+    <!-- Content -->
 
     <!-- Content -->
     <div class="settings-content">
@@ -240,10 +231,7 @@
     <div class="settings-footer">
       <button class="btn btn-secondary" (click)="resetSettings()">
         <i class="pi pi-refresh"></i>
-        Reset
-      </button>
-      <button class="btn btn-primary" (click)="closePanel()">
-        Done
+        Reset to Defaults
       </button>
     </div>
 
