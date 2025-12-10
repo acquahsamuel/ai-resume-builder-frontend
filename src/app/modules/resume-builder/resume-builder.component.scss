@@ -96,15 +96,18 @@
     font-weight: 500;
     position: relative;
     border-left: 3px solid transparent;
+    width: 100%;
 
     i {
       font-size: 20px;
       width: 24px;
       text-align: center;
+      flex-shrink: 0;
     }
 
     span {
       transition: opacity 0.3s ease, width 0.3s ease;
+      white-space: nowrap;
     }
 
     &:hover {
@@ -246,6 +249,22 @@
 // Mobile Sidebar Overlay
 .mobile-sidebar-overlay {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+
+  &.active {
+    display: block;
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 
 // Mobile Sidebar
@@ -327,11 +346,17 @@
       font-weight: 500;
       position: relative;
       border-left: 3px solid transparent;
+      width: 100%;
 
       i {
         font-size: 20px;
         width: 24px;
         text-align: center;
+        flex-shrink: 0;
+      }
+
+      span {
+        white-space: nowrap;
       }
 
       &:hover {

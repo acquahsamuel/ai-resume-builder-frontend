@@ -331,4 +331,21 @@ export class CvSectionsComponent implements OnInit {
   isOptionalSection(sectionName: string): boolean {
     return this.availableOptionalSections.some(s => s.name === sectionName);
   }
+
+  // Check if optional section is currently active
+  isOptionalSectionActive(sectionName: string): boolean {
+    return this.activeOptionalSections.some(s => s.name === sectionName);
+  }
+
+  // Toggle optional section on/off
+  toggleOptionalSection(section: SectionPanel): void {
+    const existingIndex = this.activeOptionalSections.findIndex(s => s.name === section.name);
+    if (existingIndex >= 0) {
+      // Remove if already active
+      this.activeOptionalSections.splice(existingIndex, 1);
+    } else {
+      // Add if not active
+      this.activeOptionalSections.push({ ...section });
+    }
+  }
 }

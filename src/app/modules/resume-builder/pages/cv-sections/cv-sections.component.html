@@ -110,22 +110,24 @@
             </div>
           </div>
 
-          <!-- Add Optional Section Button -->
-          <div class="add-section-card" *ngIf="getAvailableOptionalSections().length > 0">
-            <button class="add-section-btn" (click)="showAddSectionMenu = !showAddSectionMenu">
-              <i class="pi pi-plus-circle"></i>
-              <span>Add Section</span>
-            </button>
-            
-            <div class="add-section-menu" *ngIf="showAddSectionMenu">
-              <div 
-                *ngFor="let section of getAvailableOptionalSections()"
-                class="add-section-option"
-                (click)="addOptionalSection(section); showAddSectionMenu = false"
+          <!-- Add Optional Sections -->
+          <div class="add-sections-container" *ngIf="availableOptionalSections.length > 0">
+            <div class="add-sections-header">
+              <h4>Add Optional Sections</h4>
+              <p class="hint-text">Click to add or remove sections</p>
+            </div>
+            <div class="sections-chips">
+              <button
+                *ngFor="let section of availableOptionalSections"
+                class="section-chip"
+                [class.selected]="isOptionalSectionActive(section.name)"
+                (click)="toggleOptionalSection(section)"
+                type="button"
               >
                 <i [class]="section.icon"></i>
                 <span>{{ section.name }}</span>
-              </div>
+                <i class="pi" [class.pi-check]="isOptionalSectionActive(section.name)" [class.pi-plus]="!isOptionalSectionActive(section.name)"></i>
+              </button>
             </div>
           </div>
         </div>
