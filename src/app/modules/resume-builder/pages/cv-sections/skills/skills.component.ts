@@ -63,7 +63,7 @@ export class SkillsComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Create a new FormGroup for an education record
+  // Create a new FormGroup for a skill record
   createSkillsRecord(): FormGroup {
     return this.fb.group({
       name: ['', Validators.required],
@@ -79,18 +79,18 @@ export class SkillsComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Get the FormArray for education records
+  // Get the FormArray for skill records
   get skillsRecord(): FormArray {
     return this.skillsForm.get('skillsRecords') as FormArray;
   }
 
-  // Add a new education record
-  addRecord(): void {
+  // Add a new skill record
+  addSkillRecord(): void {
     this.skillsRecord.push(this.createSkillsRecord());
   }
 
-  // Remove an education record
-  removeRecord(index: number): void {
+  // Remove a skill record
+  removeSkillRecord(index: number): void {
     this.skillsRecord.removeAt(index);
   }
 }

@@ -1,10 +1,10 @@
 <div class="form-section">
   <form [formGroup]="languagesForm">
-    <div formArrayName="skillsRecords">
+    <div formArrayName="languagesRecords">
       <div
-        *ngFor="let skills of skillsRecord.controls; let i = index"
+        *ngFor="let language of languagesRecords.controls; let i = index"
         [formGroupName]="i"
-        class="education-record"
+        class="language-record"
       >
         <h3></h3>
 
@@ -42,7 +42,7 @@
 
         <div class="form-actions">
           <p-button
-            (onClick)="removeRecord(i)"
+            (onClick)="removeLanguageRecord(i)"
             severity="danger"
             [outlined]="true"
             icon="pi pi-trash"
@@ -53,7 +53,7 @@
     </div>
 
     <p-button
-      (onClick)="addRecord()"
+      (onClick)="addLanguageRecord()"
       label="+ Add Language"
       icon="pi pi-plus"
       class="btn-create"

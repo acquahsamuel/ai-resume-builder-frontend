@@ -4,9 +4,9 @@
 
       <p-accordion>
         <p-accordionTab
-          *ngFor="let education of experienceRecords.controls; let i = index"
+          *ngFor="let experience of experienceRecords.controls; let i = index"
           [formGroupName]="i"
-          [header]="education.get('employerName')?.value || 'New Employer'"
+          [header]="experience.get('employerName')?.value || 'New Employer'"
           [selected]="true"
         >
 
@@ -117,7 +117,7 @@
           <div class="flex justify-end">
           
             <p-button
-              (onClick)="removeField(i)"
+              (onClick)="removeExperienceRecord(i)"
               severity="danger"
               [outlined]="true"
               icon="pi pi-trash"
@@ -136,7 +136,7 @@
 
     <p-button
       class="btn-add"
-      (onClick)="addEducationRecord()"
+      (onClick)="addExperienceRecord()"
       type="button"
       label="+ Add Experience"
       icon="pi pi-plus"

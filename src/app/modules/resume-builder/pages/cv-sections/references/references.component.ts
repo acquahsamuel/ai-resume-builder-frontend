@@ -60,7 +60,7 @@ export class ReferencesComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Create a new FormGroup for an education record
+  // Create a new FormGroup for a reference record
   createReferenceRecord(): FormGroup {
     return this.fb.group({
       referenceName: ["", Validators.required],
@@ -73,30 +73,30 @@ export class ReferencesComponent implements OnInit, OnDestroy {
 
   // Create a new FormGroup for a program
   
-  // Get the FormArray for education records
+  // Get the FormArray for reference records
   get referenceRecords(): FormArray {
     return this.referenceForm.get("referenceRecords") as FormArray;
   }
 
-  // Get the FormArray for programs within an education record
-  getPrograms(educationIndex: number): FormArray {
-    return this.referenceRecords.at(educationIndex).get("programs") as FormArray;
+  // Get the FormArray for programs within a reference record
+  getPrograms(referenceIndex: number): FormArray {
+    return this.referenceRecords.at(referenceIndex).get("programs") as FormArray;
   }
 
-  // Add a new education record
-  addRecord(): void {
+  // Add a new reference record
+  addReferenceRecord(): void {
     this.referenceRecords.push(this.createReferenceRecord());
   }
 
-  // Remove an education record
-  removeRecord(index: number): void {
+  // Remove a reference record
+  removeReferenceRecord(index: number): void {
     this.referenceRecords.removeAt(index);
   }
 
  
-  // Remove a program from a specific education record
-  removeProgram(educationIndex: number, programIndex: number): void {
-    this.getPrograms(educationIndex).removeAt(programIndex);
+  // Remove a program from a specific reference record
+  removeProgram(referenceIndex: number, programIndex: number): void {
+    this.getPrograms(referenceIndex).removeAt(programIndex);
   }
 
   onDateChange(date: any) {}

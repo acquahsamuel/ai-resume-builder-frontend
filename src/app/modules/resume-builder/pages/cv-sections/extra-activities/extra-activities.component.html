@@ -1,10 +1,10 @@
 <div class="form-section">
   <form [formGroup]="extraActivitiesForm">
-    <div formArrayName="skillsRecords">
+    <div formArrayName="extraActivitiesRecords">
       <div
-        *ngFor="let skills of skillsRecord.controls; let i = index"
+        *ngFor="let activity of extraActivitiesRecords.controls; let i = index"
         [formGroupName]="i"
-        class="education-record"
+        class="extra-activity-record"
       >
         <h3></h3>
 
@@ -43,7 +43,7 @@
 
         <div class="form-actions">
           <p-button
-            (onClick)="removeEducationRecord(i)"
+            (onClick)="removeExtraActivityRecord(i)"
             severity="danger"
             [outlined]="true"
             icon="pi pi-trash"
@@ -55,7 +55,7 @@
     </div>
 
     <p-button
-      (onClick)="addEducationRecord()"
+      (onClick)="addExtraActivityRecord()"
       label="+ Add Activity"
       icon="pi pi-plus"
       class="btn-add"

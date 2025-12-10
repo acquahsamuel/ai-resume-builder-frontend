@@ -28,7 +28,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
   ) {
 
     this.languagesForm = this.fb.group({
-      skillsRecords: this.fb.array([this.createSkillsRecord()])
+      languagesRecords: this.fb.array([this.createLanguageRecord()])
     });
 
 
@@ -42,7 +42,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         distinctUntilChanged()
       )
       .subscribe((value: any) => {
-        const languagesRecords = value.skillsRecords || [];
+        const languagesRecords = value.languagesRecords || [];
         
         // Map to service format
         const languages = languagesRecords.map((lang: any) => ({
@@ -61,8 +61,8 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Create a new FormGroup for an education record
-  createSkillsRecord(): FormGroup {
+  // Create a new FormGroup for a language record
+  createLanguageRecord(): FormGroup {
     return this.fb.group({
       name: ["", Validators.required],
       proficiency: ["", Validators.required]
@@ -76,20 +76,20 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Get the FormArray for education records
-  get skillsRecord(): FormArray {
-    return this.languagesForm.get("skillsRecords") as FormArray;
+  // Get the FormArray for language records
+  get languagesRecords(): FormArray {
+    return this.languagesForm.get("languagesRecords") as FormArray;
   }
 
  
-  // Add a new education record
-  addRecord(): void {
-    this.skillsRecord.push(this.createSkillsRecord());
+  // Add a new language record
+  addLanguageRecord(): void {
+    this.languagesRecords.push(this.createLanguageRecord());
   }
 
-  // Remove an education record
-  removeRecord(index: number): void {
-    this.skillsRecord.removeAt(index);
+  // Remove a language record
+  removeLanguageRecord(index: number): void {
+    this.languagesRecords.removeAt(index);
   }
 
 }

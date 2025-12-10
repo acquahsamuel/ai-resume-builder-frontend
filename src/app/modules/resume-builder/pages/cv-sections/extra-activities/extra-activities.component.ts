@@ -25,7 +25,7 @@ export class ExtraActivitiesComponent implements OnInit, OnDestroy {
     private cvService: CvContentService
   ) {
     this.extraActivitiesForm = this.fb.group({
-      skillsRecords: this.fb.array([this.createSkillsRecord()])
+      extraActivitiesRecords: this.fb.array([this.createExtraActivityRecord()])
     });
   }
 
@@ -37,7 +37,7 @@ export class ExtraActivitiesComponent implements OnInit, OnDestroy {
         distinctUntilChanged()
       )
       .subscribe((value: any) => {
-        const activityRecords = value.skillsRecords || [];
+        const activityRecords = value.extraActivitiesRecords || [];
         
         // Map to service format
         const extraActivities = activityRecords.map((activity: any) => ({
@@ -58,8 +58,8 @@ export class ExtraActivitiesComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Create a new FormGroup for an education record
-  createSkillsRecord(): FormGroup {
+  // Create a new FormGroup for an extra activity record
+  createExtraActivityRecord(): FormGroup {
     return this.fb.group({
       name: ["", Validators.required],
       proficiency: ["", Validators.required],
@@ -74,19 +74,19 @@ export class ExtraActivitiesComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Get the FormArray for education records
-  get skillsRecord(): FormArray {
-    return this.extraActivitiesForm.get("skillsRecords") as FormArray;
+  // Get the FormArray for extra activity records
+  get extraActivitiesRecords(): FormArray {
+    return this.extraActivitiesForm.get("extraActivitiesRecords") as FormArray;
   }
 
 
-  // Add a new education record
-  addEducationRecord(): void {
-    this.skillsRecord.push(this.createSkillsRecord());
+  // Add a new extra activity record
+  addExtraActivityRecord(): void {
+    this.extraActivitiesRecords.push(this.createExtraActivityRecord());
   }
 
-  // Remove an education record
-  removeEducationRecord(index: number): void {
-    this.skillsRecord.removeAt(index);
+  // Remove an extra activity record
+  removeExtraActivityRecord(index: number): void {
+    this.extraActivitiesRecords.removeAt(index);
   }
 }

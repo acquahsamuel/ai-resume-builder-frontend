@@ -60,7 +60,7 @@ export class ExperienceComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Create a new FormGroup for an education record
+  // Create a new FormGroup for an experience record
   createExperienceRecord(): FormGroup {
     return this.fb.group({
       jobTitle: ['', Validators.required],
@@ -82,18 +82,18 @@ export class ExperienceComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Get the FormArray for education records
+  // Get the FormArray for experience records
   get experienceRecords(): FormArray {
     return this.experienceForm.get('experienceRecords') as FormArray;
   }
 
-  // Add a new education record
-  addEducationRecord(): void {
+  // Add a new experience record
+  addExperienceRecord(): void {
     this.experienceRecords.push(this.createExperienceRecord());
   }
 
-  // Remove an education record
-  removeField(index: number): void {
+  // Remove an experience record
+  removeExperienceRecord(index: number): void {
     if (this.experienceRecords.length > 1) {
       this.experienceRecords.removeAt(index);
     }

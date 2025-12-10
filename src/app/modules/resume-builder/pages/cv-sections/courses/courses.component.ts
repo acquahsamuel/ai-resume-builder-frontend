@@ -16,7 +16,7 @@ import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
-  educationForm: FormGroup;
+  courseForm: FormGroup;
   private formSubscription?: Subscription;
 
   constructor(
@@ -24,20 +24,20 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private cvService: CvContentService
   ) {
 
-    this.educationForm = this.fb.group({
-      educationRecords: this.fb.array([this.createEducationRecord()])
+    this.courseForm = this.fb.group({
+      courseRecords: this.fb.array([this.createCourseRecord()])
     });
   }
 
   ngOnInit(): void {
     // Subscribe to form changes with debounce for performance
-    this.formSubscription = this.educationForm.valueChanges
+    this.formSubscription = this.courseForm.valueChanges
       .pipe(
         debounceTime(300),
         distinctUntilChanged()
       )
       .subscribe((value: any) => {
-        const courseRecords = value.educationRecords || [];
+        const courseRecords = value.courseRecords || [];
         
         // Map to service format
         const courses = courseRecords.map((course: any) => ({
@@ -58,8 +58,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Create a new FormGroup for an education record
-  createEducationRecord(): FormGroup {
+  // Create a new FormGroup for a course record
+  createCourseRecord(): FormGroup {
     return this.fb.group({
       nameofCourse: ["", Validators.required],
       institution: ["", Validators.required],
@@ -77,34 +77,34 @@ export class CoursesComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Get the FormArray for education records
-  get educationRecords(): FormArray {
-    return this.educationForm.get("educationRecords") as FormArray;
+  // Get the FormArray for course records
+  get courseRecords(): FormArray {
+    return this.courseForm.get("courseRecords") as FormArray;
   }
 
-  // Get the FormArray for programs within an education record
-  getPrograms(educationIndex: number): FormArray {
-    return this.educationRecords.at(educationIndex).get("programs") as FormArray;
+  // Get the FormArray for programs within a course record
+  getPrograms(courseIndex: number): FormArray {
+    return this.courseRecords.at(courseIndex).get("programs") as FormArray;
   }
 
-  // Add a new education record
-  addEducationRecord(): void {
-    this.educationRecords.push(this.createEducationRecord());
+  // Add a new course record
+  addCourseRecord(): void {
+    this.courseRecords.push(this.createCourseRecord());
   }
 
-  // Remove an education record
-  removeEducationRecord(index: number): void {
-    this.educationRecords.removeAt(index);
+  // Remove a course record
+  removeCourseRecord(index: number): void {
+    this.courseRecords.removeAt(index);
   }
 
-  // Add a new program to a specific education record
-  addProgram(educationIndex: number): void {
-    this.getPrograms(educationIndex).push(this.createProgram());
+  // Add a new program to a specific course record
+  addProgram(courseIndex: number): void {
+    this.getPrograms(courseIndex).push(this.createProgram());
   }
 
-  // Remove a program from a specific education record
-  removeProgram(educationIndex: number, programIndex: number): void {
-    this.getPrograms(educationIndex).removeAt(programIndex);
+  // Remove a program from a specific course record
+  removeProgram(courseIndex: number, programIndex: number): void {
+    this.getPrograms(courseIndex).removeAt(programIndex);
   }
  
 

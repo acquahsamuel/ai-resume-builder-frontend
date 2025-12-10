@@ -25,7 +25,7 @@ export class PublicationsComponent implements OnInit, OnDestroy {
     private cvService: CvContentService
   ) {
     this.publicationsForm = this.fb.group({
-      educationRecords: this.fb.array([this.createEducationRecord()])
+      publicationsRecords: this.fb.array([this.createPublicationRecord()])
     });
   }
 
@@ -37,7 +37,7 @@ export class PublicationsComponent implements OnInit, OnDestroy {
         distinctUntilChanged()
       )
       .subscribe((value: any) => {
-        const publicationRecords = value.educationRecords || [];
+        const publicationRecords = value.publicationsRecords || [];
         
         // Map to service format
         const publications = publicationRecords.map((pub: any) => ({
@@ -60,8 +60,8 @@ export class PublicationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Create a new FormGroup for an education record
-  createEducationRecord(): FormGroup {
+  // Create a new FormGroup for a publication record
+  createPublicationRecord(): FormGroup {
     return this.fb.group({
       name: ["", Validators.required],
       summary : [""],
@@ -77,20 +77,20 @@ export class PublicationsComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Get the FormArray for education records
-  get educationRecords(): FormArray {
-    return this.publicationsForm.get("educationRecords") as FormArray;
+  // Get the FormArray for publication records
+  get publicationsRecords(): FormArray {
+    return this.publicationsForm.get("publicationsRecords") as FormArray;
   }
 
  
-  // Add a new education record
-  addEducationRecord(): void {
-    this.educationRecords.push(this.createEducationRecord());
+  // Add a new publication record
+  addPublicationRecord(): void {
+    this.publicationsRecords.push(this.createPublicationRecord());
   }
 
-  // Remove an education record
-  removeEducationRecord(index: number): void {
-    this.educationRecords.removeAt(index);
+  // Remove a publication record
+  removePublicationRecord(index: number): void {
+    this.publicationsRecords.removeAt(index);
   }
 
  
