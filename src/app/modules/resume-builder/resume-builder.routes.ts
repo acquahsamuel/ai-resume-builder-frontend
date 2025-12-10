@@ -2,17 +2,17 @@ import { Routes } from '@angular/router';
 import { ResumeBuilderComponent } from './resume-builder.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { AtsAnalysisComponent } from './pages/ats-analysis/ats-analysis.component';
-import { StartedComponent } from './pages/started/started.component';
+import { GettingStartedComponent } from './pages/getting-started/getting-started.component';
 import { CvSectionsComponent } from './pages/cv-sections/cv-sections.component';
 
-export const ResumeBuiderRoutes: Routes = [
+export const ResumeBuilderRoutes: Routes = [
   {
     path: '',
     component: ResumeBuilderComponent,
     children: [
       {
         path: '',
-        component: StartedComponent,
+        component: GettingStartedComponent,
       },
       {
         path: 'getting-started',

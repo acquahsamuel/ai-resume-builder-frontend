@@ -19,9 +19,9 @@ import { LanguagesComponent } from "./pages/cv-sections/languages/languages.comp
 import { ExtraActivitiesComponent } from "./pages/cv-sections/extra-activities/extra-activities.component";
 import { SettingsComponent } from "./pages/settings/settings.component";
 import { AtsAnalysisComponent } from "./pages/ats-analysis/ats-analysis.component";
-import { StartedComponent } from './pages/started/started.component';
+import { GettingStartedComponent } from './pages/getting-started/getting-started.component';
 import { RouterModule, Routes } from '@angular/router';
-import { ResumeBuiderRoutes } from "./resume-builder.routes";
+import { ResumeBuilderRoutes } from "./resume-builder.routes";
 
 
 @NgModule({
@@ -45,9 +45,9 @@ import { ResumeBuiderRoutes } from "./resume-builder.routes";
     ExtraActivitiesComponent,
     SettingsComponent,
     AtsAnalysisComponent,
-    StartedComponent,
-    RouterModule.forChild(ResumeBuiderRoutes),
+    GettingStartedComponent,
+    RouterModule.forChild(ResumeBuilderRoutes),
 ],
 exports: [RouterModule],
 })
-export class ResumeBuilerModule {}
+export class ResumeBuilderModule {}

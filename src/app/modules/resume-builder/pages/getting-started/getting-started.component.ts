@@ -10,13 +10,13 @@ interface Resume {
 }
 
 @Component({
-  selector: 'app-started',
-  templateUrl: './started.component.html',
-  styleUrls: ['./started.component.scss'],
+  selector: 'app-getting-started',
+  templateUrl: './getting-started.component.html',
+  styleUrls: ['./getting-started.component.scss'],
   standalone: true,
   imports: [CommonModule, PrimeNgModule],
 })
-export class StartedComponent implements OnInit {
+export class GettingStartedComponent implements OnInit {
   existingResumes: Resume[] = [
     {
       id: '1',
