@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,21 +14,25 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../../../shared/modules/primeNg.module';
+import { CvContentService } from '../../../../../shared/services/cv-content.service';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-cv-header',
-  templateUrl: './cv-header.component.html',
-  styleUrls: ['./cv-header.component.scss'],
+  selector: 'app-personal-profile',
+  templateUrl: './personal-profile.component.html',
+  styleUrls: ['./personal-profile.component.scss'],
   standalone: true,
   imports: [ReactiveFormsModule, PrimeNgModule, CommonModule],
 })
-export class CvHeaderComponent implements OnInit {
+export class PersonalProfileComponent implements OnInit, OnDestroy {
   @Input() PersonalDetails: any;
   @Output() onPersonalInfoUpdateEvt = new EventEmitter<any>();
 
   headerInfoForm: FormGroup;
   selectedFileName: string | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+  private formSubscription?: Subscription;
 
   fieldTypes = [
     'Passport ID',
@@ -52,7 +63,7 @@ export class CvHeaderComponent implements OnInit {
     'Product Hunt',
   ];
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private cvService: CvContentService) {
     this.headerInfoForm = this._fb.group({
       firstName: [''],
       lastName: [''],
@@ -69,9 +80,10 @@ export class CvHeaderComponent implements OnInit {
       socialMedia: this._fb.array([
         this._fb.group({
           platform: [''],
-          link: ['']
-        })
+          link: [''],
+        }),
       ]),
+      // Legacy fields for backward compatibility
       fields: this._fb.array([]),
     });
   }
@@ -94,34 +106,57 @@ export class CvHeaderComponent implements OnInit {
         zipCode: mappedData.zipCode,
         country: mappedData.country,
         state: mappedData.state,
-        city: mappedData.city
+        city: mappedData.city,
       });
 
       // Handle socialMedia array separately
-      const socialMediaArray = this.headerInfoForm.get('socialMedia') as FormArray;
+      const socialMediaArray = this.headerInfoForm.get(
+        'socialMedia'
+      ) as FormArray;
       socialMediaArray.clear();
 
       if (mappedData.socialMedia && mappedData.socialMedia.length > 0) {
         mappedData.socialMedia.forEach((social: any) => {
-          socialMediaArray.push(this._fb.group({
-            platform: [social.platform || ''],
-            link: [social.link || '']
-          }));
+          socialMediaArray.push(
+            this._fb.group({
+              platform: [social.platform || ''],
+              link: [social.link || ''],
+            })
+          );
         });
       } else {
         // Add at least one empty social media entry
-        socialMediaArray.push(this._fb.group({
-          platform: [''],
-          link: ['']
-        }));
+        socialMediaArray.push(
+          this._fb.group({
+            platform: [''],
+            link: [''],
+          })
+        );
       }
     }
 
-    this.headerInfoForm.valueChanges.subscribe((value: any) => {
-      // Transform to API format before emitting
-      const apiFormat = this.transformToApiFormat(value);
-      this.onPersonalInfoUpdateEvt.emit(apiFormat);
-    });
+    // Subscribe to form changes with debounce for performance
+    this.formSubscription = this.headerInfoForm.valueChanges
+      .pipe(
+        debounceTime(300), // Wait 300ms after user stops typing
+        distinctUntilChanged() // Only emit if value actually changed
+      )
+      .subscribe((value: any) => {
+        // Transform to API format
+        const apiFormat = this.transformToApiFormat(value);
+
+        // Update service (single source of truth)
+        this.cvService.updatePersonalDetails(apiFormat);
+
+        // Emit event for backward compatibility
+        this.onPersonalInfoUpdateEvt.emit(apiFormat);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -141,7 +176,7 @@ export class CvHeaderComponent implements OnInit {
       country: data.country || '',
       state: data.state || '',
       city: data.city || '',
-      socialMedia: data.socialMedia || []
+      socialMedia: data.socialMedia || [],
     };
   }
 
@@ -150,8 +185,8 @@ export class CvHeaderComponent implements OnInit {
    */
   private transformToApiFormat(formValue: any): any {
     // Filter out empty social media entries
-    const validSocialMedia = (formValue.socialMedia || []).filter((sm: any) =>
-      sm.platform || sm.link
+    const validSocialMedia = (formValue.socialMedia || []).filter(
+      (sm: any) => sm.platform || sm.link
     );
 
     return {
@@ -167,17 +202,19 @@ export class CvHeaderComponent implements OnInit {
       country: formValue.country || '',
       state: formValue.state || '',
       city: formValue.city || '',
-      socialMedia: validSocialMedia.length > 0 ? validSocialMedia : [{ platform: '', link: '' }]
+      socialMedia:
+        validSocialMedia.length > 0
+          ? validSocialMedia
+          : [{ platform: '', link: '' }],
     };
   }
 
-  onDateChange(date: any) { }
+  onDateChange(date: any) {}
 
   onSocialChange(index: number) {
     // Trigger change detection when platform name changes to update icon
     this.headerInfoForm.markAsDirty();
   }
-
 
   get fields(): FormArray<FormGroup> {
     return this.headerInfoForm.get('fields') as FormArray<FormGroup>;
@@ -190,7 +227,7 @@ export class CvHeaderComponent implements OnInit {
   addSocialMedia() {
     const control = this._fb.group({
       platform: [''],
-      link: ['']
+      link: [''],
     });
     this.socialMedia.push(control);
   }
@@ -232,28 +269,31 @@ export class CvHeaderComponent implements OnInit {
 
   getFieldIcon(fieldName: string): string {
     const iconMap: { [key: string]: string } = {
-      'LinkedIn': 'pi pi-linkedin',
+      LinkedIn: 'pi pi-linkedin',
       'Twitter/X': 'pi pi-twitter',
-      'GitHub': 'pi pi-github',
-      'GitLab': 'pi pi-gitlab',
-      'Facebook': 'pi pi-facebook',
-      'Instagram': 'pi pi-instagram',
-      'YouTube': 'pi pi-youtube',
-      'WhatsApp': 'pi pi-whatsapp',
-      'Telegram': 'pi pi-telegram',
-      'Skype': 'pi pi-skype',
-      'Website': 'pi pi-globe',
-      'Discord': 'pi pi-discord',
-      'TikTok': 'pi pi-tiktok',
-      'Dribbble': 'pi pi-dribbble',
-      'Behance': 'pi pi-behance',
+      GitHub: 'pi pi-github',
+      GitLab: 'pi pi-gitlab',
+      Facebook: 'pi pi-facebook',
+      Instagram: 'pi pi-instagram',
+      YouTube: 'pi pi-youtube',
+      WhatsApp: 'pi pi-whatsapp',
+      Telegram: 'pi pi-telegram',
+      Skype: 'pi pi-skype',
+      Website: 'pi pi-globe',
+      Discord: 'pi pi-discord',
+      TikTok: 'pi pi-tiktok',
+      Dribbble: 'pi pi-dribbble',
+      Behance: 'pi pi-behance',
       'Stack Overflow': 'pi pi-stack-overflow',
-      'Medium': 'pi pi-medium',
-      'Quora': 'pi pi-quora',
-      'PayPal': 'pi pi-paypal',
-      'Signal': 'pi pi-signal',
-      'Product Hunt': 'pi pi-product-hunt'
+      Medium: 'pi pi-medium',
+      Quora: 'pi pi-quora',
+      PayPal: 'pi pi-paypal',
+      Signal: 'pi pi-signal',
+      'Product Hunt': 'pi pi-product-hunt',
     };
     return iconMap[fieldName] || 'pi pi-link';
   }
 }
+
+// Backward compatibility export
+export { PersonalProfileComponent as CvHeaderComponent };
