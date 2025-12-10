@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule, NgFor } from "@angular/common";
 import { PrimeNgModule } from "../../../../../shared/modules/primeNg.module";
+import { CustomEditorComponent } from "../../../../../shared/components/custom-editor/custom-editor.component";
 import { CvContentService } from "../../../../../shared/services/cv-content.service";
 import { Subscription } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
@@ -12,7 +13,7 @@ import { debounceTime, distinctUntilChanged } from "rxjs/operators";
   templateUrl: './extra-activities.component.html',
   styleUrls: ['./extra-activities.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, PrimeNgModule]
+  imports: [ReactiveFormsModule, CommonModule, PrimeNgModule, CustomEditorComponent]
 })
 
 export class ExtraActivitiesComponent implements OnInit, OnDestroy {

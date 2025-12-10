@@ -98,42 +98,42 @@
 
     <!-- Social Media Links -->
     <div class="social-fields-section">
-      <h3 class="section-title">Social Media Links</h3>
+      <div class="section-header">
+        <h3 class="section-title">Social Media Links</h3>
+        <p class="section-subtitle">Add your professional social media profiles</p>
+      </div>
       
       <div class="social-fields">
         <div
           *ngFor="let social of socialMedia.controls; let i = index"
           [formGroup]="social"
-          class="social-item"
+          class="social-card"
         >
-          <div class="social-inputs">
-            <div class="form-field">
-              <label [for]="'platform-' + i">Platform</label>
-              <div class="input-wrapper">
-                <i [class]="getFieldIcon(social.get('platform')?.value || '')" class="input-icon"></i>
-                <input
-                  type="text"
-                  pInputText
-                  formControlName="platform"
-                  [id]="'platform-' + i"
-                  placeholder="LinkedIn, GitHub, Twitter..."
-                  (input)="onSocialChange(i)"
-                />
-              </div>
-            </div>
-            
-            <div class="form-field">
-              <label [for]="'link-' + i">URL</label>
-              <input
-                type="url"
-                pInputText
-                formControlName="link"
-                [id]="'link-' + i"
-                placeholder="https://..."
-              />
-            </div>
+          <div class="social-icon" [class.has-platform]="social.get('platform')?.value">
+            <i [class]="getFieldIcon(social.get('platform')?.value || '')"></i>
           </div>
-          
+
+          <div class="social-inputs">
+            <input
+              type="text"
+              pInputText
+              formControlName="platform"
+              [id]="'platform-' + i"
+              placeholder="Platform (e.g., LinkedIn, GitHub)"
+              (input)="onSocialChange(i)"
+              class="social-input"
+            />
+            
+            <input
+              type="url"
+              pInputText
+              formControlName="link"
+              [id]="'link-' + i"
+              placeholder="https://..."
+              class="social-input"
+            />
+          </div>
+
           <button
             *ngIf="socialMedia.length > 1"
             type="button"
@@ -144,16 +144,15 @@
             <i class="pi pi-times"></i>
           </button>
         </div>
-        
       </div>
 
       <button
         type="button"
-        class="add-btn"
+        class="add-social-btn"
         (click)="addSocialMedia()"
       >
-        <i class="pi pi-plus"></i>
-        Add Link
+        <i class="pi pi-plus-circle"></i>
+        <span>Add Social Media Link</span>
       </button>
     </div>
 
